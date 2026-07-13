@@ -24,8 +24,9 @@
         <nav class="bg-blue-900 text-white shadow-md border-b-2 border-blue-700">
             <div class="max-w-6xl mx-auto px-4 py-4 flex flex-col md:flex-row justify-between items-center gap-4">
                 <div class="flex items-center space-x-3">
-                    <div class="bg-white p-2 rounded-lg text-blue-900 shadow-inner">
-                        <svg class="w-7 h-7" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 6.253v13m0-13C10.832 5.477 9.246 5 7.5 5S4.168 5.477 3 6.253v13C4.168 18.477 5.754 18 7.5 18s3.332.477 4.5 1.253m0-13C13.168 5.477 14.754 5 16.5 5c1.747 0 3.332.477 4.5 1.253v13C19.832 18.477 18.247 18 16.5 18c-1.746 0-3.332.477-4.5 1.253"></path></svg>
+                    <!-- REVISI: Mengganti SVG dengan Logo MA Miftahul Ulum dari Google Drive -->
+                    <div class="bg-white p-1 rounded-lg shadow-inner flex items-center justify-center">
+                        <img src="https://drive.google.com/thumbnail?id=1xj5AeEbWisIpBlXpwJ_tbW7wMM8NsjjQ&sz=w500" alt="Logo MAS Miftahul Ulum" class="w-10 h-10 object-contain">
                     </div>
                     <div>
                         <span class="font-extrabold text-2xl tracking-tight uppercase block">MAS MIFTAHUL ULUM</span>
@@ -79,7 +80,6 @@
                         <span id="cloud-status" class="text-xs font-semibold px-3 py-1 rounded-full bg-slate-100 text-slate-500">⚪ Lokal Sahaja</span>
                     </h2>
                     
-                    <!-- REVISI: Mengubah grid menjadi 4 kolom -->
                     <div class="grid grid-cols-1 md:grid-cols-4 gap-4">
                         <div>
                             <label class="block text-xs font-bold uppercase tracking-wider text-slate-500 mb-1.5">Mata Pelajaran <span class="text-red-500">*</span></label>
@@ -122,7 +122,6 @@
                             </select>
                         </div>
                         
-                        <!-- REVISI: Tambahan Opsi Jam Mapel -->
                         <div>
                             <label class="block text-xs font-bold uppercase tracking-wider text-slate-500 mb-1.5">Jam Mapel <span class="text-red-500">*</span></label>
                             <select id="select-jam" class="w-full p-3 border border-slate-200 rounded-xl bg-slate-50 focus:ring-2 focus:ring-blue-500 focus:bg-white font-medium text-sm transition text-slate-700">
@@ -263,7 +262,6 @@
                                     <th class="p-3 font-semibold">Nama Siswa</th>
                                     <th class="p-3 font-semibold">Kelas</th>
                                     <th class="p-3 font-semibold">Mata Pelajaran</th>
-                                    <!-- REVISI: Tabel History Header -->
                                     <th class="p-3 font-semibold">Jam Mapel</th> 
                                 </tr>
                             </thead>
@@ -315,14 +313,11 @@
     </script>
 
     <script>
-        // =========================================================================
-        // REVISI CORE ENGINE KAMERA ANTI-BUG (MENDUKUNG SEMUA DEVICE HP & PC/LAPTOP)
-        // =========================================================================
         let html5QrCode = null;
         let isProcessingScan = false;
         let currentSubject = "";
         let currentClass = "";
-        let currentJam = ""; // REVISI: Variabel penampung sesi Jam Mapel
+        let currentJam = "";
         let isSessionActive = false;
         let sessionScans = [];
         let availableCameras = [];
@@ -342,7 +337,6 @@
             const randomQuote = quotesGuru[Math.floor(Math.random() * quotesGuru.length)];
             document.getElementById('teacher-quote').innerHTML = randomQuote;
 
-            // Deteksi Peringatan WhatsApp / Instagram Browser & Keamanan SSL
             const ua = navigator.userAgent || navigator.vendor || window.opera;
             const isInstagram = (ua.indexOf('Instagram') > -1) || (ua.indexOf('FBAN') > -1) || (ua.indexOf('FBAV') > -1);
             const isWhatsApp = (ua.indexOf('WhatsApp') > -1) || (ua.indexOf('Line') > -1);
@@ -405,9 +399,8 @@
         function startSession() {
             const subject = document.getElementById('select-subject').value;
             const cls = document.getElementById('select-class').value;
-            const jam = document.getElementById('select-jam').value; // REVISI: Ambil nilai jam
+            const jam = document.getElementById('select-jam').value;
 
-            // REVISI: Validasi pilihan jam
             if (!subject || !cls || !jam) {
                 alert("Pemberitahuan KBM: Pilih Mata Pelajaran, Kelas, dan Jam Mapel sebelum meluncurkan pemindaian!");
                 return;
@@ -419,7 +412,7 @@
 
             currentSubject = subject;
             currentClass = cls;
-            currentJam = jam; // REVISI: Set jam berjalan
+            currentJam = jam;
             isSessionActive = true;
             isProcessingScan = false;
             sessionScans = [];
@@ -427,13 +420,12 @@
 
             document.getElementById('select-subject').disabled = true;
             document.getElementById('select-class').disabled = true;
-            document.getElementById('select-jam').disabled = true; // REVISI: Nonaktifkan form jam
+            document.getElementById('select-jam').disabled = true;
             document.getElementById('btn-start-session').classList.add('hidden');
             document.getElementById('btn-stop-session').classList.remove('hidden');
             document.getElementById('btn-stop-session').classList.add('flex');
             document.getElementById('scanner-section').classList.remove('hidden');
             
-            // REVISI: Tampilkan status jam mapel di lencana UI
             document.getElementById('session-badge').innerText = `${cls} ➔ ${subject} (Jam ${jam})`;
 
             startDefaultCamera();
@@ -548,7 +540,7 @@
             isProcessingScan = false;
             document.getElementById('select-subject').disabled = false;
             document.getElementById('select-class').disabled = false;
-            document.getElementById('select-jam').disabled = false; // REVISI: Aktifkan kembali form
+            document.getElementById('select-jam').disabled = false;
             document.getElementById('btn-start-session').classList.remove('hidden');
             document.getElementById('btn-stop-session').classList.add('hidden');
             document.getElementById('btn-stop-session').classList.remove('flex');
@@ -613,12 +605,11 @@
                 return;
             }
 
-            // REVISI: Proteksi Duplikasi memperhitungkan Jam Mapel
             const todayStr = new Date().toISOString().slice(0, 10);
             const isDuplicate = attendanceHistory.some(log => 
                 log.nis === registeredStudent.nis && 
                 log.subject === currentSubject && 
-                log.jam === currentJam && // Cek jam mapel
+                log.jam === currentJam && 
                 log.timestamp.startsWith(todayStr)
             );
 
@@ -629,7 +620,6 @@
                 return;
             }
 
-            // --- SUKSES PRESENSI ---
             playBeep();
             const now = new Date();
             const timeString = now.toLocaleTimeString('id-ID', { hour: '2-digit', minute: '2-digit', second: '2-digit' });
@@ -641,14 +631,13 @@
                 name: registeredStudent.name,
                 className: currentClass,
                 subject: currentSubject,
-                jam: currentJam // REVISI: Simpan Jam Mapel
+                jam: currentJam
             };
 
             sessionScans.unshift(logEntry);
             attendanceHistory.unshift(logEntry);
             localStorage.setItem('miftah_history', JSON.stringify(attendanceHistory));
 
-            // KIRIM KE GOOGLE SHEETS
             kirimKeGoogleSheets(logEntry);
 
             alertBox.innerText = `✅ BERHASIL: Presensi masuk ${registeredStudent.name} tervalidasi!`;
@@ -658,7 +647,7 @@
             resumeScannerAfterDelay(1500);
         }
 
-        function onScanFailure(error) { /* Abaikan frame kosong */ }
+        function onScanFailure(error) {}
 
         function resumeScannerAfterDelay(ms) {
             setTimeout(() => {
@@ -676,7 +665,6 @@
                 return;
             }
 
-            // REVISI: Tambahkan jam dalam format pengiriman JSON
             const payload = {
                 nis: dataLog.nis,
                 nama: dataLog.name,
@@ -794,7 +782,6 @@
         function renderHistory() {
             const tbody = document.getElementById('history-table-body');
             if (attendanceHistory.length === 0) {
-                // REVISI: colspan diubah dari 5 ke 6
                 tbody.innerHTML = `<tr><td colspan="6" class="p-6 text-center text-slate-400 text-sm">Arsip kosong: Belum ada rekaman log hari ini.</td></tr>`;
                 return;
             }
@@ -804,7 +791,6 @@
                 const dateStr = dateObj.toLocaleDateString('id-ID', { weekday: 'long', day: '2-digit', month: 'short', year: 'numeric' });
                 const timeStr = dateObj.toLocaleTimeString('id-ID', { hour: '2-digit', minute: '2-digit' });
 
-                // REVISI: Menambahkan kolom UI Jam Mapel pada tabel master rekap
                 return `
                     <tr class="hover:bg-slate-100/50 transition text-xs md:text-sm">
                         <td class="p-3 text-slate-500 font-medium">${dateStr}, ${timeStr} WIB</td>
@@ -833,7 +819,6 @@
             }
 
             let csvContent = "data:text/csv;charset=utf-8,\uFEFF"; 
-            // REVISI: Menambahkan Header Jam Mapel di CSV
             csvContent += "Hari/Tanggal,Waktu,NIS,Nama Siswa,Kelas,Mata Pelajaran,Jam Mapel\n";
 
             attendanceHistory.forEach(log => {
@@ -841,7 +826,6 @@
                 const dateStr = dateObj.toLocaleDateString('id-ID', { weekday: 'long', day: '2-digit', month: '2-digit', year: 'numeric' });
                 const timeStr = dateObj.toLocaleTimeString('id-ID');
                 const cleanName = `"${log.name.replace(/"/g, '""')}"`;
-                // REVISI: Menyisipkan data log.jam
                 csvContent += `${dateStr},${timeStr},${log.nis},${cleanName},${log.className},${log.subject},${log.jam}\n`;
             });
 
