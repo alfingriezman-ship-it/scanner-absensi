@@ -78,7 +78,9 @@
                         </div>
                         <span id="cloud-status" class="text-xs font-semibold px-3 py-1 rounded-full bg-slate-100 text-slate-500">⚪ Lokal Sahaja</span>
                     </h2>
-                    <div class="grid grid-cols-1 md:grid-cols-3 gap-4">
+                    
+                    <!-- REVISI: Mengubah grid menjadi 4 kolom -->
+                    <div class="grid grid-cols-1 md:grid-cols-4 gap-4">
                         <div>
                             <label class="block text-xs font-bold uppercase tracking-wider text-slate-500 mb-1.5">Mata Pelajaran <span class="text-red-500">*</span></label>
                             <select id="select-subject" class="w-full p-3 border border-slate-200 rounded-xl bg-slate-50 focus:ring-2 focus:ring-blue-500 focus:bg-white font-medium text-sm transition text-slate-700">
@@ -94,7 +96,7 @@
                                 <option value="Ekonomi">Ekonomi</option>
                                 <option value="Fikih">Fikih</option>
                                 <option value="Geografi">Geografi</option>
-                                <option value="Sejarah">Sejarah</option> <
+                                <option value="Sejarah">Sejarah</option>
                                 <option value="Informatika">Informatika</option>
                                 <option value="Kimia">Kimia</option>
                                 <option value="Matematika">Matematika</option>
@@ -108,7 +110,7 @@
                             </select>
                         </div>
                         <div>
-                            <label class="block text-xs font-bold uppercase tracking-wider text-slate-500 mb-1.5">Kelas Terpilih <span class="text-red-500">*</span></label>
+                            <label class="block text-xs font-bold uppercase tracking-wider text-slate-500 mb-1.5">Kelas <span class="text-red-500">*</span></label>
                             <select id="select-class" class="w-full p-3 border border-slate-200 rounded-xl bg-slate-50 focus:ring-2 focus:ring-blue-500 focus:bg-white font-medium text-sm transition text-slate-700">
                                 <option value="">-- Pilih Kelas --</option>
                                 <option value="X - A">X - A</option>
@@ -119,6 +121,20 @@
                                 <option value="XII - B">XII - B</option>
                             </select>
                         </div>
+                        
+                        <!-- REVISI: Tambahan Opsi Jam Mapel -->
+                        <div>
+                            <label class="block text-xs font-bold uppercase tracking-wider text-slate-500 mb-1.5">Jam Mapel <span class="text-red-500">*</span></label>
+                            <select id="select-jam" class="w-full p-3 border border-slate-200 rounded-xl bg-slate-50 focus:ring-2 focus:ring-blue-500 focus:bg-white font-medium text-sm transition text-slate-700">
+                                <option value="">-- Pilih Jam --</option>
+                                <option value="1-2">Jam 1-2</option>
+                                <option value="3-4">Jam 3-4</option>
+                                <option value="5-6">Jam 5-6</option>
+                                <option value="7-8">Jam 7-8</option>
+                                <option value="9-10">Jam 9-10</option>
+                            </select>
+                        </div>
+
                         <div class="flex items-end">
                             <button id="btn-start-session" onclick="startSession()" class="w-full bg-blue-700 hover:bg-blue-800 text-white font-bold py-3 px-4 rounded-xl transition flex justify-center items-center gap-2 shadow-sm text-sm">
                                 <span>Aktifkan Scanner</span>
@@ -240,6 +256,8 @@
                                     <th class="p-3 font-semibold">Nama Siswa</th>
                                     <th class="p-3 font-semibold">Kelas</th>
                                     <th class="p-3 font-semibold">Mata Pelajaran</th>
+                                    <!-- REVISI: Tabel History Header -->
+                                    <th class="p-3 font-semibold">Jam Mapel</th> 
                                 </tr>
                             </thead>
                             <tbody id="history-table-body" class="divide-y text-slate-700"></tbody>
@@ -297,6 +315,7 @@
         let isProcessingScan = false;
         let currentSubject = "";
         let currentClass = "";
+        let currentJam = ""; // REVISI: Variabel penampung sesi Jam Mapel
         let isSessionActive = false;
         let sessionScans = [];
         let availableCameras = [];
@@ -376,13 +395,14 @@
             if (tabId === 'students') renderStudents();
         }
 
-        // --- SISTEM PEMINDAIAN KAMERA BARU YANG AMAN & BERSIH ---
         function startSession() {
             const subject = document.getElementById('select-subject').value;
             const cls = document.getElementById('select-class').value;
+            const jam = document.getElementById('select-jam').value; // REVISI: Ambil nilai jam
 
-            if (!subject || !cls) {
-                alert("Pemberitahuan KBM: Pilih Mata Pelajaran dan Kelas sebelum meluncurkan pemindaian!");
+            // REVISI: Validasi pilihan jam
+            if (!subject || !cls || !jam) {
+                alert("Pemberitahuan KBM: Pilih Mata Pelajaran, Kelas, dan Jam Mapel sebelum meluncurkan pemindaian!");
                 return;
             }
 
@@ -392,6 +412,7 @@
 
             currentSubject = subject;
             currentClass = cls;
+            currentJam = jam; // REVISI: Set jam berjalan
             isSessionActive = true;
             isProcessingScan = false;
             sessionScans = [];
@@ -399,13 +420,15 @@
 
             document.getElementById('select-subject').disabled = true;
             document.getElementById('select-class').disabled = true;
+            document.getElementById('select-jam').disabled = true; // REVISI: Nonaktifkan form jam
             document.getElementById('btn-start-session').classList.add('hidden');
             document.getElementById('btn-stop-session').classList.remove('hidden');
             document.getElementById('btn-stop-session').classList.add('flex');
             document.getElementById('scanner-section').classList.remove('hidden');
-            document.getElementById('session-badge').innerText = `${cls} ➔ ${subject}`;
+            
+            // REVISI: Tampilkan status jam mapel di lencana UI
+            document.getElementById('session-badge').innerText = `${cls} ➔ ${subject} (Jam ${jam})`;
 
-            // Langsung nyalakan kamera belakang (Default) dengan sistem Fallback
             startDefaultCamera();
         }
 
@@ -425,20 +448,16 @@
                 aspectRatio: 1.0
             };
 
-            // STRATEGI 1: Minta langsung kamera belakang ("environment") tanpa getCameras() duluan
-            // Ini adalah cara paling ampuh & standar W3C untuk iPhone/iOS & Android!
             html5QrCode.start(
                 { facingMode: "environment" },
                 config,
                 onScanSuccess,
                 onScanFailure
             ).then(() => {
-                // Kamera berhasil menyala! Sekarang baru kita muat daftar kamera untuk dropdown
                 populateCameraDropdown();
             }).catch(errEnvironment => {
                 console.warn("Kamera belakang (environment) gagal, mencoba fallback ke kamera depan/webcam PC...", errEnvironment);
                 
-                // STRATEGI 2 (FALLBACK): Jika di Laptop/PC tidak ada kamera belakang, coba buka kamera depan ("user")
                 html5QrCode.start(
                     { facingMode: "user" },
                     config,
@@ -449,7 +468,6 @@
                 }).catch(errUser => {
                     console.warn("Fallback facingMode gagal, membaca daftar ID perangkat manual...", errUser);
                     
-                    // STRATEGI 3 (FALLBACK TERAKHIR): Baca manual lewat getCameras
                     Html5Qrcode.getCameras().then(devices => {
                         if (devices && devices.length > 0) {
                             html5QrCode.start(
@@ -523,6 +541,7 @@
             isProcessingScan = false;
             document.getElementById('select-subject').disabled = false;
             document.getElementById('select-class').disabled = false;
+            document.getElementById('select-jam').disabled = false; // REVISI: Aktifkan kembali form
             document.getElementById('btn-start-session').classList.remove('hidden');
             document.getElementById('btn-stop-session').classList.add('hidden');
             document.getElementById('btn-stop-session').classList.remove('flex');
@@ -546,7 +565,7 @@
 
         function onScanSuccess(decodedText, decodedResult) {
             if (!isSessionActive || isProcessingScan) return;
-            isProcessingScan = true; // Kunci sementara agar tidak double-scan
+            isProcessingScan = true;
 
             let studentData = null;
             try {
@@ -580,7 +599,6 @@
                 }
             }
 
-            // Proteksi Salah Kelas
             if (registeredStudent.className !== currentClass && registeredStudent.className !== "Data Kosong") {
                 alertBox.innerText = `⚠️ PROTEKSI: ${registeredStudent.name} adalah siswa kelas ${registeredStudent.className} (Bukan ${currentClass})!`;
                 alertBox.classList.add('bg-amber-50', 'text-amber-800', 'border-amber-200');
@@ -588,16 +606,17 @@
                 return;
             }
 
-            // Proteksi Duplikasi Absen Hari Ini
+            // REVISI: Proteksi Duplikasi memperhitungkan Jam Mapel
             const todayStr = new Date().toISOString().slice(0, 10);
             const isDuplicate = attendanceHistory.some(log => 
                 log.nis === registeredStudent.nis && 
                 log.subject === currentSubject && 
+                log.jam === currentJam && // Cek jam mapel
                 log.timestamp.startsWith(todayStr)
             );
 
             if (isDuplicate || sessionScans.some(s => s.nis === registeredStudent.nis)) {
-                alertBox.innerText = `⚠️ NOTIFIKASI: ${registeredStudent.name} sudah melakukan presensi pada mapel ini hari ini.`;
+                alertBox.innerText = `⚠️ NOTIFIKASI: ${registeredStudent.name} sudah melakukan presensi pada mapel ini (Jam ${currentJam}).`;
                 alertBox.classList.add('bg-amber-50', 'text-amber-800', 'border-amber-200');
                 resumeScannerAfterDelay(2000);
                 return;
@@ -614,7 +633,8 @@
                 nis: registeredStudent.nis,
                 name: registeredStudent.name,
                 className: currentClass,
-                subject: currentSubject
+                subject: currentSubject,
+                jam: currentJam // REVISI: Simpan Jam Mapel
             };
 
             sessionScans.unshift(logEntry);
@@ -649,11 +669,13 @@
                 return;
             }
 
+            // REVISI: Tambahkan jam dalam format pengiriman JSON
             const payload = {
                 nis: dataLog.nis,
                 nama: dataLog.name,
                 kelas: dataLog.className,
-                mapel: dataLog.subject
+                mapel: dataLog.subject,
+                jam: dataLog.jam
             };
 
             fetch(scriptUrl, {
@@ -765,7 +787,8 @@
         function renderHistory() {
             const tbody = document.getElementById('history-table-body');
             if (attendanceHistory.length === 0) {
-                tbody.innerHTML = `<tr><td colspan="5" class="p-6 text-center text-slate-400 text-sm">Arsip kosong: Belum ada rekaman log hari ini.</td></tr>`;
+                // REVISI: colspan diubah dari 5 ke 6
+                tbody.innerHTML = `<tr><td colspan="6" class="p-6 text-center text-slate-400 text-sm">Arsip kosong: Belum ada rekaman log hari ini.</td></tr>`;
                 return;
             }
 
@@ -774,6 +797,7 @@
                 const dateStr = dateObj.toLocaleDateString('id-ID', { weekday: 'long', day: '2-digit', month: 'short', year: 'numeric' });
                 const timeStr = dateObj.toLocaleTimeString('id-ID', { hour: '2-digit', minute: '2-digit' });
 
+                // REVISI: Menambahkan kolom UI Jam Mapel pada tabel master rekap
                 return `
                     <tr class="hover:bg-slate-100/50 transition text-xs md:text-sm">
                         <td class="p-3 text-slate-500 font-medium">${dateStr}, ${timeStr} WIB</td>
@@ -781,6 +805,7 @@
                         <td class="p-3 font-bold text-slate-900">${log.name}</td>
                         <td class="p-3 font-semibold text-slate-600">${log.className}</td>
                         <td class="p-3"><span class="bg-blue-50 text-blue-800 border border-blue-200 text-[11px] font-bold px-2.5 py-0.5 rounded-md">${log.subject}</span></td>
+                        <td class="p-3"><span class="bg-amber-50 text-amber-800 border border-amber-200 text-[11px] font-bold px-2.5 py-0.5 rounded-md">${log.jam || '-'}</span></td>
                     </tr>
                 `;
             }).join('');
@@ -801,14 +826,16 @@
             }
 
             let csvContent = "data:text/csv;charset=utf-8,\uFEFF"; 
-            csvContent += "Hari/Tanggal,Waktu,NIS,Nama Siswa,Kelas,Mata Pelajaran\n";
+            // REVISI: Menambahkan Header Jam Mapel di CSV
+            csvContent += "Hari/Tanggal,Waktu,NIS,Nama Siswa,Kelas,Mata Pelajaran,Jam Mapel\n";
 
             attendanceHistory.forEach(log => {
                 const dateObj = new Date(log.timestamp);
                 const dateStr = dateObj.toLocaleDateString('id-ID', { weekday: 'long', day: '2-digit', month: '2-digit', year: 'numeric' });
                 const timeStr = dateObj.toLocaleTimeString('id-ID');
                 const cleanName = `"${log.name.replace(/"/g, '""')}"`;
-                csvContent += `${dateStr},${timeStr},${log.nis},${cleanName},${log.className},${log.subject}\n`;
+                // REVISI: Menyisipkan data log.jam
+                csvContent += `${dateStr},${timeStr},${log.nis},${cleanName},${log.className},${log.subject},${log.jam}\n`;
             });
 
             const encodedUri = encodeURI(csvContent);
