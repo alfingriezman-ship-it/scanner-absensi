@@ -228,14 +228,21 @@
                             <h2 class="text-base md:text-lg font-bold text-blue-950">Bank Data Kartu QR Siswa</h2>
                             <p class="text-[11px] md:text-xs text-slate-500">Cetak kartu ini untuk digunakan siswa saat absensi.</p>
                         </div>
-                        <div class="grid grid-cols-2 gap-2 w-full sm:w-auto">
+                        
+                        <!-- REVISI: Penambahan Tombol Ekspor Word & Penyesuaian Layout Tombol -->
+                        <div class="flex flex-wrap gap-2 w-full sm:w-auto justify-start sm:justify-end">
+                            <button onclick="exportQRToWord()" class="bg-blue-600 hover:bg-blue-700 text-white px-4 py-2.5 rounded-xl text-xs font-bold transition flex justify-center items-center gap-1.5 shadow-sm">
+                                📄 Ekspor Word
+                            </button>
                             <button onclick="printQRCodes()" class="bg-slate-800 hover:bg-slate-900 text-white px-4 py-2.5 rounded-xl text-xs font-bold transition flex justify-center items-center gap-1.5 shadow-sm">
                                 🖨️ Cetak Kartu
                             </button>
-                            <button onclick="clearStudents()" class="bg-rose-100 text-rose-700 hover:bg-rose-200 px-4 py-2.5 rounded-xl text-xs font-bold transition flex justify-center items-center">
+                            <button onclick="clearStudents()" class="bg-rose-100 text-rose-700 hover:bg-rose-200 px-4 py-2.5 rounded-xl text-xs font-bold transition flex justify-center items-center gap-1.5">
                                 🗑️ Wipe Out
                             </button>
                         </div>
+                        <!-- END REVISI -->
+                        
                     </div>
 
                     <div id="print-area" class="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 lg:grid-cols-5 gap-4"></div>
@@ -383,18 +390,13 @@
         }
 
         function switchTab(tabId) {
-            // Hide all views
             document.querySelectorAll('[id^="view-"]').forEach(el => el.classList.add('hidden'));
-            
-            // Reset all tabs to default blue styling
             document.querySelectorAll('[id^="tab-"]').forEach(el => {
                 el.className = "px-3 md:px-5 py-2.5 rounded-lg bg-blue-800/80 hover:bg-blue-700 font-bold text-xs md:text-sm transition flex-grow md:flex-grow-0 text-slate-200";
             });
             
-            // Show selected view
             document.getElementById(`view-${tabId}`).classList.remove('hidden');
             
-            // Style active tab (Green Success Color)
             const activeTab = document.getElementById(`tab-${tabId}`);
             activeTab.className = "px-3 md:px-5 py-2.5 rounded-lg bg-emerald-600 shadow-md font-bold text-xs md:text-sm transition flex-grow md:flex-grow-0 text-white border-b-2 border-emerald-800";
 
@@ -693,6 +695,76 @@
         }
 
         function printQRCodes() { window.print(); }
+
+        // REVISI: Fungsi Baru Untuk Ekspor ke Word (.doc)
+        function exportQRToWord() {
+            if (students.length === 0) {
+                alert("Tidak ada kartu QR untuk diekspor.");
+                return;
+            }
+
+            // Gunakan struktur tag <table> agar layout grid aman saat di render oleh Microsoft Word
+            let contentHtml = `
+                <div style="text-align: center; font-family: Arial, sans-serif;">
+                    <h2>Kartu QR Siswa - MAS MIFTAHUL ULUM</h2>
+                    <table style="width: 100%; border-collapse: collapse; margin-top: 20px;">
+            `;
+
+            const columns = 3; // Mengatur 3 kartu siswa berjejer per baris tabel Word
+            for (let i = 0; i < students.length; i++) {
+                if (i % columns === 0) contentHtml += "<tr>";
+
+                const stu = students[i];
+                const qrDiv = document.getElementById(`qrcode-${stu.nis}`);
+                
+                let imgSrc = '';
+                if (qrDiv) {
+                    const img = qrDiv.querySelector('img');
+                    const canvas = qrDiv.querySelector('canvas');
+                    
+                    // Mengekstrak base64 gambar QR agar dapat tertanam (embedded) di file Word
+                    if (img && img.src && img.src.startsWith('data:image')) {
+                        imgSrc = img.src;
+                    } else if (canvas) {
+                        imgSrc = canvas.toDataURL("image/png");
+                    }
+                }
+
+                contentHtml += `
+                    <td style="padding: 15px; border: 1px dashed #ccc; text-align: center; vertical-align: top; width: 33%;">
+                        <div style="font-size: 11px; font-weight: bold; color: #1e3a8a; margin-bottom: 8px;">MAS MIFTAHUL ULUM</div>
+                        ${imgSrc ? `<img src="${imgSrc}" width="100" height="100" style="margin: 0 auto; display: block;" />` : ''}
+                        <div style="font-weight: bold; font-size: 14px; margin-top: 10px;">${stu.name}</div>
+                        <div style="font-size: 11px; color: #059669; margin-top: 5px;">NIS ${stu.nis} &bull; ${stu.className}</div>
+                    </td>
+                `;
+
+                if (i % columns === columns - 1 || i === students.length - 1) contentHtml += "</tr>";
+            }
+
+            contentHtml += `
+                    </table>
+                </div>
+            `;
+
+            // Setup Header XML kompatibel dengan Microsoft Office Word
+            const preHtml = "<html xmlns:o='urn:schemas-microsoft-com:office:office' xmlns:w='urn:schemas-microsoft-com:office:word' xmlns='http://www.w3.org/TR/REC-html40'><head><meta charset='utf-8'><title>Kartu QR Siswa</title></head><body>";
+            const postHtml = "</body></html>";
+            const html = preHtml + contentHtml + postHtml;
+
+            const blob = new Blob(['\ufeff', html], { type: 'application/msword' });
+            const url = URL.createObjectURL(blob);
+            const downloadLink = document.createElement("a");
+            
+            downloadLink.href = url;
+            downloadLink.download = `Kartu_QR_Siswa_${new Date().toISOString().slice(0,10)}.doc`;
+            
+            document.body.appendChild(downloadLink);
+            downloadLink.click();
+            document.body.removeChild(downloadLink);
+            URL.revokeObjectURL(url);
+        }
+        // END REVISI
 
         function renderHistory() {
             const tbody = document.getElementById('history-table-body');
