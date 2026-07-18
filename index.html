@@ -16,62 +16,81 @@
             #print-area { position: absolute; left: 0; top: 0; width: 100%; }
             .no-print { display: none !important; }
         }
+        /* Styling untuk scrollbar tabel di mobile */
+        .table-scroll::-webkit-scrollbar { height: 6px; }
+        .table-scroll::-webkit-scrollbar-track { background: #f1f5f9; border-radius: 4px; }
+        .table-scroll::-webkit-scrollbar-thumb { background: #cbd5e1; border-radius: 4px; }
     </style>
 </head>
 <body class="bg-slate-50 text-slate-800 min-h-screen flex flex-col justify-between">
 
     <div>
-        <nav class="bg-blue-900 text-white shadow-md border-b-2 border-blue-700">
-            <div class="max-w-6xl mx-auto px-4 py-4 flex flex-col md:flex-row justify-between items-center gap-4">
-                <div class="flex items-center space-x-3">
-                    <div class="bg-white p-1 rounded-lg shadow-inner flex items-center justify-center">
+        <!-- Live Clock Top Bar -->
+        <div class="bg-slate-900 border-t-4 border-rose-600 text-white py-2 px-4 flex justify-between items-center text-xs md:text-sm font-medium z-50 relative shadow-md no-print">
+            <span class="flex items-center gap-2">
+                <span class="w-2.5 h-2.5 rounded-full bg-emerald-500 animate-pulse shadow-[0_0_8px_rgba(16,185,129,0.8)]"></span>
+                <span class="hidden md:inline">Sistem Presensi</span> Digital Aktif
+            </span>
+            <span id="live-clock" class="font-mono font-bold bg-slate-800 text-rose-400 px-3 py-1 rounded-lg border border-slate-700 shadow-inner tracking-widest flex items-center gap-2">
+                ⏳ Memuat...
+            </span>
+        </div>
+
+        <!-- Navbar Utama (Biru Gradient) -->
+        <nav class="bg-gradient-to-r from-blue-900 via-blue-800 to-blue-950 text-white shadow-lg border-b border-blue-700">
+            <div class="max-w-6xl mx-auto px-4 py-4 flex flex-col md:flex-row justify-between items-center gap-5">
+                <div class="flex items-center space-x-3 w-full md:w-auto justify-center md:justify-start">
+                    <div class="bg-white p-1.5 rounded-xl shadow-inner flex items-center justify-center border-2 border-emerald-500">
                         <img src="https://drive.google.com/thumbnail?id=1xj5AeEbWisIpBlXpwJ_tbW7wMM8NsjjQ&sz=w500" alt="Logo MAS Miftahul Ulum" class="w-10 h-10 object-contain">
                     </div>
-                    <div>
-                        <span class="font-extrabold text-2xl tracking-tight uppercase block">MAS MIFTAHUL ULUM</span>
-                        <span class="text-xs text-blue-200 tracking-wider font-medium block -mt-1">Sistem Presensi Digital Siswa Kontemporer</span>
+                    <div class="text-center md:text-left">
+                        <span class="font-extrabold text-xl md:text-2xl tracking-tight uppercase block">MAS MIFTAHUL ULUM</span>
+                        <span class="text-[10px] md:text-xs text-emerald-300 tracking-wider font-medium block -mt-1">Sistem Presensi Digital Siswa</span>
                     </div>
                 </div>
-                <div class="flex space-x-1.5 no-print bg-blue-950 p-1 rounded-xl border border-blue-800">
-                    <button onclick="switchTab('scan')" id="tab-scan" class="px-4 py-2 rounded-lg bg-blue-700 font-semibold text-sm transition">Scanner Absensi</button>
-                    <button onclick="switchTab('students')" id="tab-students" class="px-4 py-2 rounded-lg hover:bg-blue-800 font-semibold text-sm transition">Siswa & QR</button>
-                    <button onclick="switchTab('history')" id="tab-history" class="px-4 py-2 rounded-lg hover:bg-blue-800 font-semibold text-sm transition">Rekap Data</button>
+                
+                <!-- Tab Menu (Responsif) -->
+                <div class="flex flex-wrap justify-center w-full md:w-auto gap-2 no-print bg-blue-950/50 p-1.5 rounded-xl border border-blue-800/50">
+                    <button onclick="switchTab('scan')" id="tab-scan" class="px-3 md:px-5 py-2.5 rounded-lg bg-emerald-600 shadow-md font-bold text-xs md:text-sm transition flex-grow md:flex-grow-0 text-white border-b-2 border-emerald-800">Scanner Absensi</button>
+                    <button onclick="switchTab('students')" id="tab-students" class="px-3 md:px-5 py-2.5 rounded-lg bg-blue-800/80 hover:bg-blue-700 font-bold text-xs md:text-sm transition flex-grow md:flex-grow-0 text-slate-200">Siswa & QR</button>
+                    <button onclick="switchTab('history')" id="tab-history" class="px-3 md:px-5 py-2.5 rounded-lg bg-blue-800/80 hover:bg-blue-700 font-bold text-xs md:text-sm transition flex-grow md:flex-grow-0 text-slate-200">Rekap Data</button>
                 </div>
             </div>
         </nav>
 
-        <div class="bg-gradient-to-r from-blue-800 via-blue-700 to-blue-800 text-white py-3 px-4 shadow-sm text-center border-b border-blue-600 no-print">
-            <p class="text-xs md:text-sm font-semibold tracking-wide uppercase flex items-center justify-center gap-2">
+        <!-- Banner Motivasi (Gradien Biru-Hijau-Merah) -->
+        <div class="bg-gradient-to-r from-blue-800 via-emerald-600 to-rose-600 text-white py-3 px-4 shadow-sm text-center no-print">
+            <p class="text-xs md:text-sm font-semibold tracking-wide flex items-center justify-center gap-2 drop-shadow-md">
                 <span class="inline-block animate-bounce">⚡</span>
-                "Mulailah hari ini dengan semangat dan kedisiplinan"
+                "Mulai hari ini dengan kedisiplinan, raih masa depan dengan kegemilangan"
                 <span class="inline-block animate-bounce">⚡</span>
             </p>
         </div>
 
-        <div class="max-w-6xl mx-auto px-4 py-8">
+        <div class="max-w-6xl mx-auto px-4 py-6 md:py-8">
 
+            <!-- TAB 1: SCANNER -->
             <div id="view-scan" class="space-y-6">
                 
                 <div id="browser-warning" class="hidden bg-rose-600 text-white p-4 rounded-2xl shadow-lg border-2 border-rose-400 font-bold text-xs md:text-sm text-center animate-pulse"></div>
 
-                <div class="bg-white p-6 rounded-2xl shadow-sm border border-slate-200/80">
-                    <h2 class="text-lg font-bold text-blue-950 mb-4 flex items-center justify-between">
+                <div class="bg-white p-5 md:p-6 rounded-2xl shadow-md border border-slate-200/80">
+                    <h2 class="text-base md:text-lg font-bold text-blue-950 mb-4 flex flex-col md:flex-row md:items-center justify-between gap-3">
                         <div class="flex items-center gap-2">
-                            <span class="bg-blue-100 text-blue-900 w-6 h-6 rounded-full flex items-center justify-center text-xs font-extrabold">1</span>
-                            <span>Konfigurasi Kegiatan Belajar Mengajar (KBM)</span>
+                            <span class="bg-blue-600 text-white w-7 h-7 rounded-full flex items-center justify-center text-xs font-extrabold shadow-sm">1</span>
+                            <span>Konfigurasi Kegiatan Belajar (KBM)</span>
                         </div>
-                        <span id="cloud-status" class="text-xs font-bold px-3 py-1 rounded-full bg-emerald-100 text-emerald-800 border border-emerald-300">🟢 Terhubung ke Sheets</span>
+                        <span id="cloud-status" class="text-[10px] md:text-xs font-bold px-3 py-1.5 rounded-full bg-emerald-100 text-emerald-800 border border-emerald-300 w-fit">🟢 Terhubung ke Sheets</span>
                     </h2>
                     
                     <div class="grid grid-cols-1 md:grid-cols-4 gap-4">
                         <div>
-                            <label class="block text-xs font-bold uppercase tracking-wider text-slate-500 mb-1.5">Mata Pelajaran <span class="text-red-500">*</span></label>
-                            <select id="select-subject" class="w-full p-3 border border-slate-200 rounded-xl bg-slate-50 focus:ring-2 focus:ring-blue-500 focus:bg-white font-medium text-sm transition text-slate-700">
+                            <label class="block text-[11px] font-bold uppercase tracking-wider text-slate-500 mb-1.5">Mata Pelajaran <span class="text-rose-500">*</span></label>
+                            <select id="select-subject" class="w-full p-3 md:p-3.5 border border-slate-200 rounded-xl bg-slate-50 focus:ring-2 focus:ring-blue-500 focus:bg-white font-medium text-sm transition text-slate-700 shadow-sm appearance-none">
                                 <option value="">-- Pilih Mata Pelajaran --</option>
                                 <option value="Akidah">Akidah</option>
                                 <option value="Alquran Hadits">Alquran Hadits</option>
                                 <option value="Bahasa Arab">Bahasa Arab</option>
-                                <option value="Bahasa Arab TL">Bahasa Arab TL</option>
                                 <option value="Bahasa Indonesia">Bahasa Indonesia</option>
                                 <option value="Bahasa Inggris">Bahasa Inggris</option>
                                 <option value="Biologi">Biologi</option>
@@ -83,7 +102,6 @@
                                 <option value="Informatika">Informatika</option>
                                 <option value="Kimia">Kimia</option>
                                 <option value="Matematika">Matematika</option>
-                                <option value="Matematika TL">Matematika TL</option>
                                 <option value="PJOK">PJOK</option>
                                 <option value="PPKn">PPKn</option>
                                 <option value="Seni Budaya">Seni Budaya</option>
@@ -93,8 +111,8 @@
                             </select>
                         </div>
                         <div>
-                            <label class="block text-xs font-bold uppercase tracking-wider text-slate-500 mb-1.5">Kelas <span class="text-red-500">*</span></label>
-                            <select id="select-class" class="w-full p-3 border border-slate-200 rounded-xl bg-slate-50 focus:ring-2 focus:ring-blue-500 focus:bg-white font-medium text-sm transition text-slate-700">
+                            <label class="block text-[11px] font-bold uppercase tracking-wider text-slate-500 mb-1.5">Kelas <span class="text-rose-500">*</span></label>
+                            <select id="select-class" class="w-full p-3 md:p-3.5 border border-slate-200 rounded-xl bg-slate-50 focus:ring-2 focus:ring-blue-500 focus:bg-white font-medium text-sm transition text-slate-700 shadow-sm appearance-none">
                                 <option value="">-- Pilih Kelas --</option>
                                 <option value="X - A">X - A</option>
                                 <option value="X - B">X - B</option>
@@ -105,12 +123,10 @@
                             </select>
                         </div>
                         
-                        <!-- Bagian Jam Mapel yang telah direvisi -->
                         <div>
-                            <label class="block text-xs font-bold uppercase tracking-wider text-slate-500 mb-1.5">Jam Mapel <span class="text-red-500">*</span></label>
-                            <select id="select-jam" onchange="checkManualJam(this.value)" class="w-full p-3 border border-slate-200 rounded-xl bg-slate-50 focus:ring-2 focus:ring-blue-500 focus:bg-white font-medium text-sm transition text-slate-700">
+                            <label class="block text-[11px] font-bold uppercase tracking-wider text-slate-500 mb-1.5">Jam Mapel <span class="text-rose-500">*</span></label>
+                            <select id="select-jam" onchange="checkManualJam(this.value)" class="w-full p-3 md:p-3.5 border border-slate-200 rounded-xl bg-slate-50 focus:ring-2 focus:ring-blue-500 focus:bg-white font-medium text-sm transition text-slate-700 shadow-sm appearance-none">
                                 <option value="">-- Pilih Jam --</option>
-                                <option value="0-0">0-0</option>
                                 <option value="1">1</option>
                                 <option value="2">2</option>
                                 <option value="3">3</option>
@@ -119,87 +135,81 @@
                                 <option value="6">6</option>
                                 <option value="7">7</option>
                                 <option value="8">8</option>
-                                <option value="9">9</option>
                                 <option value="1-2">1-2</option>
                                 <option value="3-4">3-4</option>
                                 <option value="5-6">5-6</option>
                                 <option value="7-8">7-8</option>
-                                <option value="9-10">9-10</option>
-                                <option value="1-2-3">1-2-3</option>
-                                <option value="2-3-4">2-3-4</option>
-                                <option value="3-4-5">3-4-5</option>
-                                <option value="4-5-6">4-5-6</option>
-                                <option value="manual">Lainnya (Ketik Manual)...</option>
+                                <option value="manual">Lainnya (Manual)...</option>
                             </select>
-                            <input type="text" id="input-jam-manual" placeholder="Ketik manual jam mapel..." class="hidden mt-2 w-full p-3 border border-slate-200 rounded-xl bg-slate-50 focus:ring-2 focus:ring-blue-500 focus:bg-white font-medium text-sm transition text-slate-700">
+                            <input type="text" id="input-jam-manual" placeholder="Ketik manual..." class="hidden mt-2 w-full p-3 border border-slate-200 rounded-xl bg-slate-50 focus:ring-2 focus:ring-blue-500 font-medium text-sm transition text-slate-700">
                         </div>
 
                         <div class="flex items-end">
-                            <button id="btn-start-session" onclick="startSession()" class="w-full bg-blue-700 hover:bg-blue-800 text-white font-bold py-3 px-4 rounded-xl transition flex justify-center items-center gap-2 shadow-sm text-sm">
-                                <span>Aktifkan Scanner</span>
+                            <button id="btn-start-session" onclick="startSession()" class="w-full bg-emerald-600 hover:bg-emerald-700 text-white font-bold py-3.5 px-4 rounded-xl transition flex justify-center items-center gap-2 shadow-md border-b-4 border-emerald-800 text-sm active:translate-y-1 active:border-b-0">
+                                <span>🚀 Aktifkan Scanner</span>
                             </button>
-                            <button id="btn-stop-session" onclick="stopSession()" class="w-full bg-rose-600 hover:bg-rose-700 text-white font-bold py-3 px-4 rounded-xl transition hidden justify-center items-center gap-2 shadow-sm text-sm">
-                                <span>Matikan Kamera</span>
+                            <button id="btn-stop-session" onclick="stopSession()" class="w-full bg-rose-600 hover:bg-rose-700 text-white font-bold py-3.5 px-4 rounded-xl transition hidden justify-center items-center gap-2 shadow-md border-b-4 border-rose-800 text-sm active:translate-y-1 active:border-b-0">
+                                <span>⏹️ Matikan Kamera</span>
                             </button>
                         </div>
                     </div>
                 </div>
 
-                <div id="scanner-section" class="hidden grid grid-cols-1 md:grid-cols-2 gap-6">
-                    <div class="bg-white p-6 rounded-2xl shadow-sm border border-slate-200">
+                <div id="scanner-section" class="hidden grid grid-cols-1 lg:grid-cols-2 gap-6">
+                    <div class="bg-white p-5 md:p-6 rounded-2xl shadow-md border border-slate-200">
                         <div class="flex flex-col gap-3 mb-4">
                             <div class="flex justify-between items-center">
-                                <h3 class="font-bold text-base text-blue-950">2. Tempatkan QR Code pada Kamera</h3>
-                                <span id="session-badge" class="bg-blue-50 text-blue-800 text-xs font-bold px-3 py-1 rounded-full border border-blue-200"></span>
+                                <h3 class="font-bold text-sm md:text-base text-blue-950">2. Arahkan QR Code Siswa</h3>
+                                <span id="session-badge" class="bg-blue-50 text-blue-800 text-[10px] md:text-xs font-bold px-3 py-1.5 rounded-full border border-blue-200"></span>
                             </div>
                             
-                            <div id="camera-select-container" class="hidden w-full bg-slate-100 p-2.5 rounded-xl border border-slate-300">
-                                <label class="block text-[11px] font-bold uppercase tracking-wider text-slate-600 mb-1 flex items-center gap-1">
-                                    <span>📷 Ganti Lensa Kamera:</span>
-                                </label>
+                            <div id="camera-select-container" class="hidden w-full bg-slate-100 p-2.5 rounded-xl border border-slate-200">
+                                <label class="block text-[10px] font-bold uppercase tracking-wider text-slate-600 mb-1">📷 Lensa Kamera:</label>
                                 <select id="camera-select" onchange="switchCamera(this.value)" class="w-full p-2 border border-slate-300 rounded-lg text-xs font-semibold bg-white focus:ring-2 focus:ring-blue-500 text-slate-800 shadow-inner"></select>
                             </div>
                         </div>
 
-                        <div id="reader" class="w-full aspect-square overflow-hidden rounded-xl border-2 border-slate-300 bg-slate-900 mx-auto relative flex items-center justify-center text-white text-xs"></div>
-                        <p class="text-[11px] text-slate-400 mt-2 text-center">Arahkan kamera ke kartu QR siswa. Pastikan pencahayaan cukup terang.</p>
+                        <!-- Scanner Viewfinder -->
+                        <div id="reader" class="w-full max-w-[400px] aspect-square overflow-hidden rounded-2xl border-4 border-emerald-500/50 bg-slate-900 mx-auto relative flex items-center justify-center text-white text-xs shadow-inner"></div>
+                        <p class="text-[11px] md:text-xs text-slate-400 mt-3 text-center">Pastikan pencahayaan terang dan QR tidak buram.</p>
                     </div>
 
-                    <div class="bg-white p-6 rounded-2xl shadow-sm border border-slate-200 flex flex-col justify-between">
+                    <div class="bg-white p-5 md:p-6 rounded-2xl shadow-md border border-slate-200 flex flex-col justify-between">
                         <div>
-                            <h3 class="font-bold text-base text-blue-950 mb-4">Log Kehadiran Kelas Ini (<span id="count-session" class="text-blue-700 font-extrabold">0</span>)</h3>
-                            <div class="overflow-y-auto max-h-80 border rounded-xl bg-slate-50">
-                                <table class="w-full text-left border-collapse text-xs md:text-sm">
-                                    <thead>
-                                        <tr class="bg-slate-100 border-b text-slate-600">
-                                            <th class="p-3 font-semibold">Jam</th>
-                                            <th class="p-3 font-semibold">NIS</th>
-                                            <th class="p-3 font-semibold">Nama Lengkap</th>
-                                            <th class="p-3 font-semibold text-center">Status</th>
+                            <h3 class="font-bold text-sm md:text-base text-blue-950 mb-4 border-b pb-2">Log Kehadiran Sesi Ini (<span id="count-session" class="text-emerald-600 font-extrabold text-lg">0</span>)</h3>
+                            <div class="overflow-x-auto overflow-y-auto max-h-[300px] border border-slate-200 rounded-xl bg-slate-50 table-scroll shadow-inner">
+                                <table class="w-full text-left border-collapse text-[11px] md:text-sm min-w-[350px]">
+                                    <thead class="sticky top-0 bg-slate-200 shadow-sm z-10">
+                                        <tr class="text-slate-700">
+                                            <th class="p-3 font-bold whitespace-nowrap">Jam Masuk</th>
+                                            <th class="p-3 font-bold whitespace-nowrap">NIS</th>
+                                            <th class="p-3 font-bold whitespace-nowrap">Nama Siswa</th>
+                                            <th class="p-3 font-bold text-center">Status</th>
                                         </tr>
                                     </thead>
-                                    <tbody id="session-log-body" class="divide-y text-slate-700">
+                                    <tbody id="session-log-body" class="divide-y divide-slate-200 text-slate-700">
                                         <tr>
-                                            <td colspan="4" class="p-4 text-center text-slate-400">Belum ada pemindaian masuk.</td>
+                                            <td colspan="4" class="p-6 text-center text-slate-400 italic">Belum ada pemindaian masuk.</td>
                                         </tr>
                                     </tbody>
                                 </table>
                             </div>
                         </div>
                         <div class="mt-4 pt-3 border-t">
-                            <div id="scan-alert" class="hidden p-3 rounded-xl text-xs font-bold text-center border shadow-sm"></div>
+                            <div id="scan-alert" class="hidden p-3 md:p-4 rounded-xl text-xs md:text-sm font-bold text-center border shadow-sm"></div>
                         </div>
                     </div>
                 </div>
             </div>
 
+            <!-- TAB 2: DATA SISWA -->
             <div id="view-students" class="hidden space-y-6">
-                <div class="bg-white p-6 rounded-2xl shadow-sm border border-slate-200">
-                    <h2 class="text-lg font-bold text-blue-950 mb-4">Form Registrasi Siswa Baru</h2>
-                    <form id="form-add-student" onsubmit="addStudent(event)" class="grid grid-cols-1 md:grid-cols-4 gap-4">
-                        <input type="text" id="stu-nis" placeholder="Nomor Induk Siswa (NIS)" required class="p-3 border border-slate-200 rounded-xl text-sm bg-slate-50 focus:bg-white focus:ring-2 focus:ring-blue-500">
-                        <input type="text" id="stu-name" placeholder="Nama Lengkap Siswa" required class="p-3 border border-slate-200 rounded-xl text-sm bg-slate-50 focus:bg-white focus:ring-2 focus:ring-blue-500">
-                        <select id="stu-class" required class="p-3 border border-slate-200 rounded-xl text-sm bg-slate-50 focus:bg-white focus:ring-2 focus:ring-blue-500">
+                <div class="bg-white p-5 md:p-6 rounded-2xl shadow-md border border-slate-200">
+                    <h2 class="text-base md:text-lg font-bold text-blue-950 mb-4">Registrasi Kartu QR Siswa Baru</h2>
+                    <form id="form-add-student" onsubmit="addStudent(event)" class="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-4 gap-3 md:gap-4">
+                        <input type="text" id="stu-nis" placeholder="Nomor Induk Siswa (NIS)" required class="p-3.5 border border-slate-200 rounded-xl text-sm bg-slate-50 focus:bg-white focus:ring-2 focus:ring-emerald-500 shadow-inner">
+                        <input type="text" id="stu-name" placeholder="Nama Lengkap Siswa" required class="p-3.5 border border-slate-200 rounded-xl text-sm bg-slate-50 focus:bg-white focus:ring-2 focus:ring-emerald-500 shadow-inner">
+                        <select id="stu-class" required class="p-3.5 border border-slate-200 rounded-xl text-sm bg-slate-50 focus:bg-white focus:ring-2 focus:ring-emerald-500 shadow-inner appearance-none">
                             <option value="">-- Pilih Kelas --</option>
                             <option value="X - A">X - A</option>
                             <option value="X - B">X - B</option>
@@ -208,57 +218,61 @@
                             <option value="XII - A">XII - A</option>
                             <option value="XII - B">XII - B</option>
                         </select>
-                        <button type="submit" class="bg-blue-800 hover:bg-blue-900 text-white font-bold py-3 px-4 rounded-xl text-sm transition shadow-sm">Generate ID & QR</button>
+                        <button type="submit" class="bg-blue-600 hover:bg-blue-700 text-white font-bold py-3.5 px-4 rounded-xl text-sm transition shadow-md border-b-4 border-blue-800 active:translate-y-1 active:border-b-0 w-full">+ Generate QR</button>
                     </form>
                 </div>
 
-                <div class="bg-white p-6 rounded-2xl shadow-sm border border-slate-200">
+                <div class="bg-white p-5 md:p-6 rounded-2xl shadow-md border border-slate-200">
                     <div class="flex flex-col sm:flex-row justify-between items-start sm:items-center mb-6 gap-4 border-b pb-4">
                         <div>
-                            <h2 class="text-lg font-bold text-blue-950">Bank Data Kartu QR Siswa</h2>
-                            <p class="text-xs text-slate-400">Gunakan tombol cetak untuk mencetak kartu barcode absensi fisik siswa</p>
+                            <h2 class="text-base md:text-lg font-bold text-blue-950">Bank Data Kartu QR Siswa</h2>
+                            <p class="text-[11px] md:text-xs text-slate-500">Cetak kartu ini untuk digunakan siswa saat absensi.</p>
                         </div>
-                        <div class="space-x-1 flex w-full sm:w-auto">
-                            <button onclick="printQRCodes()" class="bg-slate-900 hover:bg-black text-white px-4 py-2 rounded-xl text-xs font-semibold transition flex items-center gap-1.5 shadow-sm">
-                                <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M17 17h2a2 2 0 002-2v-4a2 2 0 00-2-2H5a2 2 0 00-2 2v4a2 2 0 002 2h2m2 4h6a2 2 0 002-2v-4a2 2 0 00-2-2H9a2 2 0 00-2 2v4a2 2 0 002 2zm8-12V5a2 2 0 00-2-2H9a2 2 0 00-2 2v4h10z"></path></svg>
-                                Cetak Kartu
+                        <div class="grid grid-cols-2 gap-2 w-full sm:w-auto">
+                            <button onclick="printQRCodes()" class="bg-slate-800 hover:bg-slate-900 text-white px-4 py-2.5 rounded-xl text-xs font-bold transition flex justify-center items-center gap-1.5 shadow-sm">
+                                🖨️ Cetak Kartu
                             </button>
-                            <button onclick="clearStudents()" class="bg-rose-50 text-rose-700 hover:bg-rose-100 px-3 py-2 rounded-xl text-xs font-semibold transition">Wipe Out</button>
+                            <button onclick="clearStudents()" class="bg-rose-100 text-rose-700 hover:bg-rose-200 px-4 py-2.5 rounded-xl text-xs font-bold transition flex justify-center items-center">
+                                🗑️ Wipe Out
+                            </button>
                         </div>
                     </div>
 
-                    <div id="print-area" class="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 gap-4"></div>
+                    <div id="print-area" class="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 lg:grid-cols-5 gap-4"></div>
                 </div>
             </div>
 
+            <!-- TAB 3: REKAP DATA -->
             <div id="view-history" class="hidden space-y-6">
-                <div class="bg-white p-6 rounded-2xl shadow-sm border border-slate-200">
-                    <div class="flex flex-col md:flex-row justify-between items-start md:items-center mb-6 gap-4">
+                <div class="bg-white p-5 md:p-6 rounded-2xl shadow-md border border-slate-200">
+                    <div class="flex flex-col sm:flex-row justify-between items-start sm:items-center mb-6 gap-4">
                         <div>
-                            <h2 class="text-lg font-bold text-blue-950">Master Rekapitulasi Presensi</h2>
-                            <p class="text-xs text-slate-400">Seluruh riwayat scan terekam aman di browser dan otomatis tersinkron ke Spreadsheet</p>
+                            <h2 class="text-base md:text-lg font-bold text-blue-950">Master Rekapitulasi</h2>
+                            <p class="text-[11px] md:text-xs text-slate-500 mt-1">Otomatis tersimpan di browser & sinkron ke Cloud Sheets.</p>
                         </div>
-                        <div class="flex gap-2 w-full md:w-auto">
-                            <button onclick="exportToCSV()" class="bg-emerald-600 hover:bg-emerald-700 text-white px-4 py-2.5 rounded-xl font-bold text-xs transition flex items-center justify-center gap-1.5 shadow-sm w-full md:w-auto">
-                                <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 10v6m0 0l-3-3m3 3l3-3m2 8H7a2 2 0 01-2-2V5a2 2 0 012-2h5.586a1 1 0 01.707.293l5.414 5.414a1 1 0 01.293.707V19a2 2 0 01-2 2z"></path></svg>
-                                Export CSV (Excel)
+                        <div class="grid grid-cols-2 gap-2 w-full sm:w-auto">
+                            <button onclick="exportToCSV()" class="bg-emerald-600 hover:bg-emerald-700 text-white px-4 py-3 rounded-xl font-bold text-xs transition flex items-center justify-center gap-1.5 shadow-sm">
+                                📊 Export CSV
                             </button>
-                            <button onclick="clearHistory()" class="bg-rose-50 text-rose-700 hover:bg-rose-100 px-4 py-2.5 rounded-xl font-bold text-xs transition whitespace-nowrap">Reset Log</button>
+                            <button onclick="clearHistory()" class="bg-rose-600 hover:bg-rose-700 text-white px-4 py-3 rounded-xl font-bold text-xs transition flex items-center justify-center shadow-sm">
+                                ⚠️ Reset Log
+                            </button>
                         </div>
                     </div>
-                    <div class="overflow-x-auto border border-slate-100 rounded-xl bg-slate-50">
-                        <table class="w-full text-left border-collapse text-xs md:text-sm">
-                            <thead>
-                                <tr class="bg-slate-100 border-b text-slate-600">
-                                    <th class="p-3 font-semibold">Hari, Tanggal & Waktu</th>
-                                    <th class="p-3 font-semibold">NIS</th>
-                                    <th class="p-3 font-semibold">Nama Siswa</th>
-                                    <th class="p-3 font-semibold">Kelas</th>
-                                    <th class="p-3 font-semibold">Mata Pelajaran</th>
-                                    <th class="p-3 font-semibold">Jam Mapel</th> 
+                    
+                    <div class="w-full overflow-x-auto border border-slate-200 rounded-xl bg-white shadow-inner table-scroll">
+                        <table class="w-full text-left border-collapse text-[11px] md:text-sm min-w-[600px]">
+                            <thead class="bg-slate-100 border-b text-slate-700">
+                                <tr>
+                                    <th class="p-3.5 font-bold whitespace-nowrap">Hari, Tanggal & Waktu</th>
+                                    <th class="p-3.5 font-bold whitespace-nowrap">NIS</th>
+                                    <th class="p-3.5 font-bold whitespace-nowrap">Nama Siswa</th>
+                                    <th class="p-3.5 font-bold whitespace-nowrap text-center">Kelas</th>
+                                    <th class="p-3.5 font-bold whitespace-nowrap">Mata Pelajaran</th>
+                                    <th class="p-3.5 font-bold whitespace-nowrap text-center">Jam</th> 
                                 </tr>
                             </thead>
-                            <tbody id="history-table-body" class="divide-y text-slate-700"></tbody>
+                            <tbody id="history-table-body" class="divide-y divide-slate-100 text-slate-700"></tbody>
                         </table>
                     </div>
                 </div>
@@ -267,25 +281,41 @@
         </div>
     </div>
 
-    <footer class="bg-gradient-to-b from-blue-900 to-blue-950 text-white mt-16 py-8 px-6 border-t-4 border-blue-700 no-print">
+    <!-- FOOTER -->
+    <footer class="bg-gradient-to-b from-slate-900 to-black text-white mt-10 py-8 px-6 border-t-4 border-blue-600 no-print">
         <div class="max-w-4xl mx-auto text-center space-y-4">
-            <div class="flex items-center justify-center space-x-2 text-amber-400">
-                <svg class="w-5 h-5" fill="currentColor" viewBox="0 0 20 20"><path d="M10.394 2.08a1 1 0 00-.788 0l-7 3a1 1 0 000 1.84L5.25 8.051a.999.999 0 01.356-.257l4-1.714a1 1 0 11.788 1.838L7.667 9.088l1.94.831a1 1 0 00.787 0l7-3a1 1 0 000-1.838l-7-3zM3.31 9.397L5 10.12v4.102a8.969 8.969 0 00-2.312-.174 1 1 0 01-.83-.83l-.26-1.3a1 1 0 01.517-.955l.202-.12zm13.38 0l.202.12a1 1 0 01.517.955l-.26 1.3a1 1 0 01-.83.83 8.973 8.973 0 00-2.312.174V10.12l1.69-.723zM10 11.667a1 1 0 01.788.394l3 4a1 1 0 11-1.6 1.212L10 14.307l-2.188 2.916a1 1 0 11-1.6-1.212l3-4a1 1 0 01.788-.394z"></path></svg>
-                <h3 class="font-bold uppercase tracking-widest text-xs">Pesan Kehormatan & Pengabdian Guru</h3>
+            <div class="flex items-center justify-center space-x-2 text-emerald-400">
+                <h3 class="font-bold uppercase tracking-widest text-xs">Pesan Dedikasi Guru</h3>
             </div>
             
-            <div class="bg-blue-950/50 p-4 rounded-xl border border-blue-800 max-w-2xl mx-auto">
-                <p id="teacher-quote" class="text-sm md:text-base italic text-slate-100 font-serif leading-relaxed"></p>
-                <span class="block mt-2 text-xs font-bold text-blue-300 uppercase tracking-wider">— Catatan Dedikasi MAS Miftahul Ulum</span>
+            <div class="bg-slate-800/80 p-4 md:p-5 rounded-2xl border border-slate-700 max-w-2xl mx-auto shadow-inner">
+                <p id="teacher-quote" class="text-sm md:text-base italic text-slate-200 font-serif leading-relaxed"></p>
+                <span class="block mt-3 text-[10px] font-bold text-blue-400 uppercase tracking-widest">— MAS Miftahul Ulum</span>
             </div>
 
-            <div class="text-[10px] text-blue-400 font-medium tracking-wide">
-                &copy; 2026 MAS MIFTAHUL ULUM &bull; All Rights Reserved &bull; Auto-Sync Cloud Enabled
+            <div class="text-[10px] text-slate-500 font-medium tracking-wide mt-6">
+                &copy; 2026 MAS MIFTAHUL ULUM &bull; Sistem Presensi Responsif
             </div>
         </div>
     </footer>
 
     <script>
+        // LIVE CLOCK FUNCTION - WIB
+        function updateClock() {
+            const now = new Date();
+            const options = { 
+                timeZone: 'Asia/Jakarta', 
+                hour12: false, 
+                hour: '2-digit', 
+                minute: '2-digit', 
+                second: '2-digit' 
+            };
+            const timeString = now.toLocaleTimeString('id-ID', options);
+            document.getElementById('live-clock').innerHTML = `⏱️ ${timeString} WIB`;
+        }
+        setInterval(updateClock, 1000);
+        updateClock(); // Initial call
+
         let audioCtx = null;
         function playBeep() {
             try {
@@ -301,7 +331,7 @@
                 gain.gain.exponentialRampToValueAtTime(0.01, audioCtx.currentTime + 0.15);
                 osc.start();
                 osc.stop(audioCtx.currentTime + 0.15);
-            } catch(e) { console.log("Audio non-aktif atau diblokir browser."); }
+            } catch(e) { console.log("Audio non-aktif."); }
         }
     </script>
 
@@ -319,11 +349,9 @@
         let attendanceHistory = JSON.parse(localStorage.getItem('miftah_history')) || [];
 
         const quotesGuru = [
-            "\"Mengajar bukanlah sekadar profesi; ia adalah panggilan jiwa. Ketulusan bapak dan ibu guru hari ini dalam menuntun kedisiplinan murid adalah pilar utama yang membentuk peradaban mulia masa depan.\"",
-            "\"Setiap peluh dan kesabaran bapak/ibu dalam menghadapi ruang kelas adalah benih ilmu yang tak akan pernah mati, mengalir terus sebagai amal jariyah terindah.\"",
-            "\"Guru terbaik tidak sekadar memberi jawaban, tetapi menyalakan api keingintahuan dalam jiwa peserta didik. Tetaplah menjadi lentera di tengah kegelapan.\"",
-            "\"Masa depan bangsa ini ditulis dari jemari bapak dan ibu guru di atas papan tulis hari ini. Dedikasi tulusmu adalah kebanggaan abadi MAS Miftahul Ulum.\"",
-            "\"Ketika rasa lelah melanda, ingatlah bahwa senyum keberhasilan murid di masa depan adalah mahkota sejati atas segala ketabahan bapak/ibu guru hari ini.\""
+            "\"Mengajar bukanlah sekadar profesi; ia adalah panggilan jiwa. Ketulusan bapak dan ibu guru hari ini dalam menuntun kedisiplinan murid adalah pilar utama yang membentuk peradaban mulia.\"",
+            "\"Setiap peluh dan kesabaran bapak/ibu dalam menghadapi ruang kelas adalah benih ilmu yang tak akan pernah mati, mengalir terus sebagai amal jariyah.\"",
+            "\"Masa depan bangsa ini ditulis dari jemari bapak dan ibu guru di atas papan tulis hari ini.\""
         ];
 
         document.addEventListener("DOMContentLoaded", () => {
@@ -331,29 +359,19 @@
             document.getElementById('teacher-quote').innerHTML = randomQuote;
 
             const ua = navigator.userAgent || navigator.vendor || window.opera;
-            const isInstagram = (ua.indexOf('Instagram') > -1) || (ua.indexOf('FBAN') > -1) || (ua.indexOf('FBAV') > -1);
+            const isInstagram = (ua.indexOf('Instagram') > -1) || (ua.indexOf('FBAN') > -1);
             const isWhatsApp = (ua.indexOf('WhatsApp') > -1) || (ua.indexOf('Line') > -1);
             
             if (isInstagram || isWhatsApp || (!window.isSecureContext && location.hostname !== "localhost" && location.hostname !== "127.0.0.1" && location.protocol !== "file:")) {
                 const banner = document.getElementById('browser-warning');
                 banner.classList.remove('hidden');
-                banner.innerHTML = "⚠️ PERINGATAN BROWSER/KEAMANAN: Akses kamera diblokir oleh browser internal WhatsApp/Instagram atau koneksi tidak menggunakan HTTPS.<br><strong>Solusi: Klik ikon 3 titik di pojok kanan atas, lalu pilih 'Buka di Chrome' / 'Open in Safari' pada koneksi HTTPS.</strong>";
+                banner.innerHTML = "⚠️ PERINGATAN: Akses kamera mungkin diblokir oleh browser internal (WA/IG) atau bukan koneksi HTTPS.<br><strong>Solusi: Klik ikon 3 titik, pilih 'Buka di Chrome / Browser Eksternal'.</strong>";
             }
 
-            if (students.length === 0) {
-                students = [
-                    { nis: "26001", name: "Ahmad Zaki", className: "XII - A" },
-                    { nis: "26002", name: "Siti Aminah", className: "XII - A" },
-                    { nis: "26003", name: "Fathur Rahman", className: "XII - B" },
-                    { nis: "11234512", name: "RUNA NOSE", className: "X - A" }
-                ];
-                saveStudents();
-            }
             renderStudents();
             renderHistory();
         });
 
-        // Fungsi baru untuk menampilkan kolom input manual Jam Mapel
         function checkManualJam(val) {
             const manualInput = document.getElementById('input-jam-manual');
             if (val === 'manual') {
@@ -365,11 +383,20 @@
         }
 
         function switchTab(tabId) {
+            // Hide all views
             document.querySelectorAll('[id^="view-"]').forEach(el => el.classList.add('hidden'));
-            document.querySelectorAll('[id^="tab-"]').forEach(el => el.classList.remove('bg-blue-700'));
             
+            // Reset all tabs to default blue styling
+            document.querySelectorAll('[id^="tab-"]').forEach(el => {
+                el.className = "px-3 md:px-5 py-2.5 rounded-lg bg-blue-800/80 hover:bg-blue-700 font-bold text-xs md:text-sm transition flex-grow md:flex-grow-0 text-slate-200";
+            });
+            
+            // Show selected view
             document.getElementById(`view-${tabId}`).classList.remove('hidden');
-            document.getElementById(`tab-${tabId}`).classList.add('bg-blue-700');
+            
+            // Style active tab (Green Success Color)
+            const activeTab = document.getElementById(`tab-${tabId}`);
+            activeTab.className = "px-3 md:px-5 py-2.5 rounded-lg bg-emerald-600 shadow-md font-bold text-xs md:text-sm transition flex-grow md:flex-grow-0 text-white border-b-2 border-emerald-800";
 
             if (tabId === 'history') renderHistory();
             if (tabId === 'students') renderStudents();
@@ -380,18 +407,11 @@
             const cls = document.getElementById('select-class').value;
             let jam = document.getElementById('select-jam').value;
             
-            // Logika untuk menangkap nilai jam manual jika opsi 'manual' dipilih
-            if (jam === 'manual') {
-                jam = document.getElementById('input-jam-manual').value.trim();
-            }
+            if (jam === 'manual') jam = document.getElementById('input-jam-manual').value.trim();
 
             if (!subject || !cls || !jam) {
-                alert("Pemberitahuan KBM: Pilih Mata Pelajaran, Kelas, dan Jam Mapel sebelum meluncurkan pemindaian!");
+                alert("Harap pilih Mata Pelajaran, Kelas, dan Jam Mapel terlebih dahulu!");
                 return;
-            }
-
-            if (!window.isSecureContext && location.hostname !== "localhost" && location.hostname !== "127.0.0.1" && location.protocol !== "file:") {
-                alert("⚠️ KENDALA IZIN KAMERA:\nBrowser menolak kamera karena web tidak dijalankan pada protokol HTTPS atau Localhost.\n\nHarap hosting web ini di layanan bersertifikat SSL (seperti GitHub Pages / Vercel / Netlify / Hosting HTTPS) agar kamera diizinkan oleh Android & iOS.");
             }
 
             currentSubject = subject;
@@ -406,70 +426,40 @@
             document.getElementById('select-class').disabled = true;
             document.getElementById('select-jam').disabled = true;
             document.getElementById('input-jam-manual').disabled = true;
+            
             document.getElementById('btn-start-session').classList.add('hidden');
             document.getElementById('btn-stop-session').classList.remove('hidden');
             document.getElementById('btn-stop-session').classList.add('flex');
-            document.getElementById('scanner-section').classList.remove('hidden');
             
-            document.getElementById('session-badge').innerText = `${cls} ➔ ${subject} (Jam ${jam})`;
+            document.getElementById('scanner-section').classList.remove('hidden');
+            document.getElementById('session-badge').innerText = `${cls} | ${subject} (Jam ${jam})`;
 
             startDefaultCamera();
         }
 
         function startDefaultCamera() {
             const readerEl = document.getElementById('reader');
-            readerEl.innerHTML = "<div class='text-slate-400 p-4 text-center'>⏳ Sedang mengaktifkan kamera belakang (Default)...<br><span class='text-[10px] text-amber-300'>Izinkan akses kamera jika muncul *pop-up* di layar Anda.</span></div>";
+            readerEl.innerHTML = "<div class='text-slate-400 p-4 text-center'>⏳ Mengaktifkan kamera...<br><span class='text-[10px] text-emerald-400'>Harap izinkan akses kamera pada popup browser.</span></div>";
 
-            if (html5QrCode) {
-                try { html5QrCode.clear(); } catch(e){}
-            }
-
+            if (html5QrCode) { try { html5QrCode.clear(); } catch(e){} }
             html5QrCode = new Html5Qrcode("reader");
 
-            const config = {
-                fps: 15,
-                qrbox: { width: 250, height: 250 },
-                aspectRatio: 1.0
-            };
+            const config = { fps: 10, qrbox: { width: 250, height: 250 }, aspectRatio: 1.0 };
 
-            html5QrCode.start(
-                { facingMode: "environment" },
-                config,
-                onScanSuccess,
-                onScanFailure
-            ).then(() => {
-                populateCameraDropdown();
-            }).catch(errEnvironment => {
-                console.warn("Kamera belakang (environment) gagal, mencoba fallback ke kamera depan/webcam PC...", errEnvironment);
-                
-                html5QrCode.start(
-                    { facingMode: "user" },
-                    config,
-                    onScanSuccess,
-                    onScanFailure
-                ).then(() => {
-                    populateCameraDropdown();
-                }).catch(errUser => {
-                    console.warn("Fallback facingMode gagal, membaca daftar ID perangkat manual...", errUser);
-                    
+            html5QrCode.start({ facingMode: "environment" }, config, onScanSuccess, onScanFailure)
+            .then(() => populateCameraDropdown())
+            .catch(errEnv => {
+                html5QrCode.start({ facingMode: "user" }, config, onScanSuccess, onScanFailure)
+                .then(() => populateCameraDropdown())
+                .catch(errUser => {
                     Html5Qrcode.getCameras().then(devices => {
                         if (devices && devices.length > 0) {
-                            html5QrCode.start(
-                                devices[0].id,
-                                config,
-                                onScanSuccess,
-                                onScanFailure
-                            ).then(() => {
-                                populateCameraDropdown();
-                            }).catch(finalErr => {
-                                showCameraError("Gagal mengaktifkan lensa kamera. Pastikan izin kamera sudah diaktifkan di pengaturan browser Anda.");
-                            });
+                            html5QrCode.start(devices[0].id, config, onScanSuccess, onScanFailure)
+                            .then(() => populateCameraDropdown());
                         } else {
-                            showCameraError("Tidak ada perangkat kamera fisik yang terdeteksi pada HP/Laptop ini.");
+                            showCameraError("Kamera fisik tidak terdeteksi.");
                         }
-                    }).catch(err => {
-                        showCameraError("Izin kamera ditolak oleh browser atau kamera sedang dipakai oleh aplikasi lain (seperti WhatsApp/Zoom).");
-                    });
+                    }).catch(() => showCameraError("Izin kamera ditolak browser."));
                 });
             });
         }
@@ -477,74 +467,59 @@
         function populateCameraDropdown() {
             Html5Qrcode.getCameras().then(devices => {
                 if (devices && devices.length > 1) {
-                    availableCameras = devices;
                     const selectEl = document.getElementById('camera-select');
                     selectEl.innerHTML = "";
-                    
-                    devices.forEach((dev, index) => {
-                        const option = document.createElement("option");
-                        option.value = dev.id;
-                        option.text = dev.label || `Lensa Kamera ${index + 1}`;
-                        selectEl.appendChild(option);
+                    devices.forEach((dev, i) => {
+                        const opt = document.createElement("option");
+                        opt.value = dev.id;
+                        opt.text = dev.label || `Kamera ${i + 1}`;
+                        selectEl.appendChild(opt);
                     });
-
                     document.getElementById('camera-select-container').classList.remove('hidden');
-                } else {
-                    document.getElementById('camera-select-container').classList.add('hidden');
                 }
-            }).catch(e => console.log("Pemberitahuan: Dropdown kamera tidak ditampilkan karena hanya ada 1 kamera.", e));
+            }).catch(e => {});
         }
 
         function switchCamera(newDeviceId) {
             if (!newDeviceId || !html5QrCode || !isSessionActive) return;
-            
-            const config = {
-                fps: 15,
-                qrbox: { width: 250, height: 250 },
-                aspectRatio: 1.0
-            };
-
+            const config = { fps: 10, qrbox: { width: 250, height: 250 }, aspectRatio: 1.0 };
             html5QrCode.stop().then(() => {
-                html5QrCode.start(newDeviceId, config, onScanSuccess, onScanFailure)
-                .catch(err => showCameraError("Gagal beralih ke lensa terpilih: " + err));
+                html5QrCode.start(newDeviceId, config, onScanSuccess, onScanFailure);
             }).catch(() => {
-                html5QrCode.start(newDeviceId, config, onScanSuccess, onScanFailure)
-                .catch(err => showCameraError("Gagal beralih ke lensa terpilih: " + err));
+                html5QrCode.start(newDeviceId, config, onScanSuccess, onScanFailure);
             });
         }
 
         function showCameraError(msg) {
             const alertBox = document.getElementById('scan-alert');
             alertBox.classList.remove('hidden');
-            alertBox.className = "p-3 rounded-xl text-xs font-bold text-center border bg-rose-50 text-rose-800 border-rose-200";
+            alertBox.className = "p-3 rounded-xl text-xs font-bold text-center border bg-rose-100 text-rose-800 border-rose-300";
             alertBox.innerText = `❌ ERROR KAMERA: ${msg}`;
         }
 
         function stopSession() {
             isSessionActive = false;
-            isProcessingScan = false;
+            
             document.getElementById('select-subject').disabled = false;
             document.getElementById('select-class').disabled = false;
             document.getElementById('select-jam').disabled = false;
             document.getElementById('input-jam-manual').disabled = false;
+            
             document.getElementById('btn-start-session').classList.remove('hidden');
             document.getElementById('btn-stop-session').classList.add('hidden');
             document.getElementById('btn-stop-session').classList.remove('flex');
+            
             document.getElementById('scanner-section').classList.add('hidden');
-            document.getElementById('camera-select-container').classList.add('hidden');
 
             if (html5QrCode) {
                 try {
                     html5QrCode.stop().then(() => {
                         html5QrCode.clear();
                         document.getElementById('reader').innerHTML = "";
-                    }).catch(err => {
+                    }).catch(e => {
                         try { html5QrCode.clear(); } catch(e){}
-                        document.getElementById('reader').innerHTML = "";
                     });
-                } catch (e) {
-                    document.getElementById('reader').innerHTML = "";
-                }
+                } catch (e) {}
             }
         }
 
@@ -561,58 +536,43 @@
             }
 
             const alertBox = document.getElementById('scan-alert');
-            alertBox.classList.remove('hidden', 'bg-emerald-50', 'text-emerald-800', 'border-emerald-200', 'bg-rose-50', 'text-rose-800', 'border-rose-200', 'bg-amber-50', 'text-amber-800', 'border-amber-200');
+            alertBox.classList.remove('hidden', 'bg-emerald-100', 'text-emerald-800', 'bg-rose-100', 'text-rose-800', 'bg-amber-100', 'text-amber-800');
 
             if (!studentData || !studentData.nis) {
-                alertBox.innerText = "❌ GAGAL: Barcode QR tidak dikenali atau rusak!";
-                alertBox.classList.add('bg-rose-50', 'text-rose-800', 'border-rose-200');
-                resumeScannerAfterDelay(2000);
-                return;
+                alertBox.innerText = "❌ GAGAL: Barcode QR tidak dikenali!";
+                alertBox.classList.add('bg-rose-100', 'text-rose-800', 'border-rose-300');
+                resumeScannerAfterDelay(2000); return;
             }
 
             let registeredStudent = students.find(s => s.nis === studentData.nis);
             if (!registeredStudent) {
-                if (studentData.name) {
-                    registeredStudent = { nis: studentData.nis, name: studentData.name, className: currentClass };
-                    students.push(registeredStudent);
-                    saveStudents();
-                } else {
-                    alertBox.innerText = `❌ REJECT: NIS (${studentData.nis}) tidak terdaftar di pangkalan data!`;
-                    alertBox.classList.add('bg-rose-50', 'text-rose-800', 'border-rose-200');
-                    resumeScannerAfterDelay(2000);
-                    return;
-                }
+                alertBox.innerText = `❌ DITOLAK: NIS (${studentData.nis}) tidak ada di database!`;
+                alertBox.classList.add('bg-rose-100', 'text-rose-800', 'border-rose-300');
+                resumeScannerAfterDelay(2000); return;
             }
 
-            if (registeredStudent.className !== currentClass && registeredStudent.className !== "Data Kosong") {
-                alertBox.innerText = `⚠️ PROTEKSI: ${registeredStudent.name} adalah siswa kelas ${registeredStudent.className} (Bukan ${currentClass})!`;
-                alertBox.classList.add('bg-amber-50', 'text-amber-800', 'border-amber-200');
-                resumeScannerAfterDelay(2500);
-                return;
+            if (registeredStudent.className !== currentClass) {
+                alertBox.innerText = `⚠️ PROTEKSI: ${registeredStudent.name} dari kelas ${registeredStudent.className} (Bukan ${currentClass})!`;
+                alertBox.classList.add('bg-amber-100', 'text-amber-800', 'border-amber-300');
+                resumeScannerAfterDelay(2500); return;
             }
 
             const todayStr = new Date().toISOString().slice(0, 10);
-            const isDuplicate = attendanceHistory.some(log => 
-                log.nis === registeredStudent.nis && 
-                log.subject === currentSubject && 
-                log.jam === currentJam && 
-                log.timestamp.startsWith(todayStr)
-            );
+            const isDuplicate = sessionScans.some(s => s.nis === registeredStudent.nis);
 
-            if (isDuplicate || sessionScans.some(s => s.nis === registeredStudent.nis)) {
-                alertBox.innerText = `⚠️ NOTIFIKASI: ${registeredStudent.name} sudah melakukan presensi pada mapel ini (Jam ${currentJam}).`;
-                alertBox.classList.add('bg-amber-50', 'text-amber-800', 'border-amber-200');
-                resumeScannerAfterDelay(2000);
-                return;
+            if (isDuplicate) {
+                alertBox.innerText = `⚠️ DOBEL: ${registeredStudent.name} sudah scan hari ini.`;
+                alertBox.classList.add('bg-amber-100', 'text-amber-800', 'border-amber-300');
+                resumeScannerAfterDelay(2000); return;
             }
 
             playBeep();
             const now = new Date();
-            const timeString = now.toLocaleTimeString('id-ID', { hour: '2-digit', minute: '2-digit', second: '2-digit' });
+            const timeStr = now.toLocaleTimeString('id-ID', { hour: '2-digit', minute: '2-digit', second: '2-digit' });
             
             const logEntry = {
                 timestamp: now.toISOString(),
-                timeDisplay: timeString,
+                timeDisplay: timeStr,
                 nis: registeredStudent.nis,
                 name: registeredStudent.name,
                 className: currentClass,
@@ -626,8 +586,8 @@
 
             kirimKeGoogleSheets(logEntry);
 
-            alertBox.innerText = `✅ BERHASIL: Presensi masuk ${registeredStudent.name} tervalidasi!`;
-            alertBox.classList.add('bg-emerald-50', 'text-emerald-800', 'border-emerald-200');
+            alertBox.innerHTML = `✅ <b>${registeredStudent.name}</b> Berhasil Hadir!`;
+            alertBox.classList.add('bg-emerald-100', 'text-emerald-800', 'border-emerald-300');
             
             updateSessionUI();
             resumeScannerAfterDelay(1500);
@@ -638,50 +598,31 @@
         function resumeScannerAfterDelay(ms) {
             setTimeout(() => {
                 isProcessingScan = false;
-                if (isSessionActive) {
-                    document.getElementById('scan-alert').classList.add('hidden');
-                }
+                if (isSessionActive) document.getElementById('scan-alert').classList.add('hidden');
             }, ms);
         }
 
         function kirimKeGoogleSheets(dataLog) {
             const scriptUrl = "https://script.google.com/macros/s/AKfycbx_xeuose3a0kO_HxX6hPo53S4iXgQnGwcqE9oZScu1bHk5rsVSlIyTfBBeY8GFUv4a/exec";
-
-            const payload = {
-                nis: dataLog.nis,
-                nama: dataLog.name,
-                kelas: dataLog.className,
-                mapel: dataLog.subject,
-                jam: dataLog.jam
-            };
-
             fetch(scriptUrl, {
-                method: 'POST',
-                mode: 'no-cors', 
+                method: 'POST', mode: 'no-cors', 
                 headers: { 'Content-Type': 'application/json' },
-                body: JSON.stringify(payload)
-            }).then(() => {
-                console.log("🚀 Data berhasil dikirim ke server Google Sheets secara otomatis");
-            }).catch(err => {
-                console.error("Gagal sinkronisasi ke Sheets:", err);
-            });
+                body: JSON.stringify({ nis: dataLog.nis, nama: dataLog.name, kelas: dataLog.className, mapel: dataLog.subject, jam: dataLog.jam })
+            }).catch(e => console.error(e));
         }
 
         function updateSessionUI() {
             document.getElementById('count-session').innerText = sessionScans.length;
             const tbody = document.getElementById('session-log-body');
             
-            if (sessionScans.length === 0) {
-                tbody.innerHTML = `<tr><td colspan="4" class="p-4 text-center text-slate-400">Belum ada pemindaian masuk.</td></tr>`;
-                return;
-            }
+            if (sessionScans.length === 0) return;
 
             tbody.innerHTML = sessionScans.map(log => `
-                <tr class="hover:bg-slate-50 transition">
-                    <td class="p-3 font-mono text-xs text-slate-500">${log.timeDisplay}</td>
-                    <td class="p-3 font-medium text-xs">${log.nis}</td>
-                    <td class="p-3 font-bold text-blue-900">${log.name}</td>
-                    <td class="p-3 text-center"><span class="bg-emerald-100 text-emerald-800 text-[10px] font-bold px-2.5 py-1 rounded-full">HADIR</span></td>
+                <tr class="hover:bg-slate-100 transition">
+                    <td class="p-3 font-mono text-xs text-slate-500 whitespace-nowrap">${log.timeDisplay}</td>
+                    <td class="p-3 font-medium text-xs whitespace-nowrap">${log.nis}</td>
+                    <td class="p-3 font-bold text-blue-900 whitespace-nowrap">${log.name}</td>
+                    <td class="p-3 text-center"><span class="bg-emerald-100 text-emerald-800 text-[10px] font-bold px-2.5 py-1 rounded-full border border-emerald-300">HADIR</span></td>
                 </tr>
             `).join('');
         }
@@ -693,24 +634,19 @@
             const className = document.getElementById('stu-class').value;
 
             if (students.some(s => s.nis === nis)) {
-                alert("Duplikasi Data: Nomor Induk Siswa (NIS) sudah terpakai!");
-                return;
+                alert("NIS sudah terdaftar!"); return;
             }
 
             students.push({ nis, name, className });
-            saveStudents();
+            localStorage.setItem('miftah_students', JSON.stringify(students));
             renderStudents();
             e.target.reset();
         }
 
-        function saveStudents() {
-            localStorage.setItem('miftah_students', JSON.stringify(students));
-        }
-
         function clearStudents() {
-            if (confirm("Konfirmasi Khusus: Hapus permanen seluruh daftar siswa & QR generator?")) {
+            if (confirm("Hapus permanen seluruh data siswa & QR?")) {
                 students = [];
-                saveStudents();
+                localStorage.setItem('miftah_students', JSON.stringify(students));
                 renderStudents();
             }
         }
@@ -720,41 +656,38 @@
             container.innerHTML = "";
 
             if (students.length === 0) {
-                container.innerHTML = `<p class="col-span-full text-center text-slate-400 py-8 text-sm font-medium">Kosong: Daftarkan siswa baru untuk membuat kode QR.</p>`;
+                container.innerHTML = `<p class="col-span-full text-center text-slate-400 py-8 text-sm font-medium">Kosong: Daftarkan siswa baru untuk membuat QR Code.</p>`;
                 return;
             }
 
-            students.forEach((stu, index) => {
+            students.forEach((stu, i) => {
                 const card = document.createElement('div');
-                card.className = "bg-white border border-slate-200 rounded-2xl p-4 flex flex-col items-center justify-between text-center shadow-sm relative";
-                const qrPayload = JSON.stringify({ nis: stu.nis, name: stu.name });
-
+                card.className = "bg-white border-2 border-slate-200 rounded-2xl p-4 flex flex-col items-center justify-between text-center shadow-sm relative";
+                
                 card.innerHTML = `
-                    <button onclick="deleteStudent(${index})" class="no-print absolute top-2.5 right-2.5 text-slate-300 hover:text-rose-600 transition text-lg font-bold px-1">&times;</button>
-                    <div class="w-full border-b border-dashed pb-1.5 mb-3 font-extrabold text-[10px] tracking-widest text-blue-900 uppercase">MAS MIFTAHUL ULUM</div>
-                    <div id="qrcode-${stu.nis}" class="p-1.5 bg-white border border-slate-100 rounded-xl shadow-sm inline-block mx-auto"></div>
+                    <button onclick="deleteStudent(${i})" class="no-print absolute top-2 right-2 text-rose-300 hover:text-rose-600 font-bold text-lg leading-none">&times;</button>
+                    <div class="w-full border-b border-dashed border-slate-300 pb-1.5 mb-3 font-extrabold text-[9px] md:text-[10px] tracking-widest text-blue-900 uppercase">MAS MIFTAHUL ULUM</div>
+                    <div id="qrcode-${stu.nis}" class="p-1.5 bg-white border border-slate-200 rounded-xl inline-block mx-auto"></div>
                     <div class="mt-3 w-full">
-                        <div class="font-bold text-slate-900 text-xs truncate" title="${stu.name}">${stu.name}</div>
-                        <div class="text-[10px] text-slate-500 font-semibold mt-0.5">NIS ${stu.nis} &bull; KELAS ${stu.className}</div>
+                        <div class="font-bold text-slate-900 text-[11px] md:text-xs truncate px-1" title="${stu.name}">${stu.name}</div>
+                        <div class="text-[9px] md:text-[10px] text-emerald-600 font-bold mt-1 bg-emerald-50 py-1 rounded-md">NIS ${stu.nis} &bull; ${stu.className}</div>
                     </div>
                 `;
                 container.appendChild(card);
 
                 new QRCode(document.getElementById(`qrcode-${stu.nis}`), {
-                    text: qrPayload,
-                    width: 110,
-                    height: 110,
-                    colorDark: "#1e3a8a",
-                    colorLight: "#ffffff",
+                    text: JSON.stringify({ nis: stu.nis, name: stu.name }),
+                    width: 100, height: 100,
+                    colorDark: "#0f172a", colorLight: "#ffffff",
                     correctLevel: QRCode.CorrectLevel.M
                 });
             });
         }
 
         function deleteStudent(index) {
-            if(confirm("Hapus data siswa ini?")) {
+            if(confirm("Hapus siswa ini?")) {
                 students.splice(index, 1);
-                saveStudents();
+                localStorage.setItem('miftah_students', JSON.stringify(students));
                 renderStudents();
             }
         }
@@ -764,30 +697,30 @@
         function renderHistory() {
             const tbody = document.getElementById('history-table-body');
             if (attendanceHistory.length === 0) {
-                tbody.innerHTML = `<tr><td colspan="6" class="p-6 text-center text-slate-400 text-sm">Arsip kosong: Belum ada rekaman log hari ini.</td></tr>`;
+                tbody.innerHTML = `<tr><td colspan="6" class="p-6 text-center text-slate-400 text-sm italic">Belum ada rekaman log.</td></tr>`;
                 return;
             }
 
             tbody.innerHTML = attendanceHistory.map(log => {
                 const dateObj = new Date(log.timestamp);
-                const dateStr = dateObj.toLocaleDateString('id-ID', { weekday: 'long', day: '2-digit', month: 'short', year: 'numeric' });
+                const dateStr = dateObj.toLocaleDateString('id-ID', { day: '2-digit', month: 'short', year: 'numeric' });
                 const timeStr = dateObj.toLocaleTimeString('id-ID', { hour: '2-digit', minute: '2-digit' });
 
                 return `
-                    <tr class="hover:bg-slate-100/50 transition text-xs md:text-sm">
-                        <td class="p-3 text-slate-500 font-medium">${dateStr}, ${timeStr} WIB</td>
-                        <td class="p-3 font-mono text-xs">${log.nis}</td>
-                        <td class="p-3 font-bold text-slate-900">${log.name}</td>
-                        <td class="p-3 font-semibold text-slate-600">${log.className}</td>
-                        <td class="p-3"><span class="bg-blue-50 text-blue-800 border border-blue-200 text-[11px] font-bold px-2.5 py-0.5 rounded-md">${log.subject}</span></td>
-                        <td class="p-3"><span class="bg-amber-50 text-amber-800 border border-amber-200 text-[11px] font-bold px-2.5 py-0.5 rounded-md">${log.jam || '-'}</span></td>
+                    <tr class="hover:bg-blue-50/50 transition">
+                        <td class="p-3.5 text-slate-500 font-medium whitespace-nowrap">${dateStr}, ${timeStr} WIB</td>
+                        <td class="p-3.5 font-mono text-xs whitespace-nowrap">${log.nis}</td>
+                        <td class="p-3.5 font-bold text-blue-900 whitespace-nowrap">${log.name}</td>
+                        <td class="p-3.5 font-semibold text-slate-600 text-center whitespace-nowrap">${log.className}</td>
+                        <td class="p-3.5 whitespace-nowrap"><span class="bg-blue-100 text-blue-800 border border-blue-200 text-[10px] md:text-[11px] font-bold px-2.5 py-1 rounded-md">${log.subject}</span></td>
+                        <td class="p-3.5 text-center whitespace-nowrap"><span class="bg-emerald-100 text-emerald-800 border border-emerald-200 text-[10px] md:text-[11px] font-bold px-2.5 py-1 rounded-md">Jam ${log.jam || '-'}</span></td>
                     </tr>
                 `;
             }).join('');
         }
 
         function clearHistory() {
-            if (confirm("Peringatan Keras: Hapus total seluruh log rekapitulasi? Langkah ini tidak dapat dibatalkan.")) {
+            if (confirm("Peringatan: Hapus total seluruh rekapan absensi?")) {
                 attendanceHistory = [];
                 localStorage.removeItem('miftah_history');
                 renderHistory();
@@ -796,28 +729,23 @@
 
         function exportToCSV() {
             if (attendanceHistory.length === 0) {
-                alert("Gagal Export: Tidak ada data rekap yang tersedia.");
-                return;
+                alert("Tidak ada data untuk diexport."); return;
             }
-
             let csvContent = "data:text/csv;charset=utf-8,\uFEFF"; 
-            csvContent += "Hari/Tanggal,Waktu,NIS,Nama Siswa,Kelas,Mata Pelajaran,Jam Mapel\n";
+            csvContent += "Tanggal,Waktu,NIS,Nama Siswa,Kelas,Mata Pelajaran,Jam Mapel\n";
 
             attendanceHistory.forEach(log => {
                 const dateObj = new Date(log.timestamp);
-                const dateStr = dateObj.toLocaleDateString('id-ID', { weekday: 'long', day: '2-digit', month: '2-digit', year: 'numeric' });
+                const dateStr = dateObj.toLocaleDateString('id-ID', { day: '2-digit', month: '2-digit', year: 'numeric' });
                 const timeStr = dateObj.toLocaleTimeString('id-ID');
-                const cleanName = `"${log.name.replace(/"/g, '""')}"`;
-                csvContent += `${dateStr},${timeStr},${log.nis},${cleanName},${log.className},${log.subject},${log.jam}\n`;
+                csvContent += `${dateStr},${timeStr},${log.nis},"${log.name.replace(/"/g, '""')}",${log.className},${log.subject},${log.jam}\n`;
             });
 
             const encodedUri = encodeURI(csvContent);
             const link = document.createElement("a");
             link.setAttribute("href", encodedUri);
-            link.setAttribute("download", `Rekap_Absensi_MAS_MiftahulUlum_${new Date().toISOString().slice(0,10)}.csv`);
-            document.body.appendChild(link);
-            link.click();
-            document.body.removeChild(link);
+            link.setAttribute("download", `Rekap_Absensi_${new Date().toISOString().slice(0,10)}.csv`);
+            document.body.appendChild(link); link.click(); document.body.removeChild(link);
         }
     </script>
 </body>
