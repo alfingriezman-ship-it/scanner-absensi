@@ -54,8 +54,6 @@
                 
                 <div id="browser-warning" class="hidden bg-rose-600 text-white p-4 rounded-2xl shadow-lg border-2 border-rose-400 font-bold text-xs md:text-sm text-center animate-pulse"></div>
 
-                <!-- Bagian Form UI Koneksi Google Sheets Telah Dihapus dari Sini -->
-
                 <div class="bg-white p-6 rounded-2xl shadow-sm border border-slate-200/80">
                     <h2 class="text-lg font-bold text-blue-950 mb-4 flex items-center justify-between">
                         <div class="flex items-center gap-2">
@@ -107,23 +105,33 @@
                             </select>
                         </div>
                         
+                        <!-- Bagian Jam Mapel yang telah direvisi -->
                         <div>
                             <label class="block text-xs font-bold uppercase tracking-wider text-slate-500 mb-1.5">Jam Mapel <span class="text-red-500">*</span></label>
-                            <select id="select-jam" class="w-full p-3 border border-slate-200 rounded-xl bg-slate-50 focus:ring-2 focus:ring-blue-500 focus:bg-white font-medium text-sm transition text-slate-700">
+                            <select id="select-jam" onchange="checkManualJam(this.value)" class="w-full p-3 border border-slate-200 rounded-xl bg-slate-50 focus:ring-2 focus:ring-blue-500 focus:bg-white font-medium text-sm transition text-slate-700">
                                 <option value="">-- Pilih Jam --</option>
-                                <option value="1-2">Jam 0-0</option>
-                                <option value="1-2">Jam 1-2</option>
-                                <option value="3-4">Jam 3-4</option>
-                                <option value="5-6">Jam 5-6</option>
-                                <option value="7-8">Jam 7-8</option>
-                                <option value="9-10">Jam 9-10</option>
-                                <option value="1-2">Jam 3</option>
-                                <option value="1-2">Jam 4</option>
-                                <option value="1-2">Jam 5</option>
-                                <option value="1-2">Jam 6</option>
-                                <option value="1-2">Jam 7</option>
-                                <option value="1-2">Jam 8</option>
+                                <option value="0-0">0-0</option>
+                                <option value="1">1</option>
+                                <option value="2">2</option>
+                                <option value="3">3</option>
+                                <option value="4">4</option>
+                                <option value="5">5</option>
+                                <option value="6">6</option>
+                                <option value="7">7</option>
+                                <option value="8">8</option>
+                                <option value="9">9</option>
+                                <option value="1-2">1-2</option>
+                                <option value="3-4">3-4</option>
+                                <option value="5-6">5-6</option>
+                                <option value="7-8">7-8</option>
+                                <option value="9-10">9-10</option>
+                                <option value="1-2-3">1-2-3</option>
+                                <option value="2-3-4">2-3-4</option>
+                                <option value="3-4-5">3-4-5</option>
+                                <option value="4-5-6">4-5-6</option>
+                                <option value="manual">Lainnya (Ketik Manual)...</option>
                             </select>
+                            <input type="text" id="input-jam-manual" placeholder="Ketik manual jam mapel..." class="hidden mt-2 w-full p-3 border border-slate-200 rounded-xl bg-slate-50 focus:ring-2 focus:ring-blue-500 focus:bg-white font-medium text-sm transition text-slate-700">
                         </div>
 
                         <div class="flex items-end">
@@ -345,6 +353,17 @@
             renderHistory();
         });
 
+        // Fungsi baru untuk menampilkan kolom input manual Jam Mapel
+        function checkManualJam(val) {
+            const manualInput = document.getElementById('input-jam-manual');
+            if (val === 'manual') {
+                manualInput.classList.remove('hidden');
+                manualInput.focus();
+            } else {
+                manualInput.classList.add('hidden');
+            }
+        }
+
         function switchTab(tabId) {
             document.querySelectorAll('[id^="view-"]').forEach(el => el.classList.add('hidden'));
             document.querySelectorAll('[id^="tab-"]').forEach(el => el.classList.remove('bg-blue-700'));
@@ -359,7 +378,12 @@
         function startSession() {
             const subject = document.getElementById('select-subject').value;
             const cls = document.getElementById('select-class').value;
-            const jam = document.getElementById('select-jam').value;
+            let jam = document.getElementById('select-jam').value;
+            
+            // Logika untuk menangkap nilai jam manual jika opsi 'manual' dipilih
+            if (jam === 'manual') {
+                jam = document.getElementById('input-jam-manual').value.trim();
+            }
 
             if (!subject || !cls || !jam) {
                 alert("Pemberitahuan KBM: Pilih Mata Pelajaran, Kelas, dan Jam Mapel sebelum meluncurkan pemindaian!");
@@ -381,6 +405,7 @@
             document.getElementById('select-subject').disabled = true;
             document.getElementById('select-class').disabled = true;
             document.getElementById('select-jam').disabled = true;
+            document.getElementById('input-jam-manual').disabled = true;
             document.getElementById('btn-start-session').classList.add('hidden');
             document.getElementById('btn-stop-session').classList.remove('hidden');
             document.getElementById('btn-stop-session').classList.add('flex');
@@ -501,6 +526,7 @@
             document.getElementById('select-subject').disabled = false;
             document.getElementById('select-class').disabled = false;
             document.getElementById('select-jam').disabled = false;
+            document.getElementById('input-jam-manual').disabled = false;
             document.getElementById('btn-start-session').classList.remove('hidden');
             document.getElementById('btn-stop-session').classList.add('hidden');
             document.getElementById('btn-stop-session').classList.remove('flex');
@@ -619,7 +645,6 @@
         }
 
         function kirimKeGoogleSheets(dataLog) {
-            // REVISI: URL Hardcoded sesuai permintaan Anda agar otomatis terkoneksi
             const scriptUrl = "https://script.google.com/macros/s/AKfycbx_xeuose3a0kO_HxX6hPo53S4iXgQnGwcqE9oZScu1bHk5rsVSlIyTfBBeY8GFUv4a/exec";
 
             const payload = {
