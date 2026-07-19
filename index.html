@@ -16,6 +16,7 @@
             #print-area { position: absolute; left: 0; top: 0; width: 100%; }
             .no-print { display: none !important; }
         }
+        /* Styling untuk scrollbar tabel di mobile */
         .table-scroll::-webkit-scrollbar { height: 6px; }
         .table-scroll::-webkit-scrollbar-track { background: #f1f5f9; border-radius: 4px; }
         .table-scroll::-webkit-scrollbar-thumb { background: #cbd5e1; border-radius: 4px; }
@@ -35,7 +36,7 @@
             </span>
         </div>
 
-        <!-- Navbar Utama -->
+        <!-- Navbar Utama (Biru Gradient) -->
         <nav class="bg-gradient-to-r from-blue-900 via-blue-800 to-blue-950 text-white shadow-lg border-b border-blue-700">
             <div class="max-w-6xl mx-auto px-4 py-4 flex flex-col md:flex-row justify-between items-center gap-5">
                 <div class="flex items-center space-x-3 w-full md:w-auto justify-center md:justify-start">
@@ -48,7 +49,7 @@
                     </div>
                 </div>
                 
-                <!-- Tab Menu -->
+                <!-- Tab Menu (Responsif) -->
                 <div class="flex flex-wrap justify-center w-full md:w-auto gap-2 no-print bg-blue-950/50 p-1.5 rounded-xl border border-blue-800/50">
                     <button onclick="switchTab('scan')" id="tab-scan" class="px-3 md:px-5 py-2.5 rounded-lg bg-emerald-600 shadow-md font-bold text-xs md:text-sm transition flex-grow md:flex-grow-0 text-white border-b-2 border-emerald-800">Scanner Absensi</button>
                     <button onclick="switchTab('students')" id="tab-students" class="px-3 md:px-5 py-2.5 rounded-lg bg-blue-800/80 hover:bg-blue-700 font-bold text-xs md:text-sm transition flex-grow md:flex-grow-0 text-slate-200">Siswa & QR</button>
@@ -57,10 +58,20 @@
             </div>
         </nav>
 
+        <!-- Banner Motivasi (Gradien Biru-Hijau-Merah) -->
+        <div class="bg-gradient-to-r from-blue-800 via-emerald-600 to-rose-600 text-white py-3 px-4 shadow-sm text-center no-print">
+            <p class="text-xs md:text-sm font-semibold tracking-wide flex items-center justify-center gap-2 drop-shadow-md">
+                <span class="inline-block animate-bounce">⚡</span>
+                "Mulai hari ini dengan kedisiplinan, raih masa depan dengan kegemilangan"
+                <span class="inline-block animate-bounce">⚡</span>
+            </p>
+        </div>
+
         <div class="max-w-6xl mx-auto px-4 py-6 md:py-8">
 
             <!-- TAB 1: SCANNER -->
             <div id="view-scan" class="space-y-6">
+                
                 <div id="browser-warning" class="hidden bg-rose-600 text-white p-4 rounded-2xl shadow-lg border-2 border-rose-400 font-bold text-xs md:text-sm text-center animate-pulse"></div>
 
                 <div class="bg-white p-5 md:p-6 rounded-2xl shadow-md border border-slate-200/80">
@@ -69,7 +80,7 @@
                             <span class="bg-blue-600 text-white w-7 h-7 rounded-full flex items-center justify-center text-xs font-extrabold shadow-sm">1</span>
                             <span>Konfigurasi Kegiatan Belajar (KBM)</span>
                         </div>
-                        <span id="cloud-status" class="text-[10px] md:text-xs font-bold px-3 py-1.5 rounded-full bg-emerald-100 text-emerald-800 border border-emerald-300 w-fit">🟢 Terhubung Lokal</span>
+                        <span id="cloud-status" class="text-[10px] md:text-xs font-bold px-3 py-1.5 rounded-full bg-emerald-100 text-emerald-800 border border-emerald-300 w-fit">🟢 Terhubung ke Sheets</span>
                     </h2>
                     
                     <div class="grid grid-cols-1 md:grid-cols-4 gap-4">
@@ -157,6 +168,8 @@
                                 <select id="camera-select" onchange="switchCamera(this.value)" class="w-full p-2 border border-slate-300 rounded-lg text-xs font-semibold bg-white focus:ring-2 focus:ring-blue-500 text-slate-800 shadow-inner"></select>
                             </div>
                         </div>
+
+                        <!-- Scanner Viewfinder -->
                         <div id="reader" class="w-full max-w-[400px] aspect-square overflow-hidden rounded-2xl border-4 border-emerald-500/50 bg-slate-900 mx-auto relative flex items-center justify-center text-white text-xs shadow-inner"></div>
                         <p class="text-[11px] md:text-xs text-slate-400 mt-3 text-center">Pastikan pencahayaan terang dan QR tidak buram.</p>
                     </div>
@@ -210,26 +223,26 @@
                 </div>
 
                 <div class="bg-white p-5 md:p-6 rounded-2xl shadow-md border border-slate-200">
-                    <div class="flex flex-col md:flex-row justify-between items-start md:items-center mb-6 gap-4 border-b pb-4">
+                    <div class="flex flex-col sm:flex-row justify-between items-start sm:items-center mb-6 gap-4 border-b pb-4">
                         <div>
                             <h2 class="text-base md:text-lg font-bold text-blue-950">Bank Data Kartu QR Siswa</h2>
-                            <p class="text-[11px] md:text-xs text-slate-500">Tersinkronisasi dengan Google Sheets KBM Anda.</p>
+                            <p class="text-[11px] md:text-xs text-slate-500">Cetak kartu ini untuk digunakan siswa saat absensi.</p>
                         </div>
                         
-                        <div class="flex flex-wrap gap-2 w-full md:w-auto justify-start md:justify-end">
-                            <button onclick="syncStudentsFromCloud()" class="bg-emerald-600 hover:bg-emerald-700 text-white px-4 py-2.5 rounded-xl text-xs font-bold transition flex justify-center items-center gap-1.5 shadow-sm">
-                                🔄 Tarik Data Sheets
-                            </button>
+                        <!-- REVISI: Penambahan Tombol Ekspor Word & Penyesuaian Layout Tombol -->
+                        <div class="flex flex-wrap gap-2 w-full sm:w-auto justify-start sm:justify-end">
                             <button onclick="exportQRToWord()" class="bg-blue-600 hover:bg-blue-700 text-white px-4 py-2.5 rounded-xl text-xs font-bold transition flex justify-center items-center gap-1.5 shadow-sm">
                                 📄 Ekspor Word
                             </button>
                             <button onclick="printQRCodes()" class="bg-slate-800 hover:bg-slate-900 text-white px-4 py-2.5 rounded-xl text-xs font-bold transition flex justify-center items-center gap-1.5 shadow-sm">
-                                🖨️ Cetak
+                                🖨️ Cetak Kartu
                             </button>
                             <button onclick="clearStudents()" class="bg-rose-100 text-rose-700 hover:bg-rose-200 px-4 py-2.5 rounded-xl text-xs font-bold transition flex justify-center items-center gap-1.5">
                                 🗑️ Wipe Out
                             </button>
                         </div>
+                        <!-- END REVISI -->
+                        
                     </div>
 
                     <div id="print-area" class="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 lg:grid-cols-5 gap-4"></div>
@@ -294,9 +307,7 @@
     </footer>
 
     <script>
-        // INTEGRASI URL APPS SCRIPT
-        const SCRIPT_URL = "https://script.google.com/macros/s/AKfycbx_xeuose3a0kO_HxX6hPo53S4iXgQnGwcqE9oZScu1bHk5rsVSlIyTfBBeY8GFUv4a/exec";
-
+        // LIVE CLOCK FUNCTION - WIB
         function updateClock() {
             const now = new Date();
             const options = { 
@@ -310,7 +321,7 @@
             document.getElementById('live-clock').innerHTML = `⏱️ ${timeString} WIB`;
         }
         setInterval(updateClock, 1000);
-        updateClock();
+        updateClock(); // Initial call
 
         let audioCtx = null;
         function playBeep() {
@@ -339,83 +350,9 @@
         let currentJam = "";
         let isSessionActive = false;
         let sessionScans = [];
-        
-        // ========================================================
-        // INJEKSI 62 DATA SISWA (SEBAGAI DATABASE LOKAL BAWAAN)
-        // ========================================================
-        const defaultDataSiswa = [
-            { nis: "0105890337", name: "ACH. ABRORI", className: "XI - A" },
-            { nis: "0091647096", name: "AH. UBAIDILLAH MUHTAR", className: "XI - A" },
-            { nis: "3109719364", name: "AHMAD ALVIN EZZA MAHILLA", className: "XI - A" },
-            { nis: "3098783071", name: "AHMAD RIFKI RAMADANI", className: "XI - A" },
-            { nis: "0105291994", name: "ANA SYAHRINI", className: "XI - A" },
-            { nis: "3099622851", name: "ATINA BARKA AWLIYA", className: "XI - A" },
-            { nis: "3095517394", name: "AZALICHA INTAN NURAINI", className: "XI - A" },
-            { nis: "0106704850", name: "DEWI TASMIATUL AULIYA", className: "XI - A" },
-            { nis: "3089571471", name: "FICO BAGUS TRICAHYONO", className: "XI - A" },
-            { nis: "3096060662", name: "IMROATUS SYAFIQOH", className: "XI - A" },
-            { nis: "3103862926", name: "JHONI IRAWAN ISKANDAR", className: "XI - A" },
-            { nis: "0099569138", name: "MAULIDYA FIZTA DIARSELA", className: "XI - A" },
-            { nis: "0094063027", name: "MOH. AKBAR AL MUBAROK", className: "XI - A" },
-            { nis: "3098213406", name: "MOH. ANDRY YANTO", className: "XI - A" },
-            { nis: "3100474715", name: "MOH. ULIL ABSOR", className: "XI - A" },
-            { nis: "0104697587", name: "MOH. WAFIL MURODHI", className: "XI - A" },
-            { nis: "3102306888", name: "PUTRI AMANDA PRATAMA", className: "XI - A" },
-            { nis: "3100780883", name: "RIZKI MAULIDIA PUTRI", className: "XI - A" },
-            { nis: "3094349759", name: "ROMSI", className: "XI - A" },
-            { nis: "3124001121", name: "SITTI AISYAH", className: "XI - A" },
-            { nis: "0091572267", name: "SYIFA AULIA", className: "XI - A" },
-            { nis: "3097472486", name: "WUFRON SAWRIN RAMADHANI", className: "XI - A" },
-            { nis: "3106235907", name: "ZAHROTIN ABDILLAH", className: "XI - A" },
-            { nis: "0105306563", name: "ZIDNIYATUR ROFAHIAH", className: "XI - A" },
-            { nis: "3098729452", name: "AHMAD SYAFIQ MAULIDI", className: "XI - A" },
-            { nis: "0095365079", name: "HASAN RAFI AL KAROMI RAZIQ", className: "XI - A" },
-            { nis: "0099703181", name: "AHMAD BISUNI", className: "XII - A" },
-            { nis: "3095611645", "name: "ABRORI", className: "XII - B" },
-            { nis: "3083858501", "name: "AHMAD FARHAN", className: "XII - A" },
-            { nis: "0094180021", "name": "AHMAD ROMSI", className: "XII - B" },
-            { nis: "3081493378", "name": "AIRIN", className: "XII - A" },
-            { nis: "0087338163", "name": "AZIZATUN AULIAN NISAK", className: "XII - B" },
-            { nis: "0043427705", "name": "BAYU SEGORO", className: "XII - B" },
-            { nis: "3084324597", "name": "DAUDY SULAIMAN", className: "XII - A" },
-            { nis: "0087937238", "name": "DEVI WAHYUNI KARTIKA", className: "XII - B" },
-            { nis: "0085761450", "name": "EDI CAHYONO", className: "XII - B" },
-            { nis: "0088599734", "name": "I'ZZATUL MUTTAQIYAH", className: "XII - A" },
-            { nis: "3089010744", "name": "KAYLA MAULIDAH", className: "XII - B" },
-            { nis: "0094926385", "name": "KHOIRUZ ZADIT TAQWA", className: "XII - A" },
-            { nis: "0086762627", "name": "KISWATUL LATIFAH", className: "XII - B" },
-            { nis: "0083049172", "name": "MAYLA SYAFIQA AZAHRA", className: "XII - A" },
-            { nis: "0088456843", "name": "MESSY LIONY", className: "XII - B" },
-            { nis: "0082053461", "name": "MOH. ADITIYA SAPUTRA", className: "XII - B" },
-            { nis: "3076967092", "name": "MOH. FAHMIL ULUM", className: "XII - B" },
-            { nis: "3081016075", "name": "MOH. NASHIRUDDIN FAYIZ NAFIS", className: "XII - B" },
-            { nis: "0083023128", "name": "MOH. RIZAL FAHRI", className: "XII - A" },
-            { nis: "0098756270", "name": "MUHAMMAD ANSHORI", className: "XII - B" },
-            { nis: "0084751200", "name": "MUHAMMAD IRGI ROBI VARIZKY", className: "XII - A" },
-            { nis: "3084446994", "name": "NABILATUS ZAHRAH", className: "XII - A" },
-            { nis: "3082160587", "name": "NAJWA AMELIA PUTRI BAIHAKI", className: "XII - B" },
-            { nis: "3081144205", "name": "OVI ARTI WAHYU NINGSIH", className: "XII - A" },
-            { nis: "0086536627", "name": "RIZKA SABILATIL AMALIA", className: "XII - A" },
-            { nis: "3091391063", "name": "ROIHATUL JANNAH", className: "XII - B" },
-            { nis: "0082111496", "name": "ROY MARTIN", className: "XII - A" },
-            { nis: "0082721137", "name": "ROYHAN AL JINAN", className: "XII - B" },
-            { nis: "0087390292", "name": "RUSDIANTO", className: "XII - B" },
-            { nis: "0082487864", "name": "SAFINATUD DIANA", className: "XII - B" },
-            { nis: "3094439103", "name": "SITI NURHALISA JULIA AGUSTIN", className: "XII - B" },
-            { nis: "3095803061", "name": "SYARIF HIDAYATULLAH", className: "XII - B" },
-            { nis: "3089311819", "name": "UJANG RAHMANA DEWA", className: "XII - B" },
-            { nis: "3082650576", "name": "ULFATUN NAIMAH", className: "XII - A" },
-            { nis: "3084336012", "name": "ZALWA IMELDA PUTRI BAIHAKI", className: "XII - A" }
-        ];
+        let availableCameras = [];
 
-        let cachedStudents = JSON.parse(localStorage.getItem('miftah_students'));
-        let students = (cachedStudents && cachedStudents.length > 0) ? cachedStudents : defaultDataSiswa;
-        
-        // Simpan default data siswa langsung ke local storage browser saat web dibuka pertama kali
-        if (!cachedStudents || cachedStudents.length === 0) {
-            localStorage.setItem('miftah_students', JSON.stringify(students));
-        }
-
+        let students = JSON.parse(localStorage.getItem('miftah_students')) || [];
         let attendanceHistory = JSON.parse(localStorage.getItem('miftah_history')) || [];
 
         const quotesGuru = [
@@ -425,47 +362,22 @@
         ];
 
         document.addEventListener("DOMContentLoaded", () => {
-            document.getElementById('teacher-quote').innerHTML = quotesGuru[Math.floor(Math.random() * quotesGuru.length)];
+            const randomQuote = quotesGuru[Math.floor(Math.random() * quotesGuru.length)];
+            document.getElementById('teacher-quote').innerHTML = randomQuote;
+
+            const ua = navigator.userAgent || navigator.vendor || window.opera;
+            const isInstagram = (ua.indexOf('Instagram') > -1) || (ua.indexOf('FBAN') > -1);
+            const isWhatsApp = (ua.indexOf('WhatsApp') > -1) || (ua.indexOf('Line') > -1);
             
-            if(navigator.onLine) {
-                // Hapus atau comment baris di bawah jika tidak ingin otomatis load dari Google Sheet dan menimpa data siswa lokal ini.
-                syncStudentsFromCloud(true);
+            if (isInstagram || isWhatsApp || (!window.isSecureContext && location.hostname !== "localhost" && location.hostname !== "127.0.0.1" && location.protocol !== "file:")) {
+                const banner = document.getElementById('browser-warning');
+                banner.classList.remove('hidden');
+                banner.innerHTML = "⚠️ PERINGATAN: Akses kamera mungkin diblokir oleh browser internal (WA/IG) atau bukan koneksi HTTPS.<br><strong>Solusi: Klik ikon 3 titik, pilih 'Buka di Chrome / Browser Eksternal'.</strong>";
             }
 
             renderStudents();
             renderHistory();
         });
-
-        async function syncStudentsFromCloud(isSilent = false) {
-            const badge = document.getElementById('cloud-status');
-            badge.innerHTML = "🔄 Sinkronisasi...";
-            badge.className = "text-[10px] md:text-xs font-bold px-3 py-1.5 rounded-full bg-amber-100 text-amber-800 border border-amber-300 w-fit";
-
-            try {
-                const response = await fetch(SCRIPT_URL + "?action=getStudents");
-                const result = await response.json();
-                
-                if (result.status === 'success' && result.data && result.data.length > 0) {
-                    students = result.data; 
-                    localStorage.setItem('miftah_students', JSON.stringify(students));
-                    renderStudents();
-                    
-                    badge.innerHTML = `🟢 Terhubung Sheets (${students.length} Siswa)`;
-                    badge.className = "text-[10px] md:text-xs font-bold px-3 py-1.5 rounded-full bg-emerald-100 text-emerald-800 border border-emerald-300 w-fit";
-                    
-                    if(!isSilent) alert(`✅ Sinkronisasi berhasil! ${students.length} data siswa ditarik dari Cloud.`);
-                } else {
-                    if(!isSilent) alert("❌ Gagal menarik data: " + (result.message || "Data kosong dari sheets. Menggunakan data default lokal."));
-                    badge.innerHTML = `🟢 Mode Lokal Aktif (${students.length} Siswa)`;
-                    badge.className = "text-[10px] md:text-xs font-bold px-3 py-1.5 rounded-full bg-emerald-100 text-emerald-800 border border-emerald-300 w-fit";
-                }
-            } catch (error) {
-                console.error("Gagal terhubung ke Apps Script: ", error);
-                badge.innerHTML = "⚠️ Mode Offline Lokal Aktif";
-                badge.className = "text-[10px] md:text-xs font-bold px-3 py-1.5 rounded-full bg-rose-100 text-rose-800 border border-rose-300 w-fit";
-                if(!isSilent) alert("❌ Terjadi kesalahan jaringan. Tetap menggunakan data bawaan dari browser.");
-            }
-        }
 
         function checkManualJam(val) {
             const manualInput = document.getElementById('input-jam-manual');
@@ -482,8 +394,11 @@
             document.querySelectorAll('[id^="tab-"]').forEach(el => {
                 el.className = "px-3 md:px-5 py-2.5 rounded-lg bg-blue-800/80 hover:bg-blue-700 font-bold text-xs md:text-sm transition flex-grow md:flex-grow-0 text-slate-200";
             });
+            
             document.getElementById(`view-${tabId}`).classList.remove('hidden');
-            document.getElementById(`tab-${tabId}`).className = "px-3 md:px-5 py-2.5 rounded-lg bg-emerald-600 shadow-md font-bold text-xs md:text-sm transition flex-grow md:flex-grow-0 text-white border-b-2 border-emerald-800";
+            
+            const activeTab = document.getElementById(`tab-${tabId}`);
+            activeTab.className = "px-3 md:px-5 py-2.5 rounded-lg bg-emerald-600 shadow-md font-bold text-xs md:text-sm transition flex-grow md:flex-grow-0 text-white border-b-2 border-emerald-800";
 
             if (tabId === 'history') renderHistory();
             if (tabId === 'students') renderStudents();
@@ -526,17 +441,28 @@
 
         function startDefaultCamera() {
             const readerEl = document.getElementById('reader');
-            readerEl.innerHTML = "<div class='text-slate-400 p-4 text-center'>⏳ Mengaktifkan kamera...</div>";
+            readerEl.innerHTML = "<div class='text-slate-400 p-4 text-center'>⏳ Mengaktifkan kamera...<br><span class='text-[10px] text-emerald-400'>Harap izinkan akses kamera pada popup browser.</span></div>";
 
             if (html5QrCode) { try { html5QrCode.clear(); } catch(e){} }
             html5QrCode = new Html5Qrcode("reader");
 
             const config = { fps: 10, qrbox: { width: 250, height: 250 }, aspectRatio: 1.0 };
+
             html5QrCode.start({ facingMode: "environment" }, config, onScanSuccess, onScanFailure)
             .then(() => populateCameraDropdown())
             .catch(errEnv => {
                 html5QrCode.start({ facingMode: "user" }, config, onScanSuccess, onScanFailure)
-                .then(() => populateCameraDropdown());
+                .then(() => populateCameraDropdown())
+                .catch(errUser => {
+                    Html5Qrcode.getCameras().then(devices => {
+                        if (devices && devices.length > 0) {
+                            html5QrCode.start(devices[0].id, config, onScanSuccess, onScanFailure)
+                            .then(() => populateCameraDropdown());
+                        } else {
+                            showCameraError("Kamera fisik tidak terdeteksi.");
+                        }
+                    }).catch(() => showCameraError("Izin kamera ditolak browser."));
+                });
             });
         }
 
@@ -553,7 +479,7 @@
                     });
                     document.getElementById('camera-select-container').classList.remove('hidden');
                 }
-            });
+            }).catch(e => {});
         }
 
         function switchCamera(newDeviceId) {
@@ -561,11 +487,21 @@
             const config = { fps: 10, qrbox: { width: 250, height: 250 }, aspectRatio: 1.0 };
             html5QrCode.stop().then(() => {
                 html5QrCode.start(newDeviceId, config, onScanSuccess, onScanFailure);
+            }).catch(() => {
+                html5QrCode.start(newDeviceId, config, onScanSuccess, onScanFailure);
             });
+        }
+
+        function showCameraError(msg) {
+            const alertBox = document.getElementById('scan-alert');
+            alertBox.classList.remove('hidden');
+            alertBox.className = "p-3 rounded-xl text-xs font-bold text-center border bg-rose-100 text-rose-800 border-rose-300";
+            alertBox.innerText = `❌ ERROR KAMERA: ${msg}`;
         }
 
         function stopSession() {
             isSessionActive = false;
+            
             document.getElementById('select-subject').disabled = false;
             document.getElementById('select-class').disabled = false;
             document.getElementById('select-jam').disabled = false;
@@ -574,10 +510,18 @@
             document.getElementById('btn-start-session').classList.remove('hidden');
             document.getElementById('btn-stop-session').classList.add('hidden');
             document.getElementById('btn-stop-session').classList.remove('flex');
+            
             document.getElementById('scanner-section').classList.add('hidden');
 
             if (html5QrCode) {
-                try { html5QrCode.stop().then(() => html5QrCode.clear()); } catch (e) {}
+                try {
+                    html5QrCode.stop().then(() => {
+                        html5QrCode.clear();
+                        document.getElementById('reader').innerHTML = "";
+                    }).catch(e => {
+                        try { html5QrCode.clear(); } catch(e){}
+                    });
+                } catch (e) {}
             }
         }
 
@@ -586,8 +530,9 @@
             isProcessingScan = true;
 
             let studentData = null;
-            try { studentData = JSON.parse(decodedText); } 
-            catch (e) {
+            try {
+                studentData = JSON.parse(decodedText);
+            } catch (e) {
                 const found = students.find(s => s.nis === decodedText.trim());
                 if (found) studentData = { nis: found.nis, name: found.name };
             }
@@ -609,23 +554,27 @@
             }
 
             if (registeredStudent.className !== currentClass) {
-                alertBox.innerText = `⚠️ PROTEKSI: ${registeredStudent.name} (Kelas ${registeredStudent.className})!`;
+                alertBox.innerText = `⚠️ PROTEKSI: ${registeredStudent.name} dari kelas ${registeredStudent.className} (Bukan ${currentClass})!`;
                 alertBox.classList.add('bg-amber-100', 'text-amber-800', 'border-amber-300');
                 resumeScannerAfterDelay(2500); return;
             }
 
-            if (sessionScans.some(s => s.nis === registeredStudent.nis)) {
-                alertBox.innerText = `⚠️ DOBEL: ${registeredStudent.name} sudah scan.`;
+            const todayStr = new Date().toISOString().slice(0, 10);
+            const isDuplicate = sessionScans.some(s => s.nis === registeredStudent.nis);
+
+            if (isDuplicate) {
+                alertBox.innerText = `⚠️ DOBEL: ${registeredStudent.name} sudah scan hari ini.`;
                 alertBox.classList.add('bg-amber-100', 'text-amber-800', 'border-amber-300');
                 resumeScannerAfterDelay(2000); return;
             }
 
             playBeep();
             const now = new Date();
+            const timeStr = now.toLocaleTimeString('id-ID', { hour: '2-digit', minute: '2-digit', second: '2-digit' });
             
             const logEntry = {
                 timestamp: now.toISOString(),
-                timeDisplay: now.toLocaleTimeString('id-ID', { hour: '2-digit', minute: '2-digit', second: '2-digit' }),
+                timeDisplay: timeStr,
                 nis: registeredStudent.nis,
                 name: registeredStudent.name,
                 className: currentClass,
@@ -639,7 +588,7 @@
 
             kirimKeGoogleSheets(logEntry);
 
-            alertBox.innerHTML = `✅ <b>${registeredStudent.name}</b> Hadir!`;
+            alertBox.innerHTML = `✅ <b>${registeredStudent.name}</b> Berhasil Hadir!`;
             alertBox.classList.add('bg-emerald-100', 'text-emerald-800', 'border-emerald-300');
             
             updateSessionUI();
@@ -647,6 +596,7 @@
         }
 
         function onScanFailure(error) {}
+
         function resumeScannerAfterDelay(ms) {
             setTimeout(() => {
                 isProcessingScan = false;
@@ -655,16 +605,18 @@
         }
 
         function kirimKeGoogleSheets(dataLog) {
-            fetch(SCRIPT_URL, {
+            const scriptUrl = "https://script.google.com/macros/s/AKfycbx_xeuose3a0kO_HxX6hPo53S4iXgQnGwcqE9oZScu1bHk5rsVSlIyTfBBeY8GFUv4a/exec";
+            fetch(scriptUrl, {
                 method: 'POST', mode: 'no-cors', 
                 headers: { 'Content-Type': 'application/json' },
-                body: JSON.stringify({ action: "presensi", nis: dataLog.nis, nama: dataLog.name, kelas: dataLog.className, mapel: dataLog.subject, jam: dataLog.jam })
+                body: JSON.stringify({ nis: dataLog.nis, nama: dataLog.name, kelas: dataLog.className, mapel: dataLog.subject, jam: dataLog.jam })
             }).catch(e => console.error(e));
         }
 
         function updateSessionUI() {
             document.getElementById('count-session').innerText = sessionScans.length;
             const tbody = document.getElementById('session-log-body');
+            
             if (sessionScans.length === 0) return;
 
             tbody.innerHTML = sessionScans.map(log => `
@@ -691,17 +643,10 @@
             localStorage.setItem('miftah_students', JSON.stringify(students));
             renderStudents();
             e.target.reset();
-
-            // SINKRONISASI KE GOOGLE SHEETS
-            fetch(SCRIPT_URL, {
-                method: 'POST', mode: 'no-cors',
-                headers: { 'Content-Type': 'application/json' },
-                body: JSON.stringify({ action: "addStudent", nis: nis, nama: name, kelas: className })
-            }).catch(e => console.error(e));
         }
 
         function clearStudents() {
-            if (confirm("Hapus permanen seluruh data siswa & QR? (Ini tidak akan menghapus data di Sheets)")) {
+            if (confirm("Hapus permanen seluruh data siswa & QR?")) {
                 students = [];
                 localStorage.setItem('miftah_students', JSON.stringify(students));
                 renderStudents();
@@ -713,7 +658,7 @@
             container.innerHTML = "";
 
             if (students.length === 0) {
-                container.innerHTML = `<p class="col-span-full text-center text-slate-400 py-8 text-sm font-medium">Data Siswa Kosong. Klik 'Tarik Data Sheets' atau daftarkan baru.</p>`;
+                container.innerHTML = `<p class="col-span-full text-center text-slate-400 py-8 text-sm font-medium">Kosong: Daftarkan siswa baru untuk membuat QR Code.</p>`;
                 return;
             }
 
@@ -742,7 +687,7 @@
         }
 
         function deleteStudent(index) {
-            if(confirm("Hapus siswa ini dari browser?")) {
+            if(confirm("Hapus siswa ini?")) {
                 students.splice(index, 1);
                 localStorage.setItem('miftah_students', JSON.stringify(students));
                 renderStudents();
@@ -750,25 +695,39 @@
         }
 
         function printQRCodes() { window.print(); }
-        
+
+        // REVISI: Fungsi Baru Untuk Ekspor ke Word (.doc)
         function exportQRToWord() {
-            if (students.length === 0) { alert("Tidak ada kartu QR untuk diekspor."); return; }
+            if (students.length === 0) {
+                alert("Tidak ada kartu QR untuk diekspor.");
+                return;
+            }
 
-            let contentHtml = `<div style="text-align: center; font-family: Arial, sans-serif;">
+            // Gunakan struktur tag <table> agar layout grid aman saat di render oleh Microsoft Word
+            let contentHtml = `
+                <div style="text-align: center; font-family: Arial, sans-serif;">
                     <h2>Kartu QR Siswa - MAS MIFTAHUL ULUM</h2>
-                    <table style="width: 100%; border-collapse: collapse; margin-top: 20px;">`;
+                    <table style="width: 100%; border-collapse: collapse; margin-top: 20px;">
+            `;
 
-            const columns = 3;
+            const columns = 3; // Mengatur 3 kartu siswa berjejer per baris tabel Word
             for (let i = 0; i < students.length; i++) {
                 if (i % columns === 0) contentHtml += "<tr>";
+
                 const stu = students[i];
                 const qrDiv = document.getElementById(`qrcode-${stu.nis}`);
+                
                 let imgSrc = '';
                 if (qrDiv) {
                     const img = qrDiv.querySelector('img');
                     const canvas = qrDiv.querySelector('canvas');
-                    if (img && img.src && img.src.startsWith('data:image')) { imgSrc = img.src; } 
-                    else if (canvas) { imgSrc = canvas.toDataURL("image/png"); }
+                    
+                    // Mengekstrak base64 gambar QR agar dapat tertanam (embedded) di file Word
+                    if (img && img.src && img.src.startsWith('data:image')) {
+                        imgSrc = img.src;
+                    } else if (canvas) {
+                        imgSrc = canvas.toDataURL("image/png");
+                    }
                 }
 
                 contentHtml += `
@@ -777,21 +736,35 @@
                         ${imgSrc ? `<img src="${imgSrc}" width="100" height="100" style="margin: 0 auto; display: block;" />` : ''}
                         <div style="font-weight: bold; font-size: 14px; margin-top: 10px;">${stu.name}</div>
                         <div style="font-size: 11px; color: #059669; margin-top: 5px;">NIS ${stu.nis} &bull; ${stu.className}</div>
-                    </td>`;
+                    </td>
+                `;
+
                 if (i % columns === columns - 1 || i === students.length - 1) contentHtml += "</tr>";
             }
 
-            contentHtml += `</table></div>`;
-            const html = "<html xmlns:o='urn:schemas-microsoft-com:office:office' xmlns:w='urn:schemas-microsoft-com:office:word' xmlns='http://www.w3.org/TR/REC-html40'><head><meta charset='utf-8'><title>Kartu QR Siswa</title></head><body>" + contentHtml + "</body></html>";
+            contentHtml += `
+                    </table>
+                </div>
+            `;
+
+            // Setup Header XML kompatibel dengan Microsoft Office Word
+            const preHtml = "<html xmlns:o='urn:schemas-microsoft-com:office:office' xmlns:w='urn:schemas-microsoft-com:office:word' xmlns='http://www.w3.org/TR/REC-html40'><head><meta charset='utf-8'><title>Kartu QR Siswa</title></head><body>";
+            const postHtml = "</body></html>";
+            const html = preHtml + contentHtml + postHtml;
 
             const blob = new Blob(['\ufeff', html], { type: 'application/msword' });
             const url = URL.createObjectURL(blob);
             const downloadLink = document.createElement("a");
+            
             downloadLink.href = url;
             downloadLink.download = `Kartu_QR_Siswa_${new Date().toISOString().slice(0,10)}.doc`;
-            document.body.appendChild(downloadLink); downloadLink.click(); document.body.removeChild(downloadLink);
+            
+            document.body.appendChild(downloadLink);
+            downloadLink.click();
+            document.body.removeChild(downloadLink);
             URL.revokeObjectURL(url);
         }
+        // END REVISI
 
         function renderHistory() {
             const tbody = document.getElementById('history-table-body');
@@ -799,6 +772,7 @@
                 tbody.innerHTML = `<tr><td colspan="6" class="p-6 text-center text-slate-400 text-sm italic">Belum ada rekaman log.</td></tr>`;
                 return;
             }
+
             tbody.innerHTML = attendanceHistory.map(log => {
                 const dateObj = new Date(log.timestamp);
                 const dateStr = dateObj.toLocaleDateString('id-ID', { day: '2-digit', month: 'short', year: 'numeric' });
@@ -826,16 +800,22 @@
         }
 
         function exportToCSV() {
-            if (attendanceHistory.length === 0) { alert("Tidak ada data untuk diexport."); return; }
-            let csvContent = "data:text/csv;charset=utf-8,\uFEFFTanggal,Waktu,NIS,Nama Siswa,Kelas,Mata Pelajaran,Jam Mapel\n";
+            if (attendanceHistory.length === 0) {
+                alert("Tidak ada data untuk diexport."); return;
+            }
+            let csvContent = "data:text/csv;charset=utf-8,\uFEFF"; 
+            csvContent += "Tanggal,Waktu,NIS,Nama Siswa,Kelas,Mata Pelajaran,Jam Mapel\n";
+
             attendanceHistory.forEach(log => {
                 const dateObj = new Date(log.timestamp);
                 const dateStr = dateObj.toLocaleDateString('id-ID', { day: '2-digit', month: '2-digit', year: 'numeric' });
                 const timeStr = dateObj.toLocaleTimeString('id-ID');
                 csvContent += `${dateStr},${timeStr},${log.nis},"${log.name.replace(/"/g, '""')}",${log.className},${log.subject},${log.jam}\n`;
             });
+
+            const encodedUri = encodeURI(csvContent);
             const link = document.createElement("a");
-            link.setAttribute("href", encodeURI(csvContent));
+            link.setAttribute("href", encodedUri);
             link.setAttribute("download", `Rekap_Absensi_${new Date().toISOString().slice(0,10)}.csv`);
             document.body.appendChild(link); link.click(); document.body.removeChild(link);
         }
