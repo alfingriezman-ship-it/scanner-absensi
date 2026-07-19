@@ -80,7 +80,7 @@
                             <span class="bg-blue-600 text-white w-7 h-7 rounded-full flex items-center justify-center text-xs font-extrabold shadow-sm">1</span>
                             <span>Konfigurasi Kegiatan Belajar (KBM)</span>
                         </div>
-                        <span id="cloud-status" class="text-[10px] md:text-xs font-bold px-3 py-1.5 rounded-full bg-emerald-100 text-emerald-800 border border-emerald-300 w-fit">🟢 Terhubung ke Sheets</span>
+                        <span id="cloud-status" class="text-[10px] md:text-xs font-bold px-3 py-1.5 rounded-full bg-emerald-100 text-emerald-800 border border-emerald-300 w-fit">Menunggu Data...</span>
                     </h2>
                     
                     <div class="grid grid-cols-1 md:grid-cols-4 gap-4">
@@ -228,7 +228,6 @@
                             <p class="text-[11px] md:text-xs text-slate-500">Cetak kartu ini untuk digunakan siswa saat absensi.</p>
                         </div>
                         
-                        <!-- REVISI: Penambahan Tombol Ekspor Word & Penyesuaian Layout Tombol -->
                         <div class="flex flex-wrap gap-2 w-full sm:w-auto justify-start sm:justify-end">
                             <button onclick="exportQRToWord()" class="bg-blue-600 hover:bg-blue-700 text-white px-4 py-2.5 rounded-xl text-xs font-bold transition flex justify-center items-center gap-1.5 shadow-sm">
                                 📄 Ekspor Word
@@ -240,7 +239,6 @@
                                 🗑️ Wipe Out
                             </button>
                         </div>
-                        <!-- END REVISI -->
                         
                     </div>
 
@@ -254,7 +252,7 @@
                     <div class="flex flex-col sm:flex-row justify-between items-start sm:items-center mb-6 gap-4">
                         <div>
                             <h2 class="text-base md:text-lg font-bold text-blue-950">Master Rekapitulasi</h2>
-                            <p class="text-[11px] md:text-xs text-slate-500 mt-1">Otomatis tersimpan di browser & sinkron ke Cloud Sheets.</p>
+                            <p class="text-[11px] md:text-xs text-slate-500 mt-1">Otomatis sinkron ke Database Google Sheets Anda.</p>
                         </div>
                         <div class="grid grid-cols-2 gap-2 w-full sm:w-auto">
                             <button onclick="exportToCSV()" class="bg-emerald-600 hover:bg-emerald-700 text-white px-4 py-3 rounded-xl font-bold text-xs transition flex items-center justify-center gap-1.5 shadow-sm">
@@ -320,7 +318,7 @@
             document.getElementById('live-clock').innerHTML = `⏱️ ${timeString} WIB`;
         }
         setInterval(updateClock, 1000);
-        updateClock(); // Initial call
+        updateClock(); 
 
         let audioCtx = null;
         function playBeep() {
@@ -351,14 +349,49 @@
         let sessionScans = [];
         let availableCameras = [];
 
-        let students = JSON.parse(localStorage.getItem('miftah_students')) || [];
-        let attendanceHistory = JSON.parse(localStorage.getItem('miftah_history')) || [];
+        // --- KONFIGURASI URL GOOGLE APPS SCRIPT ---
+        const scriptUrl = "https://script.google.com/macros/s/AKfycbyrfrefZC3SQfELvDY-tKEBaYCXfCUuXvDcV3FxcVv8zpWFvsYgUB-Ckz1tLg8H8m5T/exec";
+
+        // --- INISIALISASI ARRAY KOSONG, DATA AKAN DITARIK DARI SHEETS ---
+        let students = [];
+        let attendanceHistory = [];
 
         const quotesGuru = [
             "\"Mengajar bukanlah sekadar profesi; ia adalah panggilan jiwa. Ketulusan bapak dan ibu guru hari ini dalam menuntun kedisiplinan murid adalah pilar utama yang membentuk peradaban mulia.\"",
             "\"Setiap peluh dan kesabaran bapak/ibu dalam menghadapi ruang kelas adalah benih ilmu yang tak akan pernah mati, mengalir terus sebagai amal jariyah.\"",
             "\"Masa depan bangsa ini ditulis dari jemari bapak dan ibu guru di atas papan tulis hari ini.\""
         ];
+
+        // --- FUNGSI LOAD DATA DARI SERVER ---
+        async function loadData() {
+            try {
+                const cloudStatus = document.getElementById('cloud-status');
+                if(cloudStatus) cloudStatus.innerText = "⏳ Sinkronisasi Data...";
+                
+                // Ambil Data Siswa (Pastikan Google Apps Script merespons JSON pada GET ini)
+                const respStudents = await fetch(scriptUrl + "?action=getStudents");
+                const dataStudents = await respStudents.json();
+                if(dataStudents && dataStudents.length > 0) students = dataStudents;
+                renderStudents();
+
+                // Ambil Data History
+                const respHistory = await fetch(scriptUrl + "?action=getHistory");
+                const dataHistory = await respHistory.json();
+                if(dataHistory && dataHistory.length > 0) attendanceHistory = dataHistory;
+                renderHistory();
+                
+                if(cloudStatus) cloudStatus.innerText = "🟢 Terhubung ke Sheets";
+            } catch (error) {
+                console.error("Gagal Load Data:", error);
+                const cloudStatus = document.getElementById('cloud-status');
+                if(cloudStatus) {
+                    cloudStatus.innerText = "🔴 Offline / Gagal Terhubung";
+                    cloudStatus.classList.replace('bg-emerald-100', 'bg-rose-100');
+                    cloudStatus.classList.replace('text-emerald-800', 'text-rose-800');
+                    cloudStatus.classList.replace('border-emerald-300', 'border-rose-300');
+                }
+            }
+        }
 
         document.addEventListener("DOMContentLoaded", () => {
             const randomQuote = quotesGuru[Math.floor(Math.random() * quotesGuru.length)];
@@ -374,8 +407,8 @@
                 banner.innerHTML = "⚠️ PERINGATAN: Akses kamera mungkin diblokir oleh browser internal (WA/IG) atau bukan koneksi HTTPS.<br><strong>Solusi: Klik ikon 3 titik, pilih 'Buka di Chrome / Browser Eksternal'.</strong>";
             }
 
-            renderStudents();
-            renderHistory();
+            // Panggil Fetch Data dari cloud ketika halaman pertama kali dirender
+            loadData(); 
         });
 
         function checkManualJam(val) {
@@ -558,7 +591,6 @@
                 resumeScannerAfterDelay(2500); return;
             }
 
-            const todayStr = new Date().toISOString().slice(0, 10);
             const isDuplicate = sessionScans.some(s => s.nis === registeredStudent.nis);
 
             if (isDuplicate) {
@@ -583,8 +615,8 @@
 
             sessionScans.unshift(logEntry);
             attendanceHistory.unshift(logEntry);
-            localStorage.setItem('miftah_history', JSON.stringify(attendanceHistory));
 
+            // POST LOG BARU KE GOOGLE SHEETS
             kirimKeGoogleSheets(logEntry);
 
             alertBox.innerHTML = `✅ <b>${registeredStudent.name}</b> Berhasil Hadir!`;
@@ -603,12 +635,19 @@
             }, ms);
         }
 
+        // --- FUNGSI KIRIM LOG ABSENSI KE GOOGLE SHEETS ---
         function kirimKeGoogleSheets(dataLog) {
-            const scriptUrl = "https://script.google.com/macros/s/AKfycbyrfrefZC3SQfELvDY-tKEBaYCXfCUuXvDcV3FxcVv8zpWFvsYgUB-Ckz1tLg8H8m5T/exec";
             fetch(scriptUrl, {
                 method: 'POST', mode: 'no-cors', 
                 headers: { 'Content-Type': 'application/json' },
-                body: JSON.stringify({ nis: dataLog.nis, nama: dataLog.name, kelas: dataLog.className, mapel: dataLog.subject, jam: dataLog.jam })
+                body: JSON.stringify({ 
+                    action: 'addHistory', // Identifikasi aksi untuk Google Script (opsional tapi disarankan)
+                    nis: dataLog.nis, 
+                    nama: dataLog.name, 
+                    kelas: dataLog.className, 
+                    mapel: dataLog.subject, 
+                    jam: dataLog.jam 
+                })
             }).catch(e => console.error(e));
         }
 
@@ -628,6 +667,7 @@
             `).join('');
         }
 
+        // --- TAMBAH SISWA BARU LANGSUNG KE SHEETS ---
         function addStudent(e) {
             e.preventDefault();
             const nis = document.getElementById('stu-nis').value.trim();
@@ -638,16 +678,32 @@
                 alert("NIS sudah terdaftar!"); return;
             }
 
-            students.push({ nis, name, className });
-            localStorage.setItem('miftah_students', JSON.stringify(students));
+            const newStudent = { nis, name, className };
+            students.push(newStudent);
+            
+            // Simpan siswa ke database sheets
+            fetch(scriptUrl, {
+                method: 'POST', mode: 'no-cors',
+                headers: { 'Content-Type': 'application/json' },
+                body: JSON.stringify({ action: 'addStudent', nis, name, className })
+            }).catch(e => console.error(e));
+
             renderStudents();
             e.target.reset();
         }
 
+        // --- MENGHAPUS SEMUA DATA SISWA DI SHEETS ---
         function clearStudents() {
             if (confirm("Hapus permanen seluruh data siswa & QR?")) {
                 students = [];
-                localStorage.setItem('miftah_students', JSON.stringify(students));
+                
+                // Kirim perintah Hapus Semua Siswa
+                fetch(scriptUrl, {
+                    method: 'POST', mode: 'no-cors',
+                    headers: { 'Content-Type': 'application/json' },
+                    body: JSON.stringify({ action: 'clearStudents' })
+                }).catch(e => console.error(e));
+
                 renderStudents();
             }
         }
@@ -657,7 +713,7 @@
             container.innerHTML = "";
 
             if (students.length === 0) {
-                container.innerHTML = `<p class="col-span-full text-center text-slate-400 py-8 text-sm font-medium">Kosong: Daftarkan siswa baru untuk membuat QR Code.</p>`;
+                container.innerHTML = `<p class="col-span-full text-center text-slate-400 py-8 text-sm font-medium">Kosong: Daftarkan siswa baru atau tunggu proses sinkronisasi dari database.</p>`;
                 return;
             }
 
@@ -685,31 +741,38 @@
             });
         }
 
+        // --- MENGHAPUS 1 SISWA SPESIFIK ---
         function deleteStudent(index) {
             if(confirm("Hapus siswa ini?")) {
+                const deletedNis = students[index].nis;
                 students.splice(index, 1);
-                localStorage.setItem('miftah_students', JSON.stringify(students));
+                
+                // Kirim perintah Hapus Spesifik 
+                fetch(scriptUrl, {
+                    method: 'POST', mode: 'no-cors',
+                    headers: { 'Content-Type': 'application/json' },
+                    body: JSON.stringify({ action: 'deleteStudent', nis: deletedNis })
+                }).catch(e => console.error(e));
+
                 renderStudents();
             }
         }
 
         function printQRCodes() { window.print(); }
 
-        // REVISI: Fungsi Baru Untuk Ekspor ke Word (.doc)
         function exportQRToWord() {
             if (students.length === 0) {
                 alert("Tidak ada kartu QR untuk diekspor.");
                 return;
             }
 
-            // Gunakan struktur tag <table> agar layout grid aman saat di render oleh Microsoft Word
             let contentHtml = `
                 <div style="text-align: center; font-family: Arial, sans-serif;">
                     <h2>Kartu QR Siswa - MAS MIFTAHUL ULUM</h2>
                     <table style="width: 100%; border-collapse: collapse; margin-top: 20px;">
             `;
 
-            const columns = 3; // Mengatur 3 kartu siswa berjejer per baris tabel Word
+            const columns = 3; 
             for (let i = 0; i < students.length; i++) {
                 if (i % columns === 0) contentHtml += "<tr>";
 
@@ -721,7 +784,6 @@
                     const img = qrDiv.querySelector('img');
                     const canvas = qrDiv.querySelector('canvas');
                     
-                    // Mengekstrak base64 gambar QR agar dapat tertanam (embedded) di file Word
                     if (img && img.src && img.src.startsWith('data:image')) {
                         imgSrc = img.src;
                     } else if (canvas) {
@@ -746,7 +808,6 @@
                 </div>
             `;
 
-            // Setup Header XML kompatibel dengan Microsoft Office Word
             const preHtml = "<html xmlns:o='urn:schemas-microsoft-com:office:office' xmlns:w='urn:schemas-microsoft-com:office:word' xmlns='http://www.w3.org/TR/REC-html40'><head><meta charset='utf-8'><title>Kartu QR Siswa</title></head><body>";
             const postHtml = "</body></html>";
             const html = preHtml + contentHtml + postHtml;
@@ -763,12 +824,11 @@
             document.body.removeChild(downloadLink);
             URL.revokeObjectURL(url);
         }
-        // END REVISI
 
         function renderHistory() {
             const tbody = document.getElementById('history-table-body');
             if (attendanceHistory.length === 0) {
-                tbody.innerHTML = `<tr><td colspan="6" class="p-6 text-center text-slate-400 text-sm italic">Belum ada rekaman log.</td></tr>`;
+                tbody.innerHTML = `<tr><td colspan="6" class="p-6 text-center text-slate-400 text-sm italic">Belum ada rekaman log dari database.</td></tr>`;
                 return;
             }
 
@@ -790,10 +850,18 @@
             }).join('');
         }
 
+        // --- MENGHAPUS SEMUA DATA HISTORY DI SHEETS ---
         function clearHistory() {
             if (confirm("Peringatan: Hapus total seluruh rekapan absensi?")) {
                 attendanceHistory = [];
-                localStorage.removeItem('miftah_history');
+                
+                // Kirim perintah Hapus Semua Histori
+                fetch(scriptUrl, {
+                    method: 'POST', mode: 'no-cors',
+                    headers: { 'Content-Type': 'application/json' },
+                    body: JSON.stringify({ action: 'clearHistory' })
+                }).catch(e => console.error(e));
+
                 renderHistory();
             }
         }
