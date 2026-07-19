@@ -340,7 +340,82 @@
         let isSessionActive = false;
         let sessionScans = [];
         
-        let students = JSON.parse(localStorage.getItem('miftah_students')) || [];
+        // ========================================================
+        // INJEKSI 62 DATA SISWA (SEBAGAI DATABASE LOKAL BAWAAN)
+        // ========================================================
+        const defaultDataSiswa = [
+            { nis: "0105890337", name: "ACH. ABRORI", className: "XI - A" },
+            { nis: "0091647096", name: "AH. UBAIDILLAH MUHTAR", className: "XI - A" },
+            { nis: "3109719364", name: "AHMAD ALVIN EZZA MAHILLA", className: "XI - A" },
+            { nis: "3098783071", name: "AHMAD RIFKI RAMADANI", className: "XI - A" },
+            { nis: "0105291994", name: "ANA SYAHRINI", className: "XI - A" },
+            { nis: "3099622851", name: "ATINA BARKA AWLIYA", className: "XI - A" },
+            { nis: "3095517394", name: "AZALICHA INTAN NURAINI", className: "XI - A" },
+            { nis: "0106704850", name: "DEWI TASMIATUL AULIYA", className: "XI - A" },
+            { nis: "3089571471", name: "FICO BAGUS TRICAHYONO", className: "XI - A" },
+            { nis: "3096060662", name: "IMROATUS SYAFIQOH", className: "XI - A" },
+            { nis: "3103862926", name: "JHONI IRAWAN ISKANDAR", className: "XI - A" },
+            { nis: "0099569138", name: "MAULIDYA FIZTA DIARSELA", className: "XI - A" },
+            { nis: "0094063027", name: "MOH. AKBAR AL MUBAROK", className: "XI - A" },
+            { nis: "3098213406", name: "MOH. ANDRY YANTO", className: "XI - A" },
+            { nis: "3100474715", name: "MOH. ULIL ABSOR", className: "XI - A" },
+            { nis: "0104697587", name: "MOH. WAFIL MURODHI", className: "XI - A" },
+            { nis: "3102306888", name: "PUTRI AMANDA PRATAMA", className: "XI - A" },
+            { nis: "3100780883", name: "RIZKI MAULIDIA PUTRI", className: "XI - A" },
+            { nis: "3094349759", name: "ROMSI", className: "XI - A" },
+            { nis: "3124001121", name: "SITTI AISYAH", className: "XI - A" },
+            { nis: "0091572267", name: "SYIFA AULIA", className: "XI - A" },
+            { nis: "3097472486", name: "WUFRON SAWRIN RAMADHANI", className: "XI - A" },
+            { nis: "3106235907", name: "ZAHROTIN ABDILLAH", className: "XI - A" },
+            { nis: "0105306563", name: "ZIDNIYATUR ROFAHIAH", className: "XI - A" },
+            { nis: "3098729452", name: "AHMAD SYAFIQ MAULIDI", className: "XI - A" },
+            { nis: "0095365079", name: "HASAN RAFI AL KAROMI RAZIQ", className: "XI - A" },
+            { nis: "0099703181", name: "AHMAD BISUNI", className: "XII - A" },
+            { nis: "3095611645", "name: "ABRORI", className: "XII - B" },
+            { nis: "3083858501", "name: "AHMAD FARHAN", className: "XII - A" },
+            { nis: "0094180021", "name": "AHMAD ROMSI", className: "XII - B" },
+            { nis: "3081493378", "name": "AIRIN", className: "XII - A" },
+            { nis: "0087338163", "name": "AZIZATUN AULIAN NISAK", className: "XII - B" },
+            { nis: "0043427705", "name": "BAYU SEGORO", className: "XII - B" },
+            { nis: "3084324597", "name": "DAUDY SULAIMAN", className: "XII - A" },
+            { nis: "0087937238", "name": "DEVI WAHYUNI KARTIKA", className: "XII - B" },
+            { nis: "0085761450", "name": "EDI CAHYONO", className: "XII - B" },
+            { nis: "0088599734", "name": "I'ZZATUL MUTTAQIYAH", className: "XII - A" },
+            { nis: "3089010744", "name": "KAYLA MAULIDAH", className: "XII - B" },
+            { nis: "0094926385", "name": "KHOIRUZ ZADIT TAQWA", className: "XII - A" },
+            { nis: "0086762627", "name": "KISWATUL LATIFAH", className: "XII - B" },
+            { nis: "0083049172", "name": "MAYLA SYAFIQA AZAHRA", className: "XII - A" },
+            { nis: "0088456843", "name": "MESSY LIONY", className: "XII - B" },
+            { nis: "0082053461", "name": "MOH. ADITIYA SAPUTRA", className: "XII - B" },
+            { nis: "3076967092", "name": "MOH. FAHMIL ULUM", className: "XII - B" },
+            { nis: "3081016075", "name": "MOH. NASHIRUDDIN FAYIZ NAFIS", className: "XII - B" },
+            { nis: "0083023128", "name": "MOH. RIZAL FAHRI", className: "XII - A" },
+            { nis: "0098756270", "name": "MUHAMMAD ANSHORI", className: "XII - B" },
+            { nis: "0084751200", "name": "MUHAMMAD IRGI ROBI VARIZKY", className: "XII - A" },
+            { nis: "3084446994", "name": "NABILATUS ZAHRAH", className: "XII - A" },
+            { nis: "3082160587", "name": "NAJWA AMELIA PUTRI BAIHAKI", className: "XII - B" },
+            { nis: "3081144205", "name": "OVI ARTI WAHYU NINGSIH", className: "XII - A" },
+            { nis: "0086536627", "name": "RIZKA SABILATIL AMALIA", className: "XII - A" },
+            { nis: "3091391063", "name": "ROIHATUL JANNAH", className: "XII - B" },
+            { nis: "0082111496", "name": "ROY MARTIN", className: "XII - A" },
+            { nis: "0082721137", "name": "ROYHAN AL JINAN", className: "XII - B" },
+            { nis: "0087390292", "name": "RUSDIANTO", className: "XII - B" },
+            { nis: "0082487864", "name": "SAFINATUD DIANA", className: "XII - B" },
+            { nis: "3094439103", "name": "SITI NURHALISA JULIA AGUSTIN", className: "XII - B" },
+            { nis: "3095803061", "name": "SYARIF HIDAYATULLAH", className: "XII - B" },
+            { nis: "3089311819", "name": "UJANG RAHMANA DEWA", className: "XII - B" },
+            { nis: "3082650576", "name": "ULFATUN NAIMAH", className: "XII - A" },
+            { nis: "3084336012", "name": "ZALWA IMELDA PUTRI BAIHAKI", className: "XII - A" }
+        ];
+
+        let cachedStudents = JSON.parse(localStorage.getItem('miftah_students'));
+        let students = (cachedStudents && cachedStudents.length > 0) ? cachedStudents : defaultDataSiswa;
+        
+        // Simpan default data siswa langsung ke local storage browser saat web dibuka pertama kali
+        if (!cachedStudents || cachedStudents.length === 0) {
+            localStorage.setItem('miftah_students', JSON.stringify(students));
+        }
+
         let attendanceHistory = JSON.parse(localStorage.getItem('miftah_history')) || [];
 
         const quotesGuru = [
@@ -353,6 +428,7 @@
             document.getElementById('teacher-quote').innerHTML = quotesGuru[Math.floor(Math.random() * quotesGuru.length)];
             
             if(navigator.onLine) {
+                // Hapus atau comment baris di bawah jika tidak ingin otomatis load dari Google Sheet dan menimpa data siswa lokal ini.
                 syncStudentsFromCloud(true);
             }
 
@@ -369,7 +445,7 @@
                 const response = await fetch(SCRIPT_URL + "?action=getStudents");
                 const result = await response.json();
                 
-                if (result.status === 'success') {
+                if (result.status === 'success' && result.data && result.data.length > 0) {
                     students = result.data; 
                     localStorage.setItem('miftah_students', JSON.stringify(students));
                     renderStudents();
@@ -379,13 +455,15 @@
                     
                     if(!isSilent) alert(`✅ Sinkronisasi berhasil! ${students.length} data siswa ditarik dari Cloud.`);
                 } else {
-                    if(!isSilent) alert("❌ Gagal menarik data: " + result.message);
+                    if(!isSilent) alert("❌ Gagal menarik data: " + (result.message || "Data kosong dari sheets. Menggunakan data default lokal."));
+                    badge.innerHTML = `🟢 Mode Lokal Aktif (${students.length} Siswa)`;
+                    badge.className = "text-[10px] md:text-xs font-bold px-3 py-1.5 rounded-full bg-emerald-100 text-emerald-800 border border-emerald-300 w-fit";
                 }
             } catch (error) {
                 console.error("Gagal terhubung ke Apps Script: ", error);
-                badge.innerHTML = "⚠️ Mode Offline Lokal";
+                badge.innerHTML = "⚠️ Mode Offline Lokal Aktif";
                 badge.className = "text-[10px] md:text-xs font-bold px-3 py-1.5 rounded-full bg-rose-100 text-rose-800 border border-rose-300 w-fit";
-                if(!isSilent) alert("❌ Terjadi kesalahan jaringan. Cek koneksi internet Anda atau link Apps Script.");
+                if(!isSilent) alert("❌ Terjadi kesalahan jaringan. Tetap menggunakan data bawaan dari browser.");
             }
         }
 
