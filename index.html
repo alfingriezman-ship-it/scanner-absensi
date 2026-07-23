@@ -177,19 +177,39 @@
                     <div class="bg-white p-5 md:p-6 rounded-2xl shadow-md border border-slate-200 flex flex-col justify-between">
                         <div>
                             <h3 class="font-bold text-sm md:text-base text-blue-950 mb-4 border-b pb-2">Log Kehadiran Sesi Ini (<span id="count-session" class="text-emerald-600 font-extrabold text-lg">0</span>)</h3>
-                            <div class="overflow-x-auto overflow-y-auto max-h-[300px] border border-slate-200 rounded-xl bg-slate-50 table-scroll shadow-inner">
+                            
+                            <!-- Form Input Manual Tanpa Barcode -->
+                            <div class="mb-4 p-3.5 bg-slate-50 border border-slate-200 rounded-xl space-y-2">
+                                <label class="block text-[11px] font-bold uppercase tracking-wider text-slate-600">⚡ Input Siswa Tanpa Barcode (Manual):</label>
+                                <div class="grid grid-cols-1 sm:grid-cols-3 gap-2">
+                                    <select id="manual-student-nis" class="p-2.5 border border-slate-200 rounded-xl text-xs bg-white focus:ring-2 focus:ring-blue-500 font-medium text-slate-700 shadow-sm">
+                                        <option value="">-- Pilih Siswa --</option>
+                                    </select>
+                                    <select id="manual-status" class="p-2.5 border border-slate-200 rounded-xl text-xs bg-white focus:ring-2 focus:ring-blue-500 font-medium text-slate-700 shadow-sm">
+                                        <option value="Hadir">Hadir</option>
+                                        <option value="Sakit">Sakit</option>
+                                        <option value="Izin">Izin</option>
+                                        <option value="Alpha">Alpha</option>
+                                    </select>
+                                    <button type="button" onclick="submitManualAttendance()" class="bg-blue-600 hover:bg-blue-700 text-white font-bold py-2.5 px-3 rounded-xl text-xs transition shadow-md border-b-2 border-blue-800">
+                                        Simpan Manual
+                                    </button>
+                                </div>
+                            </div>
+
+                            <div class="overflow-x-auto overflow-y-auto max-h-[220px] border border-slate-200 rounded-xl bg-slate-50 table-scroll shadow-inner">
                                 <table class="w-full text-left border-collapse text-[11px] md:text-sm min-w-[350px]">
                                     <thead class="sticky top-0 bg-slate-200 shadow-sm z-10">
                                         <tr class="text-slate-700">
-                                            <th class="p-3 font-bold whitespace-nowrap">Jam Masuk</th>
+                                            <th class="p-3 font-bold whitespace-nowrap">Waktu</th>
                                             <th class="p-3 font-bold whitespace-nowrap">NIS</th>
                                             <th class="p-3 font-bold whitespace-nowrap">Nama Siswa</th>
-                                            <th class="p-3 font-bold text-center">Status</th>
+                                            <th class="p-3 font-bold text-center">Status / Keterangan</th>
                                         </tr>
                                     </thead>
                                     <tbody id="session-log-body" class="divide-y divide-slate-200 text-slate-700">
                                         <tr>
-                                            <td colspan="4" class="p-6 text-center text-slate-400 italic">Belum ada pemindaian masuk.</td>
+                                            <td colspan="4" class="p-6 text-center text-slate-400 italic">Belum ada data presensi sesi ini.</td>
                                         </tr>
                                     </tbody>
                                 </table>
@@ -214,6 +234,7 @@
                             <option value="X - A">X - A</option>
                             <option value="X - B">X - B</option>
                             <option value="XI - A">XI - A</option>
+                            <option value="XI - B">XI - B</option>
                             <option value="XII - A">XII - A</option>
                             <option value="XII - B">XII - B</option>
                         </select>
@@ -265,7 +286,7 @@
                     </div>
                     
                     <div class="w-full overflow-x-auto border border-slate-200 rounded-xl bg-white shadow-inner table-scroll">
-                        <table class="w-full text-left border-collapse text-[11px] md:text-sm min-w-[600px]">
+                        <table class="w-full text-left border-collapse text-[11px] md:text-sm min-w-[700px]">
                             <thead class="bg-slate-100 border-b text-slate-700">
                                 <tr>
                                     <th class="p-3.5 font-bold whitespace-nowrap">Hari, Tanggal & Waktu</th>
@@ -274,6 +295,7 @@
                                     <th class="p-3.5 font-bold whitespace-nowrap text-center">Kelas</th>
                                     <th class="p-3.5 font-bold whitespace-nowrap">Mata Pelajaran</th>
                                     <th class="p-3.5 font-bold whitespace-nowrap text-center">Jam</th> 
+                                    <th class="p-3.5 font-bold whitespace-nowrap text-center">Status / Keterangan</th> 
                                 </tr>
                             </thead>
                             <tbody id="history-table-body" class="divide-y divide-slate-100 text-slate-700"></tbody>
@@ -368,7 +390,7 @@
                 const cloudStatus = document.getElementById('cloud-status');
                 if(cloudStatus) cloudStatus.innerText = "⏳ Sinkronisasi Data...";
                 
-                // Ambil Data Siswa (Pastikan Google Apps Script merespons JSON pada GET ini)
+                // Ambil Data Siswa
                 const respStudents = await fetch(scriptUrl + "?action=getStudents");
                 const dataStudents = await respStudents.json();
                 if(dataStudents && dataStudents.length > 0) students = dataStudents;
@@ -407,7 +429,6 @@
                 banner.innerHTML = "⚠️ PERINGATAN: Akses kamera mungkin diblokir oleh browser internal (WA/IG) atau bukan koneksi HTTPS.<br><strong>Solusi: Klik ikon 3 titik, pilih 'Buka di Chrome / Browser Eksternal'.</strong>";
             }
 
-            // Panggil Fetch Data dari cloud ketika halaman pertama kali dirender
             loadData(); 
         });
 
@@ -454,6 +475,8 @@
             isSessionActive = true;
             isProcessingScan = false;
             sessionScans = [];
+            
+            populateManualStudentDropdown();
             updateSessionUI();
 
             document.getElementById('select-subject').disabled = true;
@@ -469,6 +492,68 @@
             document.getElementById('session-badge').innerText = `${cls} | ${subject} (Jam ${jam})`;
 
             startDefaultCamera();
+        }
+
+        function populateManualStudentDropdown() {
+            const manualSelect = document.getElementById('manual-student-nis');
+            manualSelect.innerHTML = '<option value="">-- Pilih Siswa --</option>';
+            const filteredStudents = students.filter(s => s.className === currentClass);
+            filteredStudents.forEach(stu => {
+                const opt = document.createElement('option');
+                opt.value = stu.nis;
+                opt.text = `${stu.nis} - ${stu.name}`;
+                manualSelect.appendChild(opt);
+            });
+        }
+
+        function submitManualAttendance() {
+            const nis = document.getElementById('manual-student-nis').value;
+            const status = document.getElementById('manual-status').value;
+
+            if (!nis) {
+                alert("Silakan pilih siswa terlebih dahulu.");
+                return;
+            }
+
+            const registeredStudent = students.find(s => s.nis === nis);
+            if (!registeredStudent) {
+                alert("Data siswa tidak ditemukan.");
+                return;
+            }
+
+            const isDuplicate = sessionScans.some(s => s.nis === registeredStudent.nis);
+            if (isDuplicate) {
+                alert(`⚠️ ${registeredStudent.name} sudah tercatat dalam sesi ini.`);
+                return;
+            }
+
+            const now = new Date();
+            const timeStr = now.toLocaleTimeString('id-ID', { hour: '2-digit', minute: '2-digit', second: '2-digit' });
+            
+            const logEntry = {
+                timestamp: now.toISOString(),
+                timeDisplay: timeStr,
+                nis: registeredStudent.nis,
+                name: registeredStudent.name,
+                className: currentClass,
+                subject: currentSubject,
+                jam: currentJam,
+                status: status
+            };
+
+            sessionScans.unshift(logEntry);
+            attendanceHistory.unshift(logEntry);
+
+            kirimKeGoogleSheets(logEntry);
+            updateSessionUI();
+
+            const alertBox = document.getElementById('scan-alert');
+            alertBox.classList.remove('hidden', 'bg-emerald-100', 'text-emerald-800', 'bg-rose-100', 'text-rose-800', 'bg-amber-100', 'text-amber-800');
+            alertBox.innerHTML = `✅ <b>${registeredStudent.name}</b> (${status}) berhasil dicatat secara manual!`;
+            alertBox.classList.add('bg-emerald-100', 'text-emerald-800', 'border-emerald-300');
+            setTimeout(() => { if(isSessionActive) alertBox.classList.add('hidden'); }, 2000);
+
+            document.getElementById('manual-student-nis').value = "";
         }
 
         function startDefaultCamera() {
@@ -610,13 +695,13 @@
                 name: registeredStudent.name,
                 className: currentClass,
                 subject: currentSubject,
-                jam: currentJam
+                jam: currentJam,
+                status: "Hadir"
             };
 
             sessionScans.unshift(logEntry);
             attendanceHistory.unshift(logEntry);
 
-            // POST LOG BARU KE GOOGLE SHEETS
             kirimKeGoogleSheets(logEntry);
 
             alertBox.innerHTML = `✅ <b>${registeredStudent.name}</b> Berhasil Hadir!`;
@@ -635,18 +720,18 @@
             }, ms);
         }
 
-        // --- FUNGSI KIRIM LOG ABSENSI KE GOOGLE SHEETS ---
         function kirimKeGoogleSheets(dataLog) {
             fetch(scriptUrl, {
                 method: 'POST', mode: 'no-cors', 
                 headers: { 'Content-Type': 'application/json' },
                 body: JSON.stringify({ 
-                    action: 'addHistory', // Identifikasi aksi untuk Google Script (opsional tapi disarankan)
+                    action: 'addHistory',
                     nis: dataLog.nis, 
                     nama: dataLog.name, 
                     kelas: dataLog.className, 
                     mapel: dataLog.subject, 
-                    jam: dataLog.jam 
+                    jam: dataLog.jam,
+                    status: dataLog.status || 'Hadir'
                 })
             }).catch(e => console.error(e));
         }
@@ -655,19 +740,28 @@
             document.getElementById('count-session').innerText = sessionScans.length;
             const tbody = document.getElementById('session-log-body');
             
-            if (sessionScans.length === 0) return;
+            if (sessionScans.length === 0) {
+                tbody.innerHTML = `<tr><td colspan="4" class="p-6 text-center text-slate-400 italic">Belum ada data presensi sesi ini.</td></tr>`;
+                return;
+            }
 
-            tbody.innerHTML = sessionScans.map(log => `
-                <tr class="hover:bg-slate-100 transition">
-                    <td class="p-3 font-mono text-xs text-slate-500 whitespace-nowrap">${log.timeDisplay}</td>
-                    <td class="p-3 font-medium text-xs whitespace-nowrap">${log.nis}</td>
-                    <td class="p-3 font-bold text-blue-900 whitespace-nowrap">${log.name}</td>
-                    <td class="p-3 text-center"><span class="bg-emerald-100 text-emerald-800 text-[10px] font-bold px-2.5 py-1 rounded-full border border-emerald-300">HADIR</span></td>
-                </tr>
-            `).join('');
+            tbody.innerHTML = sessionScans.map(log => {
+                let badgeClass = "bg-emerald-100 text-emerald-800 border-emerald-300";
+                if(log.status === 'Sakit') badgeClass = "bg-blue-100 text-blue-800 border-blue-300";
+                if(log.status === 'Izin') badgeClass = "bg-amber-100 text-amber-800 border-amber-300";
+                if(log.status === 'Alpha') badgeClass = "bg-rose-100 text-rose-800 border-rose-300";
+
+                return `
+                    <tr class="hover:bg-slate-100 transition">
+                        <td class="p-3 font-mono text-xs text-slate-500 whitespace-nowrap">${log.timeDisplay}</td>
+                        <td class="p-3 font-medium text-xs whitespace-nowrap">${log.nis}</td>
+                        <td class="p-3 font-bold text-blue-900 whitespace-nowrap">${log.name}</td>
+                        <td class="p-3 text-center"><span class="${badgeClass} text-[10px] font-bold px-2.5 py-1 rounded-full border">${log.status || 'Hadir'}</span></td>
+                    </tr>
+                `;
+            }).join('');
         }
 
-        // --- TAMBAH SISWA BARU LANGSUNG KE SHEETS ---
         function addStudent(e) {
             e.preventDefault();
             const nis = document.getElementById('stu-nis').value.trim();
@@ -681,7 +775,6 @@
             const newStudent = { nis, name, className };
             students.push(newStudent);
             
-            // Simpan siswa ke database sheets
             fetch(scriptUrl, {
                 method: 'POST', mode: 'no-cors',
                 headers: { 'Content-Type': 'application/json' },
@@ -692,12 +785,10 @@
             e.target.reset();
         }
 
-        // --- MENGHAPUS SEMUA DATA SISWA DI SHEETS ---
         function clearStudents() {
             if (confirm("Hapus permanen seluruh data siswa & QR?")) {
                 students = [];
                 
-                // Kirim perintah Hapus Semua Siswa
                 fetch(scriptUrl, {
                     method: 'POST', mode: 'no-cors',
                     headers: { 'Content-Type': 'application/json' },
@@ -741,13 +832,11 @@
             });
         }
 
-        // --- MENGHAPUS 1 SISWA SPESIFIK ---
         function deleteStudent(index) {
             if(confirm("Hapus siswa ini?")) {
                 const deletedNis = students[index].nis;
                 students.splice(index, 1);
                 
-                // Kirim perintah Hapus Spesifik 
                 fetch(scriptUrl, {
                     method: 'POST', mode: 'no-cors',
                     headers: { 'Content-Type': 'application/json' },
@@ -828,7 +917,7 @@
         function renderHistory() {
             const tbody = document.getElementById('history-table-body');
             if (attendanceHistory.length === 0) {
-                tbody.innerHTML = `<tr><td colspan="6" class="p-6 text-center text-slate-400 text-sm italic">Belum ada rekaman log dari database.</td></tr>`;
+                tbody.innerHTML = `<tr><td colspan="7" class="p-6 text-center text-slate-400 text-sm italic">Belum ada rekaman log dari database.</td></tr>`;
                 return;
             }
 
@@ -836,6 +925,11 @@
                 const dateObj = new Date(log.timestamp);
                 const dateStr = dateObj.toLocaleDateString('id-ID', { day: '2-digit', month: 'short', year: 'numeric' });
                 const timeStr = dateObj.toLocaleTimeString('id-ID', { hour: '2-digit', minute: '2-digit' });
+
+                let badgeClass = "bg-emerald-100 text-emerald-800 border-emerald-300";
+                if(log.status === 'Sakit') badgeClass = "bg-blue-100 text-blue-800 border-blue-300";
+                if(log.status === 'Izin') badgeClass = "bg-amber-100 text-amber-800 border-amber-300";
+                if(log.status === 'Alpha') badgeClass = "bg-rose-100 text-rose-800 border-rose-300";
 
                 return `
                     <tr class="hover:bg-blue-50/50 transition">
@@ -845,17 +939,16 @@
                         <td class="p-3.5 font-semibold text-slate-600 text-center whitespace-nowrap">${log.className}</td>
                         <td class="p-3.5 whitespace-nowrap"><span class="bg-blue-100 text-blue-800 border border-blue-200 text-[10px] md:text-[11px] font-bold px-2.5 py-1 rounded-md">${log.subject}</span></td>
                         <td class="p-3.5 text-center whitespace-nowrap"><span class="bg-emerald-100 text-emerald-800 border border-emerald-200 text-[10px] md:text-[11px] font-bold px-2.5 py-1 rounded-md">Jam ${log.jam || '-'}</span></td>
+                        <td class="p-3.5 text-center whitespace-nowrap"><span class="${badgeClass} text-[10px] md:text-[11px] font-bold px-2.5 py-1 rounded-md border">${log.status || 'Hadir'}</span></td>
                     </tr>
                 `;
             }).join('');
         }
 
-        // --- MENGHAPUS SEMUA DATA HISTORY DI SHEETS ---
         function clearHistory() {
             if (confirm("Peringatan: Hapus total seluruh rekapan absensi?")) {
                 attendanceHistory = [];
                 
-                // Kirim perintah Hapus Semua Histori
                 fetch(scriptUrl, {
                     method: 'POST', mode: 'no-cors',
                     headers: { 'Content-Type': 'application/json' },
@@ -871,13 +964,13 @@
                 alert("Tidak ada data untuk diexport."); return;
             }
             let csvContent = "data:text/csv;charset=utf-8,\uFEFF"; 
-            csvContent += "Tanggal,Waktu,NIS,Nama Siswa,Kelas,Mata Pelajaran,Jam Mapel\n";
+            csvContent += "Tanggal,Waktu,NIS,Nama Siswa,Kelas,Mata Pelajaran,Jam Mapel,Status / Keterangan\n";
 
             attendanceHistory.forEach(log => {
                 const dateObj = new Date(log.timestamp);
                 const dateStr = dateObj.toLocaleDateString('id-ID', { day: '2-digit', month: '2-digit', year: 'numeric' });
                 const timeStr = dateObj.toLocaleTimeString('id-ID');
-                csvContent += `${dateStr},${timeStr},${log.nis},"${log.name.replace(/"/g, '""')}",${log.className},${log.subject},${log.jam}\n`;
+                csvContent += `${dateStr},${timeStr},${log.nis},"${log.name.replace(/"/g, '""')}",${log.className},${log.subject},${log.jam},${log.status || 'Hadir'}\n`;
             });
 
             const encodedUri = encodeURI(csvContent);
