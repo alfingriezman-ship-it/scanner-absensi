@@ -370,8 +370,13 @@
                         </div>
                         
                         <div class="flex flex-col lg:flex-row gap-4 w-full xl:w-3/4 justify-end items-center">
-                            <!-- FILTER GROUP -->
-                            <div class="grid grid-cols-2 sm:grid-cols-4 gap-3 w-full lg:w-auto flex-grow">
+                            <!-- FILTER GROUP REVISED -->
+                            <div class="grid grid-cols-2 sm:grid-cols-3 xl:grid-cols-6 gap-3 w-full lg:w-auto flex-grow">
+                                
+                                <!-- NEW FILTER: Tanggal & Bulan -->
+                                <input type="date" id="filter-date" onchange="renderHistory()" class="glass-input p-3 rounded-xl text-xs font-bold w-full text-slate-500" title="Filter Tanggal Spesifik">
+                                <input type="month" id="filter-month" onchange="renderHistory()" class="glass-input p-3 rounded-xl text-xs font-bold w-full text-slate-500" title="Filter Bulan Tertentu">
+
                                 <input type="text" id="filter-name" onkeyup="renderHistory()" placeholder="🔍 Cari Nama..." class="glass-input p-3 rounded-xl text-xs font-bold w-full">
                                 
                                 <select id="filter-class" onchange="renderHistory()" class="glass-input p-3 rounded-xl text-xs font-bold appearance-none cursor-pointer w-full">
@@ -494,7 +499,6 @@
         </div>
     </footer>
 
-    <!-- DIBIARKAN SAMA (LOGIC JS TIDAK DIUBAH AGAR FUNGSI AMAN) -->
     <script>
         function updateClock() {
             const now = new Date();
@@ -1103,14 +1107,26 @@
             URL.revokeObjectURL(url);
         }
 
-        // --- FILTER & RENDER HISTORY ---
+        // --- FILTER & RENDER HISTORY (MODIFIED LOGIC) ---
         function getFilteredHistory() {
+            const filterDate = document.getElementById('filter-date') ? document.getElementById('filter-date').value : '';
+            const filterMonth = document.getElementById('filter-month') ? document.getElementById('filter-month').value : '';
             const filterClass = document.getElementById('filter-class') ? document.getElementById('filter-class').value : '';
             const filterSubject = document.getElementById('filter-subject') ? document.getElementById('filter-subject').value : '';
             const filterName = document.getElementById('filter-name') ? document.getElementById('filter-name').value.toLowerCase() : '';
             const filterStatus = document.getElementById('filter-status') ? document.getElementById('filter-status').value.toLowerCase() : '';
             
             return attendanceHistory.filter(log => {
+                // Parsing timestamp to YYYY-MM-DD and YYYY-MM based on local timezone
+                const logDateObj = new Date(log.timestamp);
+                const yyyy = logDateObj.getFullYear();
+                const mm = String(logDateObj.getMonth() + 1).padStart(2, '0');
+                const dd = String(logDateObj.getDate()).padStart(2, '0');
+                const localDateStr = `${yyyy}-${mm}-${dd}`;
+                const localMonthStr = `${yyyy}-${mm}`;
+
+                const matchDate = filterDate === '' || localDateStr === filterDate;
+                const matchMonth = filterMonth === '' || localMonthStr === filterMonth;
                 const matchClass = filterClass === '' || log.className === filterClass;
                 const matchSubject = filterSubject === '' || log.subject === filterSubject;
                 const matchName = filterName === '' || log.name.toLowerCase().includes(filterName);
@@ -1118,7 +1134,7 @@
                 const logStat = (log.status || 'Hadir').toLowerCase();
                 const matchStatus = filterStatus === '' || logStat === filterStatus;
                 
-                return matchClass && matchSubject && matchName && matchStatus;
+                return matchDate && matchMonth && matchClass && matchSubject && matchName && matchStatus;
             });
         }
 
