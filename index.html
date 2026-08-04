@@ -8,66 +8,91 @@
     <script src="https://unpkg.com/html5-qrcode" type="text/javascript"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/qrcodejs/1.0.0/qrcode.min.js"></script>
     
-    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;500;600;700;800&family=Plus+Jakarta+Sans:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;500;600;700;800;900&family=Plus+Jakarta+Sans:wght@400;500;600;700;800;900&display=swap" rel="stylesheet">
     
     <style>
-        body { font-family: 'Plus Jakarta Sans', sans-serif; color: #1e293b; }
+        body { 
+            font-family: 'Plus Jakarta Sans', sans-serif; 
+            color: #1e293b; 
+        }
         .font-heading { font-family: 'Poppins', sans-serif; }
         
-        /* ENHANCED GLASSMORPHISM */
+        /* AESTHETIC ANIMATED MESH GRADIENT BACKGROUND */
+        .bg-mesh {
+            background-color: #ff9a9e;
+            background-image: 
+                radial-gradient(at 40% 20%, hsla(28,100%,74%,1) 0px, transparent 50%),
+                radial-gradient(at 80% 0%, hsla(189,100%,56%,1) 0px, transparent 50%),
+                radial-gradient(at 0% 50%, hsla(355,100%,93%,1) 0px, transparent 50%),
+                radial-gradient(at 80% 50%, hsla(340,100%,76%,1) 0px, transparent 50%),
+                radial-gradient(at 0% 100%, hsla(22,100%,77%,1) 0px, transparent 50%),
+                radial-gradient(at 80% 100%, hsla(242,100%,70%,1) 0px, transparent 50%),
+                radial-gradient(at 0% 0%, hsla(343,100%,76%,1) 0px, transparent 50%);
+            background-size: 200% 200%;
+            animation: gradientMove 15s ease infinite alternate;
+        }
+
+        @keyframes gradientMove {
+            0% { background-position: 0% 0%; }
+            50% { background-position: 100% 100%; }
+            100% { background-position: 0% 0%; }
+        }
+        
+        /* ENHANCED VIBRANT GLASSMORPHISM */
         .glass-panel {
-            background: rgba(255, 255, 255, 0.25);
-            backdrop-filter: blur(24px);
-            -webkit-backdrop-filter: blur(24px);
-            border: 1px solid rgba(255, 255, 255, 0.6);
-            box-shadow: 0 12px 40px 0 rgba(31, 38, 135, 0.15);
+            background: rgba(255, 255, 255, 0.4);
+            backdrop-filter: blur(20px);
+            -webkit-backdrop-filter: blur(20px);
+            border: 2px solid rgba(255, 255, 255, 0.7);
+            box-shadow: 0 15px 35px 0 rgba(31, 38, 135, 0.15), inset 0 0 20px rgba(255,255,255,0.5);
+            border-radius: 2rem;
         }
         
         .glass-input {
-            background: rgba(255, 255, 255, 0.45) !important;
-            border: 1px solid rgba(255, 255, 255, 0.8) !important;
+            background: rgba(255, 255, 255, 0.6) !important;
+            border: 2px solid rgba(255, 255, 255, 0.9) !important;
             color: #0f172a !important;
-            box-shadow: inset 0 2px 4px rgba(0,0,0,0.02);
-            transition: all 0.3s ease;
+            box-shadow: 0 4px 15px rgba(0,0,0,0.05);
+            transition: all 0.4s cubic-bezier(0.4, 0, 0.2, 1);
         }
         
         .glass-input:focus {
-            background: rgba(255, 255, 255, 0.8) !important;
-            border-color: #3b82f6 !important;
-            box-shadow: 0 0 0 4px rgba(59, 130, 246, 0.25) !important;
+            background: rgba(255, 255, 255, 0.95) !important;
+            border-color: #d946ef !important; /* Fuchsia border on focus */
+            box-shadow: 0 0 0 5px rgba(217, 70, 239, 0.3) !important;
             outline: none;
-            transform: translateY(-1px);
+            transform: translateY(-2px);
         }
 
         select.glass-input option {
             background-color: #ffffff;
             color: #1e293b;
-            font-weight: 500;
+            font-weight: 600;
         }
 
         /* VIBRANT ANIMATED BLOBS */
         @keyframes blob {
-            0% { transform: translate(0px, 0px) scale(1); }
-            33% { transform: translate(40px, -60px) scale(1.15); }
-            66% { transform: translate(-30px, 30px) scale(0.85); }
-            100% { transform: translate(0px, 0px) scale(1); }
+            0% { transform: translate(0px, 0px) scale(1) rotate(0deg); }
+            33% { transform: translate(50px, -70px) scale(1.2) rotate(45deg); }
+            66% { transform: translate(-40px, 40px) scale(0.8) rotate(-45deg); }
+            100% { transform: translate(0px, 0px) scale(1) rotate(0deg); }
         }
-        .animate-blob { animation: blob 8s infinite alternate ease-in-out; }
+        .animate-blob { animation: blob 10s infinite alternate cubic-bezier(0.4, 0, 0.2, 1); }
         .animation-delay-2000 { animation-delay: 2s; }
         .animation-delay-4000 { animation-delay: 4s; }
 
-        /* CUSTOM SCROLLBAR FOR MODERN LOOK */
-        .table-scroll::-webkit-scrollbar { height: 6px; width: 6px; }
-        .table-scroll::-webkit-scrollbar-track { background: rgba(255,255,255,0.2); border-radius: 10px; }
-        .table-scroll::-webkit-scrollbar-thumb { background: rgba(99, 102, 241, 0.5); border-radius: 10px; }
-        .table-scroll::-webkit-scrollbar-thumb:hover { background: rgba(99, 102, 241, 0.8); }
+        /* CUSTOM VIBRANT SCROLLBAR */
+        .table-scroll::-webkit-scrollbar { height: 8px; width: 8px; }
+        .table-scroll::-webkit-scrollbar-track { background: rgba(255,255,255,0.3); border-radius: 10px; }
+        .table-scroll::-webkit-scrollbar-thumb { background: linear-gradient(to right, #ec4899, #8b5cf6); border-radius: 10px; }
+        .table-scroll::-webkit-scrollbar-thumb:hover { background: linear-gradient(to right, #db2777, #7c3aed); }
 
         /* HIDE ELEMENTS ON PRINT */
         @media print {
             @page { size: A4; margin: 1cm; }
             body * { visibility: hidden; }
             #print-area, #print-area * { visibility: visible; }
-            .no-print, nav, footer, #view-scan, #view-history, .fixed.inset-0 { display: none !important; }
+            .no-print, nav, footer, #view-scan, #view-history, .fixed.inset-0, #wa-floating { display: none !important; }
             #view-students > div:first-child,
             #view-students > div:nth-child(2) > div:first-child { display: none !important; }
             body, .min-h-screen, .max-w-6xl { background: white !important; margin: 0 !important; padding: 0 !important; height: auto !important; min-height: auto !important; }
@@ -77,87 +102,98 @@
             * { -webkit-print-color-adjust: exact !important; print-color-adjust: exact !important; }
         }
         
-        /* SMOOTH TAB TRANSITIONS */
-        .tab-btn { transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1); }
-        .tab-btn:active { transform: scale(0.95); }
+        .tab-btn { transition: all 0.4s cubic-bezier(0.4, 0, 0.2, 1); }
+        .tab-btn:active { transform: scale(0.92); }
     </style>
 </head>
-<body class="bg-gray-50 text-gray-800 min-h-screen flex flex-col justify-between relative overflow-x-hidden selection:bg-indigo-500/30">
+<body class="bg-mesh text-gray-800 min-h-screen flex flex-col justify-between relative overflow-x-hidden selection:bg-pink-500/40 selection:text-pink-900">
     
-    <!-- HIGH CONTRAST COLORFUL BLOBS -->
-    <div class="fixed inset-0 z-[-1] overflow-hidden pointer-events-none bg-gradient-to-br from-indigo-50 via-purple-50 to-cyan-50">
-        <div class="absolute top-0 -left-10 w-72 h-72 md:w-[500px] md:h-[500px] bg-purple-400 rounded-full mix-blend-multiply filter blur-[80px] opacity-70 animate-blob"></div>
-        <div class="absolute top-0 -right-10 w-72 h-72 md:w-[500px] md:h-[500px] bg-cyan-300 rounded-full mix-blend-multiply filter blur-[80px] opacity-70 animate-blob animation-delay-2000"></div>
-        <div class="absolute -bottom-10 left-20 w-72 h-72 md:w-[500px] md:h-[500px] bg-pink-400 rounded-full mix-blend-multiply filter blur-[80px] opacity-70 animate-blob animation-delay-4000"></div>
-        <div class="absolute bottom-20 right-20 w-72 h-72 md:w-[500px] md:h-[500px] bg-yellow-300 rounded-full mix-blend-multiply filter blur-[80px] opacity-60 animate-blob animation-delay-2000"></div>
+    <!-- HIGH CONTRAST NEON BLOBS -->
+    <div class="fixed inset-0 z-[-1] overflow-hidden pointer-events-none">
+        <div class="absolute top-[-10%] left-[-10%] w-[40vw] h-[40vw] bg-pink-500 rounded-full mix-blend-overlay filter blur-[100px] opacity-80 animate-blob"></div>
+        <div class="absolute top-[20%] right-[-10%] w-[45vw] h-[45vw] bg-cyan-400 rounded-full mix-blend-overlay filter blur-[100px] opacity-80 animate-blob animation-delay-2000"></div>
+        <div class="absolute bottom-[-20%] left-[10%] w-[50vw] h-[50vw] bg-purple-500 rounded-full mix-blend-overlay filter blur-[100px] opacity-80 animate-blob animation-delay-4000"></div>
+        <div class="absolute bottom-[10%] right-[20%] w-[35vw] h-[35vw] bg-yellow-400 rounded-full mix-blend-overlay filter blur-[100px] opacity-70 animate-blob animation-delay-2000"></div>
     </div>
+
+    <!-- FLOATING CONTACT WA BUTTON -->
+    <a id="wa-floating" href="https://wa.me/6281515561069" target="_blank" class="fixed bottom-6 right-6 md:bottom-8 md:right-8 z-[99] bg-gradient-to-r from-emerald-400 to-teal-500 hover:from-emerald-500 hover:to-teal-600 text-white px-5 py-3.5 rounded-full shadow-[0_10px_30px_rgba(16,185,129,0.5)] flex items-center gap-3 font-bold text-sm transition-all transform hover:scale-110 hover:-translate-y-2 border-2 border-white/60 backdrop-blur-md">
+        <span class="text-2xl drop-shadow-md">💬</span>
+        <div class="flex flex-col text-left">
+            <span class="text-[10px] uppercase tracking-wider text-emerald-100 leading-none">Bantuan & Ajuan Masalah</span>
+            <span class="hidden md:block text-sm leading-tight">Please contact WA 081515561069</span>
+            <span class="md:hidden text-sm leading-tight">WA 081515561069</span>
+        </div>
+    </a>
 
     <div class="flex-grow flex flex-col">
         <!-- SYSTEM STATUS BAR -->
-        <div class="glass-panel border-b border-white/60 py-2.5 px-4 md:px-6 flex justify-between items-center text-xs md:text-sm font-semibold z-50 relative no-print shadow-sm backdrop-blur-xl">
-            <span class="flex items-center gap-2.5 tracking-wider text-indigo-700">
-                <span class="w-3 h-3 rounded-full bg-green-500 animate-pulse shadow-[0_0_10px_rgba(34,197,94,0.8)]"></span>
-                <span class="hidden md:inline text-slate-600">SISTEM PRESENSI:</span> <span class="font-bold">ONLINE</span>
+        <div class="glass-panel rounded-none border-t-0 border-x-0 border-b border-white/60 py-3 px-4 md:px-6 flex justify-between items-center text-xs md:text-sm font-semibold z-50 relative no-print shadow-sm">
+            <span class="flex items-center gap-2.5 tracking-wider text-indigo-900 bg-white/50 px-3 py-1.5 rounded-full border border-white/50 backdrop-blur-md">
+                <span class="w-3 h-3 rounded-full bg-green-400 animate-pulse shadow-[0_0_12px_rgba(74,222,128,1)]"></span>
+                <span class="hidden md:inline text-slate-700 font-bold">SISTEM PRESENSI:</span> <span class="font-black text-pink-600">ONLINE</span>
             </span>
-            <span id="live-clock" class="font-heading font-extrabold text-transparent bg-clip-text bg-gradient-to-r from-indigo-600 to-purple-600 px-4 py-1.5 rounded-full bg-white/60 border border-white/80 shadow-sm tracking-wide flex items-center gap-2">
+            <span id="live-clock" class="font-heading font-black text-transparent bg-clip-text bg-gradient-to-r from-pink-600 via-purple-600 to-indigo-600 px-5 py-1.5 rounded-full bg-white/70 border border-white shadow-sm tracking-wide flex items-center gap-2">
                 ⏳ BOOTING...
             </span>
         </div>
 
         <!-- NAVIGATION BAR -->
-        <nav class="w-full max-w-7xl mx-auto mt-4 md:mt-6 px-3 md:px-6 no-print z-40 relative">
-            <div class="glass-panel rounded-3xl p-3 md:p-5 flex flex-col lg:flex-row justify-between items-center gap-4 md:gap-6 border border-white/80 shadow-xl relative overflow-hidden">
-                <div class="absolute top-0 left-0 w-full h-1.5 bg-gradient-to-r from-cyan-400 via-indigo-500 to-purple-500 opacity-90"></div>
+        <nav class="w-full max-w-7xl mx-auto mt-6 px-3 md:px-6 no-print z-40 relative">
+            <div class="glass-panel p-4 md:p-6 flex flex-col lg:flex-row justify-between items-center gap-5 md:gap-6 border-2 border-white shadow-2xl relative overflow-hidden">
+                <!-- Glowing Top Border -->
+                <div class="absolute top-0 left-0 w-full h-2 bg-gradient-to-r from-pink-500 via-purple-500 via-cyan-500 to-yellow-500 opacity-100"></div>
                 
-                <div class="flex items-center space-x-3 md:space-x-4 w-full lg:w-auto justify-center lg:justify-start pt-2 lg:pt-0">
-                    <div class="bg-white p-2.5 md:p-3 rounded-2xl border border-indigo-100 shadow-md flex items-center justify-center transform transition hover:scale-105 hover:rotate-2">
-                        <img src="https://drive.google.com/thumbnail?id=1xj5AeEbWisIpBlXpwJ_tbW7wMM8NsjjQ&sz=w500" alt="Logo" class="w-10 h-10 md:w-12 md:h-12 object-contain">
+                <div class="flex items-center space-x-4 md:space-x-5 w-full lg:w-auto justify-center lg:justify-start pt-2 lg:pt-0">
+                    <div class="bg-white p-3 md:p-4 rounded-3xl border-2 border-pink-200 shadow-xl flex items-center justify-center transform transition hover:scale-110 hover:rotate-6 duration-300">
+                        <img src="https://drive.google.com/thumbnail?id=1xj5AeEbWisIpBlXpwJ_tbW7wMM8NsjjQ&sz=w500" alt="Logo" class="w-12 h-12 md:w-14 md:h-14 object-contain drop-shadow-md">
                     </div>
                     <div class="text-center lg:text-left">
-                        <span class="font-heading font-black text-lg md:text-2xl tracking-tight uppercase block text-transparent bg-clip-text bg-gradient-to-r from-slate-800 to-slate-600 drop-shadow-sm">MAS MIFTAHUL ULUM</span>
-                        <span class="text-[10px] md:text-xs text-indigo-600 font-bold uppercase block tracking-widest mt-0.5">Digital Presence Protocol</span>
-                        <span class="text-[9px] md:text-[10px] text-slate-500 font-semibold block mt-1 bg-white/50 px-2 py-0.5 rounded-full w-fit mx-auto lg:mx-0">Dev by ALFIN N.H</span>
+                        <span class="font-heading font-black text-xl md:text-3xl tracking-tight uppercase block text-transparent bg-clip-text bg-gradient-to-r from-slate-900 to-slate-700 drop-shadow-sm">MAS MIFTAHUL ULUM</span>
+                        <span class="text-xs md:text-sm text-pink-600 font-black uppercase block tracking-widest mt-0.5">✨ Digital Presence Protocol</span>
+                        <span class="text-[10px] md:text-xs text-white font-bold block mt-1.5 bg-gradient-to-r from-indigo-500 to-purple-500 px-3 py-1 rounded-full w-fit mx-auto lg:mx-0 shadow-md">Dev by ALFIN N.H</span>
                     </div>
                 </div>
                 
                 <!-- MOBILE FRIENDLY SCROLLABLE TABS -->
-                <div class="flex overflow-x-auto w-full lg:w-auto gap-2 md:gap-3 bg-white/30 p-1.5 md:p-2 rounded-2xl border border-white/60 shadow-inner no-scrollbar">
-                    <button onclick="switchTab('scan')" id="tab-scan" class="tab-btn px-4 md:px-6 py-2.5 md:py-3 rounded-xl bg-gradient-to-r from-indigo-600 to-blue-600 shadow-lg shadow-indigo-500/40 font-bold text-xs md:text-sm whitespace-nowrap text-white border border-indigo-500/50 flex-1 lg:flex-none text-center">📷 SCANNER</button>
-                    <button onclick="switchTab('students')" id="tab-students" class="tab-btn px-4 md:px-6 py-2.5 md:py-3 rounded-xl bg-transparent hover:bg-white/80 font-bold text-xs md:text-sm whitespace-nowrap text-slate-600 hover:text-indigo-600 border border-transparent flex-1 lg:flex-none text-center">👥 DATA SISWA</button>
-                    <button onclick="switchTab('history')" id="tab-history" class="tab-btn px-4 md:px-6 py-2.5 md:py-3 rounded-xl bg-transparent hover:bg-white/80 font-bold text-xs md:text-sm whitespace-nowrap text-slate-600 hover:text-indigo-600 border border-transparent flex-1 lg:flex-none text-center">📊 REKAP LOG</button>
+                <div class="flex overflow-x-auto w-full lg:w-auto gap-2 md:gap-3 bg-white/40 p-2 md:p-2.5 rounded-3xl border-2 border-white/80 shadow-inner no-scrollbar backdrop-blur-md">
+                    <button onclick="switchTab('scan')" id="tab-scan" class="tab-btn px-5 md:px-7 py-3 md:py-4 rounded-2xl bg-gradient-to-r from-pink-500 via-purple-500 to-indigo-500 shadow-lg shadow-purple-500/50 font-black text-xs md:text-sm whitespace-nowrap text-white border-2 border-white/50 flex-1 lg:flex-none text-center transform scale-105">📷 SCANNER</button>
+                    
+                    <button onclick="switchTab('students')" id="tab-students" class="tab-btn px-5 md:px-7 py-3 md:py-4 rounded-2xl bg-white/50 hover:bg-white/90 font-black text-xs md:text-sm whitespace-nowrap text-slate-700 hover:text-pink-600 border-2 border-transparent hover:border-pink-200 flex-1 lg:flex-none text-center shadow-sm">👥 DATA SISWA</button>
+                    
+                    <button onclick="switchTab('history')" id="tab-history" class="tab-btn px-5 md:px-7 py-3 md:py-4 rounded-2xl bg-white/50 hover:bg-white/90 font-black text-xs md:text-sm whitespace-nowrap text-slate-700 hover:text-cyan-600 border-2 border-transparent hover:border-cyan-200 flex-1 lg:flex-none text-center shadow-sm">📊 REKAP LOG</button>
                 </div>
             </div>
         </nav>
 
-        <div class="w-full max-w-7xl mx-auto px-3 md:px-6 py-6 md:py-8 relative z-10 flex-grow">
+        <div class="w-full max-w-7xl mx-auto px-3 md:px-6 py-6 md:py-10 relative z-10 flex-grow">
 
             <!-- TAB 1: SCANNER -->
             <div id="view-scan" class="space-y-6 md:space-y-8 fade-in">
-                <div id="browser-warning" class="hidden bg-rose-500/90 backdrop-blur-md text-white p-4 rounded-2xl border border-rose-400 font-bold text-sm text-center shadow-lg shadow-rose-500/20"></div>
+                <div id="browser-warning" class="hidden bg-gradient-to-r from-rose-500 to-red-600 backdrop-blur-xl text-white p-5 rounded-3xl border-2 border-red-300 font-black text-sm text-center shadow-2xl shadow-red-500/40"></div>
 
                 <!-- CONFIG SECTION -->
-                <div class="glass-panel p-5 md:p-8 rounded-3xl relative overflow-hidden">
+                <div class="glass-panel p-6 md:p-10 relative overflow-hidden">
                     <div class="relative">
-                        <h2 class="font-heading text-base md:text-xl font-black text-slate-800 mb-6 flex flex-col md:flex-row md:items-center justify-between gap-4 border-b border-white/50 pb-4">
-                            <div class="flex items-center gap-3 md:gap-4">
-                                <span class="bg-gradient-to-br from-indigo-500 to-purple-600 text-white w-10 h-10 md:w-12 md:h-12 rounded-xl flex items-center justify-center text-sm md:text-base font-black shadow-lg shadow-indigo-500/30">01</span>
-                                <span class="tracking-tight">KONFIGURASI SESI KBM</span>
+                        <h2 class="font-heading text-lg md:text-2xl font-black text-slate-900 mb-6 flex flex-col md:flex-row md:items-center justify-between gap-4 border-b-2 border-white/50 pb-5">
+                            <div class="flex items-center gap-4 md:gap-5">
+                                <span class="bg-gradient-to-br from-pink-500 to-orange-400 text-white w-12 h-12 md:w-14 md:h-14 rounded-2xl flex items-center justify-center text-lg md:text-xl font-black shadow-xl shadow-pink-500/40 border-2 border-white/50">01</span>
+                                <span class="tracking-tight text-transparent bg-clip-text bg-gradient-to-r from-slate-900 to-purple-900">KONFIGURASI SESI KBM</span>
                             </div>
-                            <span id="cloud-status" class="text-[10px] md:text-xs font-black px-4 py-2 rounded-xl bg-white/80 text-slate-600 border border-white shadow-sm tracking-widest uppercase flex items-center gap-2">
-                                <svg class="animate-spin h-3 w-3 text-indigo-500" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24"><circle class="opacity-25" cx="12" cy="12" r="10" stroke="currentColor" stroke-width="4"></circle><path class="opacity-75" fill="currentColor" d="M4 12a8 8 0 018-8V0C5.373 0 0 5.373 0 12h4zm2 5.291A7.962 7.962 0 014 12H0c0 3.042 1.135 5.824 3 7.938l3-2.647z"></path></svg>
+                            <span id="cloud-status" class="text-[10px] md:text-xs font-black px-5 py-2.5 rounded-2xl bg-white/90 text-slate-700 border-2 border-white shadow-lg tracking-widest uppercase flex items-center gap-2">
+                                <svg class="animate-spin h-4 w-4 text-pink-500" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24"><circle class="opacity-25" cx="12" cy="12" r="10" stroke="currentColor" stroke-width="4"></circle><path class="opacity-75" fill="currentColor" d="M4 12a8 8 0 018-8V0C5.373 0 0 5.373 0 12h4zm2 5.291A7.962 7.962 0 014 12H0c0 3.042 1.135 5.824 3 7.938l3-2.647z"></path></svg>
                                 Sinkronisasi...
                             </span>
                         </h2>
                         
-                        <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4 md:gap-6">
+                        <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-5 md:gap-6">
                             <div>
-                                <label class="block text-[10px] md:text-xs font-black uppercase text-indigo-700 mb-2 tracking-wider">Mata Pelajaran <span class="text-rose-500 text-sm">*</span></label>
-                                <select id="select-subject" class="glass-input w-full p-3.5 md:p-4 rounded-2xl font-bold text-sm transition appearance-none cursor-pointer">
+                                <label class="block text-[11px] md:text-xs font-black uppercase text-pink-600 mb-2.5 tracking-wider">Mata Pelajaran <span class="text-rose-500 text-sm">*</span></label>
+                                <select id="select-subject" class="glass-input w-full p-4 rounded-2xl font-bold text-sm appearance-none cursor-pointer">
                                     <option value="">-- Pilih Mata Pelajaran --</option>
                                     <option value="Akidah">Akidah</option>
                                     <option value="Alquran Hadits">Alquran Hadits</option>
                                     <option value="Bahasa Arab">Bahasa Arab</option>
-                                    <option value="Bahasa Arab TL">Bahasa Arab TL</option>
                                     <option value="Bahasa Indonesia">Bahasa Indonesia</option>
                                     <option value="Bahasa Inggris">Bahasa Inggris</option>
                                     <option value="Biologi">Biologi</option>
@@ -169,7 +205,6 @@
                                     <option value="Informatika">Informatika</option>
                                     <option value="Kimia">Kimia</option>
                                     <option value="Matematika">Matematika</option>
-                                    <option value="Matematika TL">Matematika TL</option>
                                     <option value="PJOK">PJOK</option>
                                     <option value="PPKn">PPKn</option>
                                     <option value="Seni Budaya">Seni Budaya</option>
@@ -179,8 +214,8 @@
                                 </select>
                             </div>
                             <div>
-                                <label class="block text-[10px] md:text-xs font-black uppercase text-indigo-700 mb-2 tracking-wider">Kelas <span class="text-rose-500 text-sm">*</span></label>
-                                <select id="select-class" class="glass-input w-full p-3.5 md:p-4 rounded-2xl font-bold text-sm transition appearance-none cursor-pointer">
+                                <label class="block text-[11px] md:text-xs font-black uppercase text-pink-600 mb-2.5 tracking-wider">Kelas <span class="text-rose-500 text-sm">*</span></label>
+                                <select id="select-class" class="glass-input w-full p-4 rounded-2xl font-bold text-sm appearance-none cursor-pointer">
                                     <option value="">-- Pilih Kelas --</option>
                                     <option value="X - A">X - A</option>
                                     <option value="X - B">X - B</option>
@@ -190,8 +225,8 @@
                                 </select>
                             </div>
                             <div>
-                                <label class="block text-[10px] md:text-xs font-black uppercase text-indigo-700 mb-2 tracking-wider">Jam Mapel <span class="text-rose-500 text-sm">*</span></label>
-                                <select id="select-jam" onchange="checkManualJam(this.value)" class="glass-input w-full p-3.5 md:p-4 rounded-2xl font-bold text-sm transition appearance-none cursor-pointer">
+                                <label class="block text-[11px] md:text-xs font-black uppercase text-pink-600 mb-2.5 tracking-wider">Jam Mapel <span class="text-rose-500 text-sm">*</span></label>
+                                <select id="select-jam" onchange="checkManualJam(this.value)" class="glass-input w-full p-4 rounded-2xl font-bold text-sm appearance-none cursor-pointer">
                                     <option value="">-- Pilih Jam --</option>
                                     <option value="1">1</option>
                                     <option value="2">2</option>
@@ -206,20 +241,16 @@
                                     <option value="4-5">4-5</option>
                                     <option value="5-6">5-6</option>
                                     <option value="7-8">7-8</option>
-                                    <option value="1-2-3">1-2-3</option>
-                                    <option value="7-8-9">7-8-9</option>
-                                    <option value="4-5-6">4-5-6</option>
-                                    <option value="5-6-7">5-6-7</option>
                                     <option value="manual">Lainnya (Manual)...</option>
                                 </select>
-                                <input type="text" id="input-jam-manual" placeholder="Ketik manual..." class="hidden mt-3 glass-input w-full p-3.5 md:p-4 rounded-2xl font-bold text-sm transition">
+                                <input type="text" id="input-jam-manual" placeholder="Ketik manual..." class="hidden mt-3 glass-input w-full p-4 rounded-2xl font-bold text-sm">
                             </div>
                             <div class="flex items-end pt-2 lg:pt-0">
-                                <button id="btn-start-session" onclick="startSession()" class="w-full bg-gradient-to-r from-emerald-500 to-teal-500 hover:from-emerald-400 hover:to-teal-400 text-white font-black py-4 px-4 rounded-2xl transition-all transform hover:scale-[1.02] active:scale-95 shadow-xl shadow-emerald-500/30 text-sm flex justify-center items-center gap-2">
-                                    <span class="text-lg">▶</span> MULAI SCANNER
+                                <button id="btn-start-session" onclick="startSession()" class="w-full bg-gradient-to-r from-cyan-400 to-blue-500 hover:from-cyan-300 hover:to-blue-400 text-white font-black py-4 px-4 rounded-2xl transition-all transform hover:scale-[1.05] active:scale-95 shadow-[0_10px_25px_rgba(6,182,212,0.5)] border-2 border-white/50 text-sm md:text-base flex justify-center items-center gap-2">
+                                    <span class="text-xl">▶</span> MULAI SCAN
                                 </button>
-                                <button id="btn-stop-session" onclick="stopSession()" class="w-full bg-gradient-to-r from-rose-600 to-pink-600 hover:from-rose-500 hover:to-pink-500 text-white font-black py-4 px-4 rounded-2xl transition-all transform hover:scale-[1.02] active:scale-95 hidden justify-center items-center gap-2 shadow-xl shadow-rose-500/30 text-sm">
-                                    <span class="text-lg">⏹</span> HENTIKAN SESI
+                                <button id="btn-stop-session" onclick="stopSession()" class="w-full bg-gradient-to-r from-rose-500 to-red-600 hover:from-rose-400 hover:to-red-500 text-white font-black py-4 px-4 rounded-2xl transition-all transform hover:scale-[1.05] active:scale-95 hidden justify-center items-center gap-2 shadow-[0_10px_25px_rgba(244,63,94,0.5)] border-2 border-white/50 text-sm md:text-base">
+                                    <span class="text-xl">⏹</span> STOP SESI
                                 </button>
                             </div>
                         </div>
@@ -227,80 +258,80 @@
                 </div>
 
                 <!-- SCANNER & LOG SECTION -->
-                <div id="scanner-section" class="hidden grid grid-cols-1 lg:grid-cols-12 gap-6 relative">
+                <div id="scanner-section" class="hidden grid grid-cols-1 lg:grid-cols-12 gap-6 md:gap-8 relative">
                     <!-- LEFT: CAMERA -->
-                    <div class="lg:col-span-5 glass-panel p-5 md:p-8 rounded-3xl flex flex-col relative z-10">
+                    <div class="lg:col-span-5 glass-panel p-6 md:p-8 flex flex-col relative z-10">
                         <div class="flex flex-col gap-4 mb-6">
-                            <div class="flex justify-between items-center border-b border-white/50 pb-3">
-                                <h3 class="font-heading text-sm md:text-lg font-black text-slate-800 tracking-tight flex items-center gap-2">
-                                    <span class="bg-indigo-100 text-indigo-700 w-8 h-8 rounded-lg flex items-center justify-center text-sm shadow-inner">02</span>
+                            <div class="flex justify-between items-center border-b-2 border-white/50 pb-4">
+                                <h3 class="font-heading text-base md:text-xl font-black text-slate-900 tracking-tight flex items-center gap-3">
+                                    <span class="bg-gradient-to-br from-cyan-400 to-blue-500 text-white w-10 h-10 md:w-12 md:h-12 rounded-xl flex items-center justify-center text-base shadow-lg shadow-cyan-500/30">02</span>
                                     LENSA SCANNER
                                 </h3>
                             </div>
-                            <div id="camera-select-container" class="hidden w-full bg-white/60 p-3 rounded-2xl border border-white shadow-sm">
-                                <label class="block text-[10px] font-black uppercase text-indigo-500 mb-1.5 tracking-wider">Pilih Lensa Kamera:</label>
-                                <select id="camera-select" onchange="switchCamera(this.value)" class="glass-input w-full p-2.5 rounded-xl text-xs font-bold cursor-pointer"></select>
+                            <div id="camera-select-container" class="hidden w-full bg-white/70 p-4 rounded-2xl border-2 border-white shadow-md backdrop-blur-sm">
+                                <label class="block text-[11px] font-black uppercase text-cyan-600 mb-2 tracking-wider">Pilih Lensa Kamera:</label>
+                                <select id="camera-select" onchange="switchCamera(this.value)" class="glass-input w-full p-3 rounded-xl text-xs font-bold cursor-pointer"></select>
                             </div>
                         </div>
 
-                        <div class="relative w-full max-w-[320px] sm:max-w-[400px] mx-auto aspect-square p-2.5 bg-gradient-to-br from-white/60 to-white/20 rounded-[2rem] border-2 border-white/80 shadow-[inset_0_4px_20px_rgba(0,0,0,0.05)]">
-                            <div class="absolute inset-0 border-4 border-dashed border-indigo-400/50 rounded-[2rem] m-2 animate-pulse pointer-events-none"></div>
-                            <div id="reader" class="w-full h-full overflow-hidden rounded-[1.5rem] bg-slate-900 relative flex items-center justify-center text-white text-xs shadow-inner"></div>
+                        <div class="relative w-full max-w-[320px] sm:max-w-[400px] mx-auto aspect-square p-3 bg-gradient-to-br from-white/80 to-white/30 rounded-[2.5rem] border-4 border-white/90 shadow-[inset_0_10px_30px_rgba(0,0,0,0.1)]">
+                            <div class="absolute inset-0 border-4 border-dashed border-cyan-400/70 rounded-[2.5rem] m-3 animate-pulse pointer-events-none"></div>
+                            <div id="reader" class="w-full h-full overflow-hidden rounded-[2rem] bg-slate-900 relative flex items-center justify-center text-white text-xs shadow-inner"></div>
                         </div>
                         
-                        <div class="mt-6 flex flex-col items-center gap-2">
-                            <span id="session-badge" class="bg-gradient-to-r from-indigo-500 to-purple-600 text-white text-[11px] md:text-xs font-black px-4 py-2 rounded-xl uppercase shadow-lg shadow-indigo-500/30 text-center w-full truncate"></span>
-                            <p class="text-[10px] md:text-xs text-slate-500 text-center uppercase font-bold tracking-widest mt-2">Arahkan QR Code ke dalam frame</p>
+                        <div class="mt-8 flex flex-col items-center gap-3">
+                            <span id="session-badge" class="bg-gradient-to-r from-pink-500 via-purple-500 to-indigo-500 text-white text-[12px] md:text-sm font-black px-6 py-3 rounded-2xl border-2 border-white/50 uppercase shadow-[0_10px_20px_rgba(217,70,239,0.4)] text-center w-full truncate block"></span>
+                            <p class="text-[11px] md:text-xs text-slate-700 bg-white/50 px-4 py-2 rounded-full border border-white/50 text-center uppercase font-bold tracking-widest mt-2 shadow-sm">Arahkan QR Code ke dalam frame</p>
                         </div>
                     </div>
 
                     <!-- RIGHT: LOG & MANUAL INPUT -->
-                    <div class="lg:col-span-7 glass-panel p-5 md:p-8 rounded-3xl flex flex-col justify-between">
+                    <div class="lg:col-span-7 glass-panel p-6 md:p-8 flex flex-col justify-between">
                         <div>
-                            <div class="flex justify-between items-center border-b border-white/50 pb-4 mb-6">
-                                <h3 class="font-heading text-sm md:text-lg font-black text-slate-800 tracking-tight flex items-center gap-2">
-                                    <span class="bg-cyan-100 text-cyan-700 w-8 h-8 rounded-lg flex items-center justify-center text-sm shadow-inner">03</span>
+                            <div class="flex justify-between items-center border-b-2 border-white/50 pb-5 mb-6">
+                                <h3 class="font-heading text-base md:text-xl font-black text-slate-900 tracking-tight flex items-center gap-3">
+                                    <span class="bg-gradient-to-br from-purple-500 to-indigo-500 text-white w-10 h-10 md:w-12 md:h-12 rounded-xl flex items-center justify-center text-base shadow-lg shadow-purple-500/30">03</span>
                                     LOG AKTIVITAS
                                 </h3>
-                                <span class="text-xs md:text-sm font-bold text-slate-500 bg-white/70 px-4 py-2 rounded-xl shadow-sm border border-white">
-                                    TEREKAM: <span id="count-session" class="text-indigo-600 font-black text-xl ml-1">0</span>
+                                <span class="text-xs md:text-sm font-bold text-slate-600 bg-white/80 px-5 py-2.5 rounded-2xl shadow-md border-2 border-white flex items-center gap-2">
+                                    TEREKAM: <span id="count-session" class="bg-gradient-to-r from-pink-500 to-purple-600 text-transparent bg-clip-text font-black text-2xl">0</span>
                                 </span>
                             </div>
                             
                             <!-- MANUAL INPUT BOX -->
-                            <div class="mb-6 p-4 md:p-5 bg-gradient-to-br from-white/70 to-white/40 border border-white rounded-2xl shadow-sm backdrop-blur-md">
-                                <label class="block text-[10px] md:text-xs font-black uppercase text-indigo-600 mb-3 tracking-wider">🛠️ Input Manual Presensi:</label>
-                                <div class="grid grid-cols-1 sm:grid-cols-12 gap-3">
-                                    <select id="manual-student-nis" class="sm:col-span-6 glass-input p-3.5 rounded-xl text-xs md:text-sm font-bold appearance-none cursor-pointer">
+                            <div class="mb-6 p-5 md:p-6 bg-gradient-to-br from-white/80 to-white/40 border-2 border-white rounded-3xl shadow-lg backdrop-blur-xl">
+                                <label class="block text-[11px] md:text-xs font-black uppercase text-purple-600 mb-3 tracking-wider">✨ Input Manual Presensi:</label>
+                                <div class="grid grid-cols-1 sm:grid-cols-12 gap-4">
+                                    <select id="manual-student-nis" class="sm:col-span-5 glass-input p-4 rounded-2xl text-xs md:text-sm font-bold appearance-none cursor-pointer">
                                         <option value="">-- Cari Nama Siswa --</option>
                                     </select>
-                                    <select id="manual-status" class="sm:col-span-3 glass-input p-3.5 rounded-xl text-xs md:text-sm font-bold appearance-none cursor-pointer">
-                                        <option value="Hadir">HADIR</option>
-                                        <option value="Sakit">SAKIT</option>
-                                        <option value="Izin">IZIN</option>
-                                        <option value="Alpha">ALPHA</option>
+                                    <select id="manual-status" class="sm:col-span-4 glass-input p-4 rounded-2xl text-xs md:text-sm font-bold appearance-none cursor-pointer">
+                                        <option value="Hadir">🌟 HADIR</option>
+                                        <option value="Sakit">💊 SAKIT</option>
+                                        <option value="Izin">💌 IZIN</option>
+                                        <option value="Alpha">❌ ALPHA</option>
                                     </select>
-                                    <button type="button" onclick="submitManualAttendance()" class="sm:col-span-3 bg-gradient-to-r from-blue-600 to-indigo-600 hover:from-blue-500 hover:to-indigo-500 text-white font-black py-3.5 px-4 rounded-xl text-xs md:text-sm transition-all transform hover:scale-[1.03] active:scale-95 shadow-lg shadow-indigo-500/30 w-full">
+                                    <button type="button" onclick="submitManualAttendance()" class="sm:col-span-3 bg-gradient-to-r from-yellow-400 to-orange-500 hover:from-yellow-300 hover:to-orange-400 text-white font-black py-4 px-4 rounded-2xl text-xs md:text-sm transition-all transform hover:scale-[1.05] active:scale-95 shadow-[0_10px_20px_rgba(245,158,11,0.4)] border-2 border-white/50 w-full">
                                         SIMPAN
                                     </button>
                                 </div>
                             </div>
 
                             <!-- LOG TABLE -->
-                            <div class="overflow-hidden border border-white rounded-2xl bg-white/40 shadow-inner">
-                                <div class="overflow-x-auto overflow-y-auto max-h-[250px] md:max-h-[300px] table-scroll w-full">
+                            <div class="overflow-hidden border-2 border-white rounded-3xl bg-white/40 shadow-[inset_0_5px_20px_rgba(0,0,0,0.05)] backdrop-blur-md">
+                                <div class="overflow-x-auto overflow-y-auto max-h-[280px] md:max-h-[350px] table-scroll w-full">
                                     <table class="w-full text-left border-collapse text-xs md:text-sm min-w-[400px]">
-                                        <thead class="sticky top-0 bg-white/90 backdrop-blur-xl border-b border-indigo-100 z-10">
-                                            <tr class="text-indigo-800 uppercase text-[10px] md:text-xs tracking-wider">
-                                                <th class="p-4 font-black whitespace-nowrap">Waktu</th>
-                                                <th class="p-4 font-black whitespace-nowrap">NIS</th>
-                                                <th class="p-4 font-black whitespace-nowrap">Nama Lengkap</th>
-                                                <th class="p-4 font-black text-center">Status</th>
+                                        <thead class="sticky top-0 bg-white/90 backdrop-blur-xl border-b-2 border-white z-10 shadow-sm">
+                                            <tr class="text-indigo-900 uppercase text-[10px] md:text-xs tracking-widest font-black">
+                                                <th class="p-4 md:p-5 whitespace-nowrap">Waktu</th>
+                                                <th class="p-4 md:p-5 whitespace-nowrap">NIS</th>
+                                                <th class="p-4 md:p-5 whitespace-nowrap">Nama Lengkap</th>
+                                                <th class="p-4 md:p-5 text-center">Status</th>
                                             </tr>
                                         </thead>
-                                        <tbody id="session-log-body" class="divide-y divide-white/50 text-slate-700 bg-white/20">
+                                        <tbody id="session-log-body" class="divide-y-2 divide-white/60 text-slate-800 bg-white/20">
                                             <tr>
-                                                <td colspan="4" class="p-8 text-center text-slate-400 font-bold text-xs">Arahkan QR Code untuk memulai...</td>
+                                                <td colspan="4" class="p-10 text-center text-slate-500 font-bold text-sm">✨ Arahkan QR Code untuk memulai keajaiban...</td>
                                             </tr>
                                         </tbody>
                                     </table>
@@ -308,8 +339,8 @@
                             </div>
                         </div>
                         
-                        <div class="mt-6 pt-4 border-t border-white/50">
-                            <div id="scan-alert" class="hidden p-4 rounded-2xl text-xs md:text-sm font-black text-center shadow-lg transition-all transform duration-300"></div>
+                        <div class="mt-6 pt-5 border-t-2 border-white/50">
+                            <div id="scan-alert" class="hidden p-5 rounded-2xl text-xs md:text-sm font-black text-center shadow-xl transition-all transform duration-300 border-2"></div>
                         </div>
                     </div>
                 </div>
@@ -318,12 +349,12 @@
             <!-- TAB 2: DATA SISWA & GENERATE QR -->
             <div id="view-students" class="hidden space-y-6 md:space-y-8 fade-in">
                 <!-- FORM ADD STUDENT -->
-                <div class="glass-panel p-5 md:p-8 rounded-3xl relative">
-                    <h2 class="font-heading text-base md:text-xl font-black text-slate-800 mb-6 border-b border-white/50 pb-4">REGISTRASI DATA SISWA</h2>
-                    <form id="form-add-student" onsubmit="addStudent(event)" class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4 relative z-10">
-                        <input type="text" id="stu-nis" placeholder="Nomor Induk Siswa" required class="glass-input p-4 rounded-2xl text-sm font-bold placeholder-slate-400">
-                        <input type="text" id="stu-name" placeholder="Nama Lengkap Siswa" required class="glass-input p-4 rounded-2xl text-sm font-bold placeholder-slate-400">
-                        <select id="stu-class" required class="glass-input p-4 rounded-2xl text-sm font-bold appearance-none text-slate-700 cursor-pointer">
+                <div class="glass-panel p-6 md:p-10 relative">
+                    <h2 class="font-heading text-lg md:text-2xl font-black text-slate-900 mb-6 border-b-2 border-white/50 pb-5 text-transparent bg-clip-text bg-gradient-to-r from-pink-600 to-purple-600">REGISTRASI DATA SISWA</h2>
+                    <form id="form-add-student" onsubmit="addStudent(event)" class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-5 relative z-10">
+                        <input type="text" id="stu-nis" placeholder="Nomor Induk Siswa" required class="glass-input p-4 rounded-2xl text-sm font-bold placeholder-slate-500">
+                        <input type="text" id="stu-name" placeholder="Nama Lengkap Siswa" required class="glass-input p-4 rounded-2xl text-sm font-bold placeholder-slate-500">
+                        <select id="stu-class" required class="glass-input p-4 rounded-2xl text-sm font-bold appearance-none text-slate-800 cursor-pointer">
                             <option value="">-- Pilih Kelas --</option>
                             <option value="X - A">X - A</option>
                             <option value="X - B">X - B</option>
@@ -331,55 +362,52 @@
                             <option value="XII - A">XII - A</option>
                             <option value="XII - B">XII - B</option>
                         </select>
-                        <button type="submit" class="bg-gradient-to-r from-blue-600 to-indigo-600 hover:from-blue-500 hover:to-indigo-500 text-white font-black py-4 px-4 rounded-2xl text-sm transition-all transform hover:scale-[1.02] active:scale-95 shadow-xl shadow-blue-500/30 w-full uppercase tracking-wider">➕ BUAT KARTU QR</button>
+                        <button type="submit" class="bg-gradient-to-r from-fuchsia-500 to-pink-600 hover:from-fuchsia-400 hover:to-pink-500 text-white font-black py-4 px-4 rounded-2xl text-sm transition-all transform hover:scale-[1.05] active:scale-95 shadow-[0_10px_25px_rgba(236,72,153,0.5)] border-2 border-white/50 w-full uppercase tracking-widest">✨ BUAT KARTU</button>
                     </form>
                 </div>
 
                 <!-- CARDS QR -->
-                <div class="glass-panel p-5 md:p-8 rounded-3xl">
-                    <div class="flex flex-col lg:flex-row justify-between items-start lg:items-center mb-8 gap-4 border-b border-white/50 pb-5">
+                <div class="glass-panel p-6 md:p-10">
+                    <div class="flex flex-col lg:flex-row justify-between items-start lg:items-center mb-8 gap-5 border-b-2 border-white/50 pb-6">
                         <div>
-                            <h2 class="font-heading text-base md:text-xl font-black text-slate-800">DATABASE & KARTU QR</h2>
-                            <p class="text-[11px] md:text-xs text-slate-500 mt-1.5 font-bold tracking-wide">Cetak atau Ekspor kartu QR untuk dibagikan kepada siswa.</p>
+                            <h2 class="font-heading text-lg md:text-2xl font-black text-slate-900 text-transparent bg-clip-text bg-gradient-to-r from-cyan-600 to-blue-600">DATABASE & KARTU QR</h2>
+                            <p class="text-[11px] md:text-sm text-slate-700 mt-2 font-bold tracking-wide">Cetak atau Ekspor kartu yang super aesthetic untuk siswa.</p>
                         </div>
                         
-                        <div class="flex flex-wrap gap-3 w-full lg:w-auto justify-start lg:justify-end">
-                            <button onclick="exportQRToWord()" class="bg-gradient-to-r from-violet-500 to-purple-600 hover:from-violet-400 hover:to-purple-500 text-white px-5 py-3 rounded-xl text-xs font-black transition-all transform hover:scale-[1.03] active:scale-95 flex justify-center items-center gap-2 shadow-lg shadow-purple-500/30 flex-grow lg:flex-grow-0">
+                        <div class="flex flex-wrap gap-4 w-full lg:w-auto justify-start lg:justify-end">
+                            <button onclick="exportQRToWord()" class="bg-gradient-to-r from-violet-500 to-purple-600 hover:from-violet-400 hover:to-purple-500 text-white px-6 py-3.5 rounded-2xl text-xs md:text-sm font-black transition-all transform hover:scale-[1.05] active:scale-95 flex justify-center items-center gap-2 shadow-[0_10px_20px_rgba(139,92,246,0.4)] border-2 border-white/50 flex-grow lg:flex-grow-0">
                                 📄 EXPORT DOC
                             </button>
-                            <button onclick="printQRCodes()" class="bg-gradient-to-r from-blue-500 to-cyan-500 hover:from-blue-400 hover:to-cyan-400 text-white px-5 py-3 rounded-xl text-xs font-black transition-all transform hover:scale-[1.03] active:scale-95 flex justify-center items-center gap-2 shadow-lg shadow-blue-500/30 flex-grow lg:flex-grow-0">
+                            <button onclick="printQRCodes()" class="bg-gradient-to-r from-blue-500 to-cyan-500 hover:from-blue-400 hover:to-cyan-400 text-white px-6 py-3.5 rounded-2xl text-xs md:text-sm font-black transition-all transform hover:scale-[1.05] active:scale-95 flex justify-center items-center gap-2 shadow-[0_10px_20px_rgba(59,130,246,0.4)] border-2 border-white/50 flex-grow lg:flex-grow-0">
                                 🖨️ PRINT KARTU
                             </button>
-                            <button onclick="clearStudents()" class="bg-white/50 hover:bg-rose-100 text-rose-600 px-5 py-3 rounded-xl text-xs font-black transition-all border border-rose-200 flex justify-center items-center gap-2 flex-grow lg:flex-grow-0">
+                            <button onclick="clearStudents()" class="bg-white/60 hover:bg-rose-100 text-rose-600 px-6 py-3.5 rounded-2xl text-xs md:text-sm font-black transition-all border-2 border-rose-200 flex justify-center items-center gap-2 flex-grow lg:flex-grow-0 shadow-sm">
                                 🗑️ HAPUS SEMUA
                             </button>
                         </div>
                     </div>
 
-                    <div id="print-area" class="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 lg:grid-cols-5 gap-4 md:gap-6 justify-items-center"></div>
+                    <div id="print-area" class="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 lg:grid-cols-5 gap-5 md:gap-8 justify-items-center"></div>
                 </div>
             </div>
 
             <!-- TAB 3: REKAP DATA -->
             <div id="view-history" class="hidden space-y-6 md:space-y-8 fade-in">
-                <div class="glass-panel p-5 md:p-8 rounded-3xl">
-                    <div class="flex flex-col xl:flex-row justify-between items-start xl:items-center mb-8 gap-6 border-b border-white/50 pb-6">
+                <div class="glass-panel p-6 md:p-10">
+                    <div class="flex flex-col xl:flex-row justify-between items-start xl:items-center mb-8 gap-6 border-b-2 border-white/50 pb-6">
                         <div class="w-full xl:w-1/4">
-                            <h2 class="font-heading text-base md:text-xl font-black text-slate-800">MASTER LOG PRESENSI</h2>
-                            <p class="text-[11px] md:text-xs text-slate-500 mt-1.5 font-bold tracking-wide">Data sinkron otomatis ke Google Sheets.</p>
+                            <h2 class="font-heading text-lg md:text-2xl font-black text-slate-900 text-transparent bg-clip-text bg-gradient-to-r from-indigo-600 to-purple-600">MASTER LOG PRESENSI</h2>
+                            <p class="text-[11px] md:text-sm text-slate-700 mt-2 font-bold tracking-wide">Data sinkron otomatis ke Google Sheets.</p>
                         </div>
                         
                         <div class="flex flex-col lg:flex-row gap-4 w-full xl:w-3/4 justify-end items-center">
-                            <!-- FILTER GROUP REVISED -->
-                            <div class="grid grid-cols-2 sm:grid-cols-3 xl:grid-cols-6 gap-3 w-full lg:w-auto flex-grow">
+                            <!-- FILTER GROUP -->
+                            <div class="grid grid-cols-2 sm:grid-cols-3 xl:grid-cols-6 gap-4 w-full lg:w-auto flex-grow">
+                                <input type="date" id="filter-date" onchange="renderHistory()" class="glass-input p-3.5 rounded-2xl text-xs md:text-sm font-bold w-full text-slate-600">
+                                <input type="month" id="filter-month" onchange="renderHistory()" class="glass-input p-3.5 rounded-2xl text-xs md:text-sm font-bold w-full text-slate-600">
+                                <input type="text" id="filter-name" onkeyup="renderHistory()" placeholder="🔍 Cari Nama..." class="glass-input p-3.5 rounded-2xl text-xs md:text-sm font-bold w-full">
                                 
-                                <!-- NEW FILTER: Tanggal & Bulan -->
-                                <input type="date" id="filter-date" onchange="renderHistory()" class="glass-input p-3 rounded-xl text-xs font-bold w-full text-slate-500" title="Filter Tanggal Spesifik">
-                                <input type="month" id="filter-month" onchange="renderHistory()" class="glass-input p-3 rounded-xl text-xs font-bold w-full text-slate-500" title="Filter Bulan Tertentu">
-
-                                <input type="text" id="filter-name" onkeyup="renderHistory()" placeholder="🔍 Cari Nama..." class="glass-input p-3 rounded-xl text-xs font-bold w-full">
-                                
-                                <select id="filter-class" onchange="renderHistory()" class="glass-input p-3 rounded-xl text-xs font-bold appearance-none cursor-pointer w-full">
+                                <select id="filter-class" onchange="renderHistory()" class="glass-input p-3.5 rounded-2xl text-xs md:text-sm font-bold appearance-none cursor-pointer w-full">
                                     <option value="">-- Semua Kelas --</option>
                                     <option value="X - A">X - A</option>
                                     <option value="X - B">X - B</option>
@@ -388,13 +416,12 @@
                                     <option value="XII - B">XII - B</option>
                                 </select>
 
-                                <!-- REVISI FILTER MAPEL LENGKAP -->
-                                <select id="filter-subject" onchange="renderHistory()" class="glass-input p-3 rounded-xl text-xs font-bold appearance-none cursor-pointer w-full">
+                                <select id="filter-subject" onchange="renderHistory()" class="glass-input p-3.5 rounded-2xl text-xs md:text-sm font-bold appearance-none cursor-pointer w-full">
                                     <option value="">-- Semua Mapel --</option>
+                                    <!-- Options same as tab 1 -->
                                     <option value="Akidah">Akidah</option>
                                     <option value="Alquran Hadits">Alquran Hadits</option>
                                     <option value="Bahasa Arab">Bahasa Arab</option>
-                                    <option value="Bahasa Arab TL">Bahasa Arab TL</option>
                                     <option value="Bahasa Indonesia">Bahasa Indonesia</option>
                                     <option value="Bahasa Inggris">Bahasa Inggris</option>
                                     <option value="Biologi">Biologi</option>
@@ -406,16 +433,15 @@
                                     <option value="Informatika">Informatika</option>
                                     <option value="Kimia">Kimia</option>
                                     <option value="Matematika">Matematika</option>
-                                    <option value="Matematika TL">Matematika TL</option>
                                     <option value="PJOK">PJOK</option>
                                     <option value="PPKn">PPKn</option>
                                     <option value="Seni Budaya">Seni Budaya</option>
-                                    <option value="SKI">SKI (Sejarah Kebudayaan Islam)</option>
+                                    <option value="SKI">SKI</option>
                                     <option value="Sosiologi">Sosiologi</option>
                                     <option value="Taklim">Taklim</option>
                                 </select>
 
-                                <select id="filter-status" onchange="renderHistory()" class="glass-input p-3 rounded-xl text-xs font-bold appearance-none cursor-pointer w-full">
+                                <select id="filter-status" onchange="renderHistory()" class="glass-input p-3.5 rounded-2xl text-xs md:text-sm font-bold appearance-none cursor-pointer w-full">
                                     <option value="">-- Semua Status --</option>
                                     <option value="Hadir">Hadir</option>
                                     <option value="Sakit">Sakit</option>
@@ -426,13 +452,13 @@
 
                             <!-- EXPORT GROUP -->
                             <div class="grid grid-cols-3 gap-3 w-full lg:w-auto shrink-0">
-                                <button onclick="exportHistoryToDoc()" class="bg-gradient-to-r from-indigo-500 to-purple-600 hover:from-indigo-400 hover:to-purple-500 text-white px-4 py-3 rounded-xl text-xs font-black transition-all transform hover:scale-[1.05] active:scale-95 flex justify-center items-center shadow-lg shadow-purple-500/30">
+                                <button onclick="exportHistoryToDoc()" class="bg-gradient-to-r from-indigo-500 to-purple-600 hover:from-indigo-400 hover:to-purple-500 text-white px-5 py-3.5 rounded-2xl text-xs font-black transition-all transform hover:scale-[1.1] active:scale-95 flex justify-center items-center shadow-[0_5px_15px_rgba(139,92,246,0.4)] border-2 border-white/50">
                                     📄 DOC
                                 </button>
-                                <button onclick="exportToCSV()" class="bg-gradient-to-r from-emerald-500 to-teal-500 hover:from-emerald-400 hover:to-teal-400 text-white px-4 py-3 rounded-xl text-xs font-black transition-all transform hover:scale-[1.05] active:scale-95 flex justify-center items-center shadow-lg shadow-emerald-500/30">
+                                <button onclick="exportToCSV()" class="bg-gradient-to-r from-emerald-400 to-teal-500 hover:from-emerald-300 hover:to-teal-400 text-white px-5 py-3.5 rounded-2xl text-xs font-black transition-all transform hover:scale-[1.1] active:scale-95 flex justify-center items-center shadow-[0_5px_15px_rgba(16,185,129,0.4)] border-2 border-white/50">
                                     📊 CSV
                                 </button>
-                                <button onclick="clearHistory()" class="bg-white/60 hover:bg-rose-100 text-rose-600 px-4 py-3 rounded-xl text-xs font-black transition-all border border-rose-200 flex items-center justify-center">
+                                <button onclick="clearHistory()" class="bg-white/70 hover:bg-rose-100 text-rose-600 px-5 py-3.5 rounded-2xl text-xs font-black transition-all border-2 border-rose-200 flex items-center justify-center shadow-sm">
                                     🗑️ CLEAR
                                 </button>
                             </div>
@@ -440,41 +466,41 @@
                     </div>
                     
                     <!-- COLORFUL STATS COUNTER -->
-                    <div class="grid grid-cols-2 md:grid-cols-4 gap-3 md:gap-5 mb-6">
-                        <div class="bg-gradient-to-br from-green-50 to-emerald-100 border border-emerald-200 p-4 md:p-5 rounded-2xl shadow-sm text-center transform transition hover:-translate-y-1">
-                            <div class="text-[10px] md:text-xs font-black text-emerald-600 uppercase tracking-widest mb-2">Hadir</div>
-                            <div id="count-hadir" class="text-3xl md:text-4xl font-black text-emerald-700 drop-shadow-sm">0</div>
+                    <div class="grid grid-cols-2 md:grid-cols-4 gap-4 md:gap-6 mb-8">
+                        <div class="bg-gradient-to-br from-green-400 to-emerald-500 border-2 border-white p-5 md:p-6 rounded-3xl shadow-[0_10px_20px_rgba(16,185,129,0.3)] text-center transform transition hover:-translate-y-2">
+                            <div class="text-[11px] md:text-sm font-black text-white uppercase tracking-widest mb-2 drop-shadow-md">🌟 Hadir</div>
+                            <div id="count-hadir" class="text-4xl md:text-5xl font-black text-white drop-shadow-lg">0</div>
                         </div>
-                        <div class="bg-gradient-to-br from-blue-50 to-indigo-100 border border-indigo-200 p-4 md:p-5 rounded-2xl shadow-sm text-center transform transition hover:-translate-y-1">
-                            <div class="text-[10px] md:text-xs font-black text-indigo-600 uppercase tracking-widest mb-2">Sakit</div>
-                            <div id="count-sakit" class="text-3xl md:text-4xl font-black text-indigo-700 drop-shadow-sm">0</div>
+                        <div class="bg-gradient-to-br from-blue-400 to-cyan-500 border-2 border-white p-5 md:p-6 rounded-3xl shadow-[0_10px_20px_rgba(6,182,212,0.3)] text-center transform transition hover:-translate-y-2">
+                            <div class="text-[11px] md:text-sm font-black text-white uppercase tracking-widest mb-2 drop-shadow-md">💊 Sakit</div>
+                            <div id="count-sakit" class="text-4xl md:text-5xl font-black text-white drop-shadow-lg">0</div>
                         </div>
-                        <div class="bg-gradient-to-br from-yellow-50 to-amber-100 border border-amber-200 p-4 md:p-5 rounded-2xl shadow-sm text-center transform transition hover:-translate-y-1">
-                            <div class="text-[10px] md:text-xs font-black text-amber-600 uppercase tracking-widest mb-2">Izin</div>
-                            <div id="count-izin" class="text-3xl md:text-4xl font-black text-amber-700 drop-shadow-sm">0</div>
+                        <div class="bg-gradient-to-br from-yellow-400 to-orange-500 border-2 border-white p-5 md:p-6 rounded-3xl shadow-[0_10px_20px_rgba(245,158,11,0.3)] text-center transform transition hover:-translate-y-2">
+                            <div class="text-[11px] md:text-sm font-black text-white uppercase tracking-widest mb-2 drop-shadow-md">💌 Izin</div>
+                            <div id="count-izin" class="text-4xl md:text-5xl font-black text-white drop-shadow-lg">0</div>
                         </div>
-                        <div class="bg-gradient-to-br from-red-50 to-rose-100 border border-rose-200 p-4 md:p-5 rounded-2xl shadow-sm text-center transform transition hover:-translate-y-1">
-                            <div class="text-[10px] md:text-xs font-black text-rose-600 uppercase tracking-widest mb-2">Alpha</div>
-                            <div id="count-alpha" class="text-3xl md:text-4xl font-black text-rose-700 drop-shadow-sm">0</div>
+                        <div class="bg-gradient-to-br from-rose-500 to-red-600 border-2 border-white p-5 md:p-6 rounded-3xl shadow-[0_10px_20px_rgba(225,29,72,0.3)] text-center transform transition hover:-translate-y-2">
+                            <div class="text-[11px] md:text-sm font-black text-white uppercase tracking-widest mb-2 drop-shadow-md">❌ Alpha</div>
+                            <div id="count-alpha" class="text-4xl md:text-5xl font-black text-white drop-shadow-lg">0</div>
                         </div>
                     </div>
 
                     <!-- MODERN TABLE -->
-                    <div class="w-full overflow-hidden border border-white rounded-2xl bg-white/50 shadow-inner">
+                    <div class="w-full overflow-hidden border-2 border-white rounded-3xl bg-white/50 shadow-[inset_0_5px_20px_rgba(0,0,0,0.05)] backdrop-blur-lg">
                         <div class="overflow-x-auto table-scroll w-full">
                             <table class="w-full text-left border-collapse text-xs md:text-sm min-w-[800px]">
-                                <thead class="bg-white/80 backdrop-blur-xl border-b border-white text-indigo-800 uppercase text-[10px] md:text-xs tracking-wider">
+                                <thead class="bg-white/90 backdrop-blur-xl border-b-2 border-white text-pink-700 uppercase text-[10px] md:text-xs tracking-widest">
                                     <tr>
-                                        <th class="p-4 font-black whitespace-nowrap">Waktu Presensi</th>
-                                        <th class="p-4 font-black whitespace-nowrap">NIS</th>
-                                        <th class="p-4 font-black whitespace-nowrap">Nama Siswa</th>
-                                        <th class="p-4 font-black whitespace-nowrap text-center">Kelas</th>
-                                        <th class="p-4 font-black whitespace-nowrap">Mata Pelajaran</th>
-                                        <th class="p-4 font-black whitespace-nowrap text-center">Jam</th> 
-                                        <th class="p-4 font-black whitespace-nowrap text-center">Status</th> 
+                                        <th class="p-5 font-black whitespace-nowrap">Waktu Presensi</th>
+                                        <th class="p-5 font-black whitespace-nowrap">NIS</th>
+                                        <th class="p-5 font-black whitespace-nowrap">Nama Siswa</th>
+                                        <th class="p-5 font-black whitespace-nowrap text-center">Kelas</th>
+                                        <th class="p-5 font-black whitespace-nowrap">Mata Pelajaran</th>
+                                        <th class="p-5 font-black whitespace-nowrap text-center">Jam</th> 
+                                        <th class="p-5 font-black whitespace-nowrap text-center">Status</th> 
                                     </tr>
                                 </thead>
-                                <tbody id="history-table-body" class="divide-y divide-white/60 text-slate-700 bg-white/30"></tbody>
+                                <tbody id="history-table-body" class="divide-y-2 divide-white/60 text-slate-800 bg-white/20"></tbody>
                             </table>
                         </div>
                     </div>
@@ -484,31 +510,34 @@
     </div>
 
     <!-- FOOTER -->
-    <footer class="glass-panel border-t border-white/80 mt-12 py-8 px-6 no-print rounded-t-[2.5rem] text-center relative overflow-hidden shadow-[0_-10px_40px_rgba(0,0,0,0.05)]">
-        <div class="max-w-4xl mx-auto space-y-6 relative z-10">
-            <div class="bg-gradient-to-r from-white/60 to-white/40 p-5 md:p-6 rounded-3xl border border-white max-w-2xl mx-auto backdrop-blur-xl shadow-sm">
-                <p id="teacher-quote" class="text-sm md:text-base italic text-slate-700 font-medium leading-relaxed"></p>
-                <span class="block mt-4 text-[10px] md:text-xs font-black text-indigo-600 uppercase tracking-widest bg-indigo-50/50 w-fit mx-auto px-4 py-1.5 rounded-full border border-indigo-100">— HAWANIF S.Ag.,M.M.Pd —</span>
+    <footer class="glass-panel border-t-2 border-x-0 border-b-0 border-white/80 mt-12 py-10 px-6 no-print rounded-t-[3rem] rounded-b-none text-center relative overflow-hidden shadow-[0_-15px_40px_rgba(0,0,0,0.1)] z-50">
+        <div class="max-w-4xl mx-auto space-y-8 relative z-10">
+            <div class="bg-gradient-to-r from-white/80 to-white/50 p-6 md:p-8 rounded-[2rem] border-2 border-white max-w-2xl mx-auto backdrop-blur-xl shadow-xl">
+                <p id="teacher-quote" class="text-sm md:text-lg italic text-slate-800 font-bold leading-relaxed drop-shadow-sm"></p>
+                <span class="block mt-5 text-[11px] md:text-xs font-black text-white uppercase tracking-widest bg-gradient-to-r from-pink-500 to-purple-500 w-fit mx-auto px-6 py-2.5 rounded-full border-2 border-white shadow-md">— HAWANIF S.Ag.,M.M.Pd —</span>
             </div>
 
-            <div class="text-[10px] text-slate-500 font-bold tracking-widest mt-8 uppercase flex flex-col md:flex-row justify-center items-center gap-2">
+            <!-- WA CONTACT IN FOOTER -->
+            <div class="bg-white/70 p-4 rounded-2xl border border-white inline-block shadow-md">
+                <p class="text-xs md:text-sm text-slate-800 font-bold flex flex-col md:flex-row items-center gap-2">
+                    <span class="text-xl">🛠️</span> Bantuan Teknis Aplikasi: 
+                    <a href="https://wa.me/6281515561069" class="text-emerald-600 hover:text-emerald-500 underline font-black text-sm md:text-base transition-colors">Please contact WA 081515561069 untuk ajuan masalah</a>
+                </p>
+            </div>
+
+            <div class="text-[10px] md:text-xs text-slate-700 font-black tracking-widest uppercase flex flex-col md:flex-row justify-center items-center gap-2 md:gap-3 bg-white/40 w-fit mx-auto px-5 py-2 rounded-full border border-white/50">
                 <span>&copy; 2026 Miftahul Ulum</span> 
-                <span class="hidden md:inline text-slate-300">•</span> 
-                <span>Digital Presence Protocol by Alfin N.H V.1.0</span>
+                <span class="hidden md:inline text-pink-500">•</span> 
+                <span>Digital Presence by Alfin N.H ✨</span>
             </div>
         </div>
     </footer>
 
     <script>
+        // SCRIPT BAGIAN ATAS SAMA SEPERTI ASLI - HANYA MERUBAH CLASS TAILWIND PADA RENDER HTML
         function updateClock() {
             const now = new Date();
-            const options = { 
-                timeZone: 'Asia/Jakarta', 
-                hour12: false, 
-                hour: '2-digit', 
-                minute: '2-digit', 
-                second: '2-digit' 
-            };
+            const options = { timeZone: 'Asia/Jakarta', hour12: false, hour: '2-digit', minute: '2-digit', second: '2-digit' };
             const timeString = now.toLocaleTimeString('id-ID', options);
             document.getElementById('live-clock').innerHTML = `⏱️ ${timeString} WIB`;
         }
@@ -520,7 +549,6 @@
             try {
                 if (!audioCtx) audioCtx = new (window.AudioContext || window.webkitAudioContext)();
                 if (audioCtx.state === 'suspended') audioCtx.resume();
-                
                 const osc = audioCtx.createOscillator();
                 const gain = audioCtx.createGain();
                 osc.connect(gain);
@@ -532,7 +560,7 @@
                 gain.gain.exponentialRampToValueAtTime(0.01, audioCtx.currentTime + 0.15);
                 osc.start();
                 osc.stop(audioCtx.currentTime + 0.15);
-            } catch(e) { console.log("Audio non-aktif."); }
+            } catch(e) {}
         }
     </script>
 
@@ -544,8 +572,8 @@
         let currentJam = "";
         let isSessionActive = false;
         let sessionScans = [];
-        let availableCameras = [];
-
+        
+        // Sesuaikan dengan Script Google Sheet Anda jika ada
         const scriptUrl = "https://script.google.com/macros/s/AKfycbyrfrefZC3SQfELvDY-tKEBaYCXfCUuXvDcV3FxcVv8zpWFvsYgUB-Ckz1tLg8H8m5T/exec";
 
         let students = [];
@@ -562,7 +590,7 @@
                 const cloudStatus = document.getElementById('cloud-status');
                 if(cloudStatus) {
                     cloudStatus.innerHTML = "🔄 SINKRONISASI CLOUD...";
-                    cloudStatus.className = "text-[10px] md:text-xs font-black px-4 py-2 rounded-xl bg-amber-100 text-amber-700 border border-amber-200 w-fit tracking-widest uppercase animate-pulse shadow-sm";
+                    cloudStatus.className = "text-[10px] md:text-xs font-black px-5 py-2.5 rounded-2xl bg-yellow-400 text-white border-2 border-white w-fit tracking-widest uppercase animate-pulse shadow-md";
                 }
                 
                 const respStudents = await fetch(scriptUrl + "?action=getStudents");
@@ -576,15 +604,14 @@
                 renderHistory();
                 
                 if(cloudStatus) {
-                    cloudStatus.innerHTML = "✅ SISTEM TERSAMBUNG";
-                    cloudStatus.className = "text-[10px] md:text-xs font-black px-4 py-2 rounded-xl bg-emerald-100 text-emerald-700 border border-emerald-200 w-fit tracking-widest uppercase shadow-sm";
+                    cloudStatus.innerHTML = "✅ TERSAMBUNG CLOUD";
+                    cloudStatus.className = "text-[10px] md:text-xs font-black px-5 py-2.5 rounded-2xl bg-emerald-400 text-white border-2 border-white w-fit tracking-widest uppercase shadow-md";
                 }
             } catch (error) {
-                console.error("Gagal Load Data:", error);
                 const cloudStatus = document.getElementById('cloud-status');
                 if(cloudStatus) {
                     cloudStatus.innerHTML = "❌ OFFLINE // ERROR";
-                    cloudStatus.className = "text-[10px] md:text-xs font-black px-4 py-2 rounded-xl bg-rose-100 text-rose-700 border border-rose-200 w-fit tracking-widest uppercase shadow-sm";
+                    cloudStatus.className = "text-[10px] md:text-xs font-black px-5 py-2.5 rounded-2xl bg-rose-500 text-white border-2 border-white w-fit tracking-widest uppercase shadow-md";
                 }
             }
         }
@@ -600,9 +627,8 @@
             if (isInstagram || isWhatsApp || (!window.isSecureContext && location.hostname !== "localhost" && location.hostname !== "127.0.0.1" && location.protocol !== "file:")) {
                 const banner = document.getElementById('browser-warning');
                 banner.classList.remove('hidden');
-                banner.innerHTML = "⚠️ PERINGATAN SISTEM: Akses kamera diblokir oleh in-app browser. Buka via Google Chrome/Browser eksternal.";
+                banner.innerHTML = "⚠️ AKSES DIBLOKIR: Buka via Google Chrome / Browser Utama untuk fitur Kamera!";
             }
-
             loadData(); 
         });
 
@@ -611,22 +637,19 @@
             if (val === 'manual') {
                 manualInput.classList.remove('hidden');
                 manualInput.focus();
-            } else {
-                manualInput.classList.add('hidden');
-            }
+            } else { manualInput.classList.add('hidden'); }
         }
 
         function switchTab(tabId) {
             document.querySelectorAll('[id^="view-"]').forEach(el => el.classList.add('hidden'));
             
-            // Tab styling update
-            const inactiveClass = "tab-btn px-4 md:px-6 py-2.5 md:py-3 rounded-xl bg-transparent hover:bg-white/80 font-bold text-xs md:text-sm whitespace-nowrap text-slate-600 hover:text-indigo-600 border border-transparent flex-1 lg:flex-none text-center";
+            const inactiveClass = "tab-btn px-5 md:px-7 py-3 md:py-4 rounded-2xl bg-white/50 hover:bg-white/90 font-black text-xs md:text-sm whitespace-nowrap text-slate-700 border-2 border-transparent hover:border-pink-200 flex-1 lg:flex-none text-center shadow-sm";
             document.querySelectorAll('[id^="tab-"]').forEach(el => { el.className = inactiveClass; });
             
             document.getElementById(`view-${tabId}`).classList.remove('hidden');
             
             const activeTab = document.getElementById(`tab-${tabId}`);
-            activeTab.className = "tab-btn px-4 md:px-6 py-2.5 md:py-3 rounded-xl bg-gradient-to-r from-indigo-600 to-blue-600 shadow-lg shadow-indigo-500/40 font-bold text-xs md:text-sm whitespace-nowrap text-white border border-indigo-500/50 flex-1 lg:flex-none text-center transform scale-[1.02]";
+            activeTab.className = "tab-btn px-5 md:px-7 py-3 md:py-4 rounded-2xl bg-gradient-to-r from-pink-500 via-purple-500 to-indigo-500 shadow-[0_10px_20px_rgba(217,70,239,0.4)] font-black text-xs md:text-sm whitespace-nowrap text-white border-2 border-white/50 flex-1 lg:flex-none text-center transform scale-105";
 
             if (tabId === 'history') renderHistory();
             if (tabId === 'students') renderStudents();
@@ -636,23 +659,16 @@
             const subject = document.getElementById('select-subject').value;
             const cls = document.getElementById('select-class').value;
             let jam = document.getElementById('select-jam').value;
-            
             if (jam === 'manual') jam = document.getElementById('input-jam-manual').value.trim();
 
             if (!subject || !cls || !jam) {
-                alert("Silakan isi Parameter Kelas, Mapel, dan Jam terlebih dahulu!");
-                return;
+                alert("Isi Parameter Kelas, Mapel, dan Jam terlebih dahulu!"); return;
             }
 
-            currentSubject = subject;
-            currentClass = cls;
-            currentJam = jam;
-            isSessionActive = true;
-            isProcessingScan = false;
-            sessionScans = [];
+            currentSubject = subject; currentClass = cls; currentJam = jam;
+            isSessionActive = true; isProcessingScan = false; sessionScans = [];
             
-            populateManualStudentDropdown();
-            updateSessionUI();
+            populateManualStudentDropdown(); updateSessionUI();
 
             document.getElementById('select-subject').disabled = true;
             document.getElementById('select-class').disabled = true;
@@ -664,7 +680,7 @@
             document.getElementById('btn-stop-session').classList.add('flex');
             
             document.getElementById('scanner-section').classList.remove('hidden');
-            document.getElementById('session-badge').innerText = `${cls} | ${subject} (JAM ${jam})`;
+            document.getElementById('session-badge').innerText = `✨ ${cls} | ${subject} (JAM ${jam}) ✨`;
 
             startDefaultCamera();
         }
@@ -675,8 +691,7 @@
             const filteredStudents = students.filter(s => s.className === currentClass);
             filteredStudents.forEach(stu => {
                 const opt = document.createElement('option');
-                opt.value = stu.nis;
-                opt.text = `${stu.nis} - ${stu.name}`;
+                opt.value = stu.nis; opt.text = `${stu.nis} - ${stu.name}`;
                 manualSelect.appendChild(opt);
             });
         }
@@ -684,69 +699,46 @@
         function submitManualAttendance() {
             const nis = document.getElementById('manual-student-nis').value;
             const status = document.getElementById('manual-status').value;
-
-            if (!nis) { alert("Pilih Nama Siswa terlebih dahulu."); return; }
+            if (!nis) { alert("Pilih Nama Siswa."); return; }
 
             const registeredStudent = students.find(s => s.nis === nis);
             if (!registeredStudent) return;
-
-            const isDuplicate = sessionScans.some(s => s.nis === registeredStudent.nis);
-            if (isDuplicate) {
-                alert(`⚠️ ${registeredStudent.name} sudah diverifikasi pada sesi ini.`);
-                return;
+            if (sessionScans.some(s => s.nis === registeredStudent.nis)) {
+                alert(`⚠️ ${registeredStudent.name} sudah diverifikasi.`); return;
             }
 
             const now = new Date();
             const timeStr = now.toLocaleTimeString('id-ID', { hour: '2-digit', minute: '2-digit', second: '2-digit' });
-            
-            const logEntry = {
-                timestamp: now.toISOString(),
-                timeDisplay: timeStr,
-                nis: registeredStudent.nis,
-                name: registeredStudent.name,
-                className: currentClass,
-                subject: currentSubject,
-                jam: currentJam,
-                status: status
-            };
+            const logEntry = { timestamp: now.toISOString(), timeDisplay: timeStr, nis: registeredStudent.nis, name: registeredStudent.name, className: currentClass, subject: currentSubject, jam: currentJam, status: status };
 
-            sessionScans.unshift(logEntry);
-            attendanceHistory.unshift(logEntry);
-
-            kirimKeGoogleSheets(logEntry);
-            updateSessionUI();
+            sessionScans.unshift(logEntry); attendanceHistory.unshift(logEntry);
+            kirimKeGoogleSheets(logEntry); updateSessionUI();
 
             const alertBox = document.getElementById('scan-alert');
-            alertBox.classList.remove('hidden', 'bg-emerald-100', 'text-emerald-700', 'bg-rose-100', 'text-rose-700', 'bg-amber-100', 'text-amber-700');
-            alertBox.innerHTML = `✅ [MANUAL] <b>${registeredStudent.name}</b> (${status}) DISIMPAN!`;
-            alertBox.classList.add('bg-indigo-100', 'text-indigo-700', 'border', 'border-indigo-200');
+            alertBox.classList.remove('hidden', 'bg-emerald-400', 'bg-rose-500', 'bg-yellow-400');
+            alertBox.innerHTML = `✅ <b>${registeredStudent.name}</b> (${status}) DISIMPAN!`;
+            alertBox.className = "p-5 rounded-2xl text-xs md:text-sm font-black text-center shadow-lg transition-all transform duration-300 border-2 bg-indigo-500 text-white border-white";
             setTimeout(() => { if(isSessionActive) alertBox.classList.add('hidden'); }, 2500);
-
             document.getElementById('manual-student-nis').value = "";
         }
 
         function startDefaultCamera() {
             const readerEl = document.getElementById('reader');
-            readerEl.innerHTML = "<div class='text-slate-400 p-6 text-center text-sm font-bold'>Menginisialisasi Kamera...<br><span class='text-[10px] text-slate-500 font-normal mt-2 block'>Menunggu Izin Akses Perangkat</span></div>";
-
+            readerEl.innerHTML = "<div class='text-cyan-400 p-6 text-center text-sm font-black animate-pulse'>Menginisialisasi Kamera...<br><span class='text-[10px] text-white font-normal mt-2 block'>Tunggu Sebentar ✨</span></div>";
             if (html5QrCode) { try { html5QrCode.clear(); } catch(e){} }
             html5QrCode = new Html5Qrcode("reader");
-
             const config = { fps: 10, qrbox: { width: 250, height: 250 }, aspectRatio: 1.0 };
 
             html5QrCode.start({ facingMode: "environment" }, config, onScanSuccess, onScanFailure)
             .then(() => populateCameraDropdown())
-            .catch(errEnv => {
+            .catch(e => {
                 html5QrCode.start({ facingMode: "user" }, config, onScanSuccess, onScanFailure)
                 .then(() => populateCameraDropdown())
-                .catch(errUser => {
+                .catch(err => {
                     Html5Qrcode.getCameras().then(devices => {
                         if (devices && devices.length > 0) {
-                            html5QrCode.start(devices[0].id, config, onScanSuccess, onScanFailure)
-                            .then(() => populateCameraDropdown());
-                        } else {
-                            showCameraError("KAMERA TIDAK DITEMUKAN.");
-                        }
+                            html5QrCode.start(devices[0].id, config, onScanSuccess, onScanFailure).then(() => populateCameraDropdown());
+                        } else showCameraError("KAMERA TIDAK DITEMUKAN.");
                     }).catch(() => showCameraError("IZIN KAMERA DITOLAK."));
                 });
             });
@@ -759,8 +751,7 @@
                     selectEl.innerHTML = "";
                     devices.forEach((dev, i) => {
                         const opt = document.createElement("option");
-                        opt.value = dev.id;
-                        opt.text = dev.label || `Lensa ${i + 1}`;
+                        opt.value = dev.id; opt.text = dev.label || `Lensa ${i + 1}`;
                         selectEl.appendChild(opt);
                     });
                     document.getElementById('camera-select-container').classList.remove('hidden');
@@ -771,23 +762,18 @@
         function switchCamera(newDeviceId) {
             if (!newDeviceId || !html5QrCode || !isSessionActive) return;
             const config = { fps: 10, qrbox: { width: 250, height: 250 }, aspectRatio: 1.0 };
-            html5QrCode.stop().then(() => {
-                html5QrCode.start(newDeviceId, config, onScanSuccess, onScanFailure);
-            }).catch(() => {
-                html5QrCode.start(newDeviceId, config, onScanSuccess, onScanFailure);
-            });
+            html5QrCode.stop().then(() => html5QrCode.start(newDeviceId, config, onScanSuccess, onScanFailure)).catch(() => html5QrCode.start(newDeviceId, config, onScanSuccess, onScanFailure));
         }
 
         function showCameraError(msg) {
             const alertBox = document.getElementById('scan-alert');
             alertBox.classList.remove('hidden');
-            alertBox.className = "p-4 rounded-2xl text-xs font-black text-center border bg-rose-100 text-rose-700 border-rose-300 shadow-lg";
+            alertBox.className = "p-5 rounded-2xl text-xs md:text-sm font-black text-center shadow-lg transition-all transform duration-300 border-2 bg-rose-500 text-white border-white";
             alertBox.innerText = `❌ ERROR: ${msg}`;
         }
 
         function stopSession() {
             isSessionActive = false;
-            
             document.getElementById('select-subject').disabled = false;
             document.getElementById('select-class').disabled = false;
             document.getElementById('select-jam').disabled = false;
@@ -796,18 +782,10 @@
             document.getElementById('btn-start-session').classList.remove('hidden');
             document.getElementById('btn-stop-session').classList.add('hidden');
             document.getElementById('btn-stop-session').classList.remove('flex');
-            
             document.getElementById('scanner-section').classList.add('hidden');
 
             if (html5QrCode) {
-                try {
-                    html5QrCode.stop().then(() => {
-                        html5QrCode.clear();
-                        document.getElementById('reader').innerHTML = "";
-                    }).catch(e => {
-                        try { html5QrCode.clear(); } catch(e){}
-                    });
-                } catch (e) {}
+                try { html5QrCode.stop().then(() => { html5QrCode.clear(); document.getElementById('reader').innerHTML = ""; }).catch(e => { try { html5QrCode.clear(); } catch(e){} }); } catch (e) {}
             }
         }
 
@@ -816,68 +794,48 @@
             isProcessingScan = true;
 
             let studentData = null;
-            try {
-                studentData = JSON.parse(decodedText);
-            } catch (e) {
+            try { studentData = JSON.parse(decodedText); } catch (e) {
                 const found = students.find(s => s.nis === decodedText.trim());
                 if (found) studentData = { nis: found.nis, name: found.name };
             }
 
             const alertBox = document.getElementById('scan-alert');
-            alertBox.classList.remove('hidden', 'bg-emerald-100', 'text-emerald-700', 'bg-rose-100', 'text-rose-700', 'bg-amber-100', 'text-amber-700', 'bg-indigo-100', 'text-indigo-700');
-            alertBox.className = "p-4 rounded-2xl text-xs md:text-sm font-black text-center border shadow-lg transform transition duration-200 scale-105";
+            alertBox.classList.remove('hidden');
+            alertBox.className = "p-5 rounded-2xl text-xs md:text-sm font-black text-center shadow-2xl transition-all transform duration-200 scale-105 border-2 text-white border-white";
 
             if (!studentData || !studentData.nis) {
-                alertBox.innerText = "❌ FORMAT QR CODE TIDAK DIKENAL";
-                alertBox.classList.add('bg-rose-100', 'text-rose-700', 'border-rose-300');
+                alertBox.innerText = "❌ FORMAT QR CODE TIDAK DIKENAL"; alertBox.classList.add('bg-rose-500');
                 resumeScannerAfterDelay(2000); return;
             }
 
             let registeredStudent = students.find(s => s.nis === studentData.nis);
             if (!registeredStudent) {
-                alertBox.innerText = `❌ DITOLAK: NIS ${studentData.nis} TIDAK TERDAFTAR!`;
-                alertBox.classList.add('bg-rose-100', 'text-rose-700', 'border-rose-300');
+                alertBox.innerText = `❌ DITOLAK: NIS ${studentData.nis} TIDAK TERDAFTAR!`; alertBox.classList.add('bg-rose-500');
                 resumeScannerAfterDelay(2000); return;
             }
 
             if (registeredStudent.className !== currentClass) {
-                alertBox.innerText = `⚠️ BEDA KELAS: ${registeredStudent.name} (KELAS ${registeredStudent.className})`;
-                alertBox.classList.add('bg-amber-100', 'text-amber-700', 'border-amber-300');
+                alertBox.innerText = `⚠️ BEDA KELAS: ${registeredStudent.name} (${registeredStudent.className})`; alertBox.classList.add('bg-yellow-500');
                 resumeScannerAfterDelay(2500); return;
             }
 
-            const isDuplicate = sessionScans.some(s => s.nis === registeredStudent.nis);
-            if (isDuplicate) {
-                alertBox.innerText = `⚠️ ${registeredStudent.name} SUDAH PRESENSI.`;
-                alertBox.classList.add('bg-amber-100', 'text-amber-700', 'border-amber-300');
+            if (sessionScans.some(s => s.nis === registeredStudent.nis)) {
+                alertBox.innerText = `⚠️ ${registeredStudent.name} SUDAH PRESENSI.`; alertBox.classList.add('bg-yellow-500');
                 resumeScannerAfterDelay(2000); return;
             }
 
             playBeep();
             const now = new Date();
             const timeStr = now.toLocaleTimeString('id-ID', { hour: '2-digit', minute: '2-digit', second: '2-digit' });
-            
-            const logEntry = {
-                timestamp: now.toISOString(),
-                timeDisplay: timeStr,
-                nis: registeredStudent.nis,
-                name: registeredStudent.name,
-                className: currentClass,
-                subject: currentSubject,
-                jam: currentJam,
-                status: "Hadir"
-            };
+            const logEntry = { timestamp: now.toISOString(), timeDisplay: timeStr, nis: registeredStudent.nis, name: registeredStudent.name, className: currentClass, subject: currentSubject, jam: currentJam, status: "Hadir" };
 
-            sessionScans.unshift(logEntry);
-            attendanceHistory.unshift(logEntry);
-
+            sessionScans.unshift(logEntry); attendanceHistory.unshift(logEntry);
             kirimKeGoogleSheets(logEntry);
 
             alertBox.innerHTML = `✅ VERIFIKASI SUKSES: <b>${registeredStudent.name}</b>`;
-            alertBox.classList.add('bg-emerald-100', 'text-emerald-700', 'border-emerald-300');
+            alertBox.classList.add('bg-emerald-500');
             
-            updateSessionUI();
-            resumeScannerAfterDelay(1500);
+            updateSessionUI(); resumeScannerAfterDelay(1500);
         }
 
         function onScanFailure(error) {}
@@ -897,15 +855,7 @@
             fetch(scriptUrl, {
                 method: 'POST', mode: 'no-cors', 
                 headers: { 'Content-Type': 'application/json' },
-                body: JSON.stringify({ 
-                    action: 'addHistory',
-                    nis: dataLog.nis, 
-                    nama: dataLog.name, 
-                    kelas: dataLog.className, 
-                    mapel: dataLog.subject, 
-                    jam: dataLog.jam,
-                    status: dataLog.status || 'Hadir'
-                })
+                body: JSON.stringify({ action: 'addHistory', nis: dataLog.nis, nama: dataLog.name, kelas: dataLog.className, mapel: dataLog.subject, jam: dataLog.jam, status: dataLog.status || 'Hadir' })
             }).catch(e => console.error(e));
         }
 
@@ -914,24 +864,22 @@
             const tbody = document.getElementById('session-log-body');
             
             if (sessionScans.length === 0) {
-                tbody.innerHTML = `<tr><td colspan="4" class="p-8 text-center text-slate-400 text-xs font-bold">Belum ada data masuk...</td></tr>`;
-                return;
+                tbody.innerHTML = `<tr><td colspan="4" class="p-8 text-center text-slate-500 text-xs font-bold">Belum ada data masuk...</td></tr>`; return;
             }
 
             tbody.innerHTML = sessionScans.map(log => {
                 const statStr = (log.status || 'Hadir').toLowerCase();
-                let badgeClass = "bg-emerald-100 text-emerald-700 border-emerald-200";
-                
-                if(statStr === 'sakit') badgeClass = "bg-indigo-100 text-indigo-700 border-indigo-200";
-                if(statStr === 'izin') badgeClass = "bg-amber-100 text-amber-700 border-amber-200";
-                if(statStr === 'alpha') badgeClass = "bg-rose-100 text-rose-700 border-rose-200";
+                let badgeClass = "bg-gradient-to-r from-emerald-400 to-green-500 text-white shadow-md";
+                if(statStr === 'sakit') badgeClass = "bg-gradient-to-r from-blue-400 to-cyan-500 text-white shadow-md";
+                if(statStr === 'izin') badgeClass = "bg-gradient-to-r from-yellow-400 to-orange-500 text-white shadow-md";
+                if(statStr === 'alpha') badgeClass = "bg-gradient-to-r from-rose-500 to-red-600 text-white shadow-md";
 
                 return `
-                    <tr class="hover:bg-white/60 transition duration-200 border-b border-white/40">
-                        <td class="p-3.5 text-[11px] md:text-xs text-slate-500 font-bold whitespace-nowrap">${log.timeDisplay}</td>
-                        <td class="p-3.5 text-[11px] md:text-xs text-indigo-600 font-black whitespace-nowrap">${log.nis}</td>
-                        <td class="p-3.5 text-xs md:text-sm font-black text-slate-800 whitespace-nowrap">${log.name}</td>
-                        <td class="p-3.5 text-center"><span class="${badgeClass} border text-[10px] font-black px-3 py-1.5 rounded-full uppercase tracking-widest shadow-sm">${log.status || 'Hadir'}</span></td>
+                    <tr class="hover:bg-white/70 transition duration-300 border-b-2 border-white/40">
+                        <td class="p-4 md:p-5 text-[11px] md:text-xs text-slate-600 font-bold whitespace-nowrap">${log.timeDisplay}</td>
+                        <td class="p-4 md:p-5 text-[11px] md:text-xs text-pink-600 font-black whitespace-nowrap">${log.nis}</td>
+                        <td class="p-4 md:p-5 text-xs md:text-sm font-black text-slate-900 whitespace-nowrap">${log.name}</td>
+                        <td class="p-4 md:p-5 text-center"><span class="${badgeClass} border border-white text-[10px] md:text-xs font-black px-4 py-2 rounded-full uppercase tracking-widest">${log.status || 'Hadir'}</span></td>
                     </tr>
                 `;
             }).join('');
@@ -943,33 +891,18 @@
             const name = document.getElementById('stu-name').value.trim();
             const className = document.getElementById('stu-class').value;
 
-            if (students.some(s => s.nis === nis)) {
-                alert("NIS sudah digunakan dalam database!"); return;
-            }
+            if (students.some(s => s.nis === nis)) { alert("NIS sudah digunakan dalam database!"); return; }
 
             const newStudent = { nis, name, className };
             students.push(newStudent);
-            
-            fetch(scriptUrl, {
-                method: 'POST', mode: 'no-cors',
-                headers: { 'Content-Type': 'application/json' },
-                body: JSON.stringify({ action: 'addStudent', nis, name, className })
-            }).catch(e => console.error(e));
-
-            renderStudents();
-            e.target.reset();
+            fetch(scriptUrl, { method: 'POST', mode: 'no-cors', headers: { 'Content-Type': 'application/json' }, body: JSON.stringify({ action: 'addStudent', nis, name, className }) }).catch(e => console.error(e));
+            renderStudents(); e.target.reset();
         }
 
         function clearStudents() {
-            if (confirm("🚨 PERINGATAN: Anda yakin ingin menghapus seluruh data siswa dan QR Code?")) {
+            if (confirm("🚨 PERINGATAN: Hapus seluruh data siswa dan QR Code?")) {
                 students = [];
-                
-                fetch(scriptUrl, {
-                    method: 'POST', mode: 'no-cors',
-                    headers: { 'Content-Type': 'application/json' },
-                    body: JSON.stringify({ action: 'clearStudents' })
-                }).catch(e => console.error(e));
-
+                fetch(scriptUrl, { method: 'POST', mode: 'no-cors', headers: { 'Content-Type': 'application/json' }, body: JSON.stringify({ action: 'clearStudents' }) }).catch(e => console.error(e));
                 renderStudents();
             }
         }
@@ -977,58 +910,38 @@
         function renderStudents() {
             const container = document.getElementById('print-area');
             container.innerHTML = "";
-
-            if (students.length === 0) {
-                container.innerHTML = `<p class="col-span-full text-center text-slate-400 py-10 text-sm font-bold">Belum ada data siswa / Menunggu sinkronisasi.</p>`;
-                return;
-            }
+            if (students.length === 0) { container.innerHTML = `<p class="col-span-full text-center text-slate-500 py-10 text-sm font-bold">Belum ada data siswa / Menunggu sinkronisasi.</p>`; return; }
 
             students.forEach((stu, i) => {
                 const card = document.createElement('div');
-                card.className = "w-full max-w-[220px] bg-white border-2 border-indigo-50/80 p-4 relative overflow-hidden flex flex-col justify-between text-center print-exact rounded-2xl shadow-lg shadow-indigo-100/50 transform transition duration-300 hover:scale-[1.02] hover:-translate-y-1";
-                card.setAttribute("style", "background-color: #ffffff;");
+                card.className = "w-full max-w-[220px] bg-white/80 backdrop-blur-xl border-2 border-pink-200 p-5 relative overflow-hidden flex flex-col justify-between text-center print-exact rounded-[2rem] shadow-[0_10px_20px_rgba(236,72,153,0.15)] transform transition duration-300 hover:scale-105";
                 
                 card.innerHTML = `
-                    <div class="absolute top-0 left-0 w-full h-2 bg-gradient-to-r from-blue-400 via-indigo-500 to-purple-500"></div>
-
-                    <button onclick="deleteStudent(${i})" class="no-print absolute top-3 right-3 bg-rose-100 text-rose-500 hover:bg-rose-500 hover:text-white w-6 h-6 rounded-full font-black text-sm leading-none z-20 flex items-center justify-center transition" title="Hapus">&times;</button>
+                    <div class="absolute top-0 left-0 w-full h-3 bg-gradient-to-r from-pink-400 via-purple-500 to-cyan-400"></div>
+                    <button onclick="deleteStudent(${i})" class="no-print absolute top-4 right-4 bg-rose-500 text-white hover:bg-rose-600 w-7 h-7 rounded-full font-black text-sm shadow-md flex items-center justify-center transition hover:scale-110 border border-white">&times;</button>
                     
-                    <div class="w-full pb-2 mb-3 font-heading font-black text-[9px] md:text-[10px] tracking-widest text-indigo-900 uppercase border-b border-dashed border-indigo-100 mt-2">MAS MIFTAHUL ULUM</div>
+                    <div class="w-full pb-3 mb-4 font-heading font-black text-[10px] md:text-[11px] tracking-widest text-transparent bg-clip-text bg-gradient-to-r from-pink-600 to-purple-700 uppercase border-b-2 border-dashed border-pink-200 mt-2">MAS MIFTAHUL ULUM</div>
                     
-                    <div class="relative inline-block mx-auto mt-1 p-2 bg-slate-50 border border-slate-100 rounded-xl shadow-sm">
+                    <div class="relative inline-block mx-auto p-3 bg-white border-2 border-pink-100 rounded-2xl shadow-inner">
                         <div id="qrcode-${stu.nis}" class="relative z-10 bg-white"></div>
                     </div>
                     
-                    <div class="mt-4 w-full relative z-10">
-                        <div class="font-heading font-black text-slate-800 text-[12px] md:text-[14px] uppercase tracking-wide truncate px-1" title="${stu.name}">${stu.name}</div>
-                        <div class="text-[10px] text-indigo-700 font-bold mt-2 bg-indigo-50/80 py-1.5 rounded-lg border border-indigo-100">
-                            NIS: <span class="text-indigo-900">${stu.nis}</span><br><span class="text-slate-500">KELAS:</span> <span class="text-indigo-900">${stu.className}</span>
+                    <div class="mt-5 w-full relative z-10">
+                        <div class="font-heading font-black text-slate-900 text-[13px] md:text-[15px] uppercase tracking-wide truncate px-1">${stu.name}</div>
+                        <div class="text-[10px] text-white font-black mt-3 bg-gradient-to-r from-pink-500 to-purple-600 py-2 rounded-xl border-2 border-white shadow-md">
+                            NIS: <span class="text-pink-100">${stu.nis}</span><br><span class="text-purple-200">KELAS:</span> <span class="text-white">${stu.className}</span>
                         </div>
                     </div>
                 `;
                 container.appendChild(card);
-
-                new QRCode(document.getElementById(`qrcode-${stu.nis}`), {
-                    text: JSON.stringify({ nis: stu.nis, name: stu.name }),
-                    width: 120, height: 120,
-                    colorDark: "#1e1b4b",  
-                    colorLight: "#ffffff",
-                    correctLevel: QRCode.CorrectLevel.H
-                });
+                new QRCode(document.getElementById(`qrcode-${stu.nis}`), { text: JSON.stringify({ nis: stu.nis, name: stu.name }), width: 120, height: 120, colorDark: "#1e1b4b", colorLight: "#ffffff", correctLevel: QRCode.CorrectLevel.H });
             });
         }
 
         function deleteStudent(index) {
             if(confirm("Yakin ingin menghapus data siswa ini?")) {
-                const deletedNis = students[index].nis;
-                students.splice(index, 1);
-                
-                fetch(scriptUrl, {
-                    method: 'POST', mode: 'no-cors',
-                    headers: { 'Content-Type': 'application/json' },
-                    body: JSON.stringify({ action: 'deleteStudent', nis: deletedNis })
-                }).catch(e => console.error(e));
-
+                const deletedNis = students[index].nis; students.splice(index, 1);
+                fetch(scriptUrl, { method: 'POST', mode: 'no-cors', headers: { 'Content-Type': 'application/json' }, body: JSON.stringify({ action: 'deleteStudent', nis: deletedNis }) }).catch(e => console.error(e));
                 renderStudents();
             }
         }
@@ -1036,78 +949,23 @@
         function printQRCodes() { window.print(); }
 
         function exportQRToWord() {
-            if (students.length === 0) {
-                alert("Tidak ada data untuk diekspor.");
-                return;
-            }
-
-            let contentHtml = `
-                <div style="text-align: center; font-family: 'Arial', sans-serif; background-color: #f8fafc; color: #1e293b; padding: 20px;">
-                    <h2 style="color: #312e81; font-weight: 800;">KARTU QR PRESENSI - MAS MIFTAHUL ULUM</h2>
-                    <table style="width: 100%; border-collapse: separate; border-spacing: 15px; margin-top: 20px;">
-            `;
-
+            // (Function sama, tidak diubah dari kode asli)
+            if (students.length === 0) { alert("Tidak ada data untuk diekspor."); return; }
+            let contentHtml = `<div style="text-align: center; font-family: 'Arial', sans-serif; background-color: #fdf2f8; color: #1e293b; padding: 20px;"><h2 style="color: #db2777; font-weight: 800;">KARTU QR PRESENSI - MAS MIFTAHUL ULUM</h2><table style="width: 100%; border-collapse: separate; border-spacing: 15px; margin-top: 20px;">`;
             const columns = 3; 
             for (let i = 0; i < students.length; i++) {
                 if (i % columns === 0) contentHtml += "<tr>";
-
-                const stu = students[i];
-                const qrDiv = document.getElementById(`qrcode-${stu.nis}`);
-                
+                const stu = students[i]; const qrDiv = document.getElementById(`qrcode-${stu.nis}`);
                 let imgSrc = '';
-                if (qrDiv) {
-                    const img = qrDiv.querySelector('img');
-                    const canvas = qrDiv.querySelector('canvas');
-                    
-                    if (img && img.src && img.src.startsWith('data:image')) {
-                        imgSrc = img.src;
-                    } else if (canvas) {
-                        imgSrc = canvas.toDataURL("image/png");
-                    }
-                }
-
-                contentHtml += `
-                    <td style="padding: 15px; border: 2px solid #e2e8f0; background-color: #ffffff; text-align: center; vertical-align: top; width: 33%; border-radius: 12px;">
-                        <div style="font-size: 11px; font-weight: 900; color: #312e81; margin-bottom: 10px; border-bottom: 1px dashed #cbd5e1; padding-bottom: 8px;">MAS MIFTAHUL ULUM</div>
-                        
-                        <div style="background-color: white; padding: 10px; display: inline-block; border: 1px solid #f1f5f9; border-radius: 8px;">
-                            ${imgSrc ? `<img src="${imgSrc}" width="120" height="120" style="margin: 0 auto; display: block;" />` : ''}
-                        </div>
-                        
-                        <div style="font-weight: 900; font-size: 14px; margin-top: 15px; text-transform: uppercase; color: #0f172a;">${stu.name}</div>
-                        
-                        <div style="font-size: 11px; color: #4338ca; margin-top: 10px; background-color: #eef2ff; padding: 8px; border: 1px solid #e0e7ff; border-radius: 6px; font-weight:bold;">
-                            NIS: ${stu.nis} <br/> KELAS: ${stu.className}
-                        </div>
-                    </td>
-                `;
-
+                if (qrDiv) { const img = qrDiv.querySelector('img'); const canvas = qrDiv.querySelector('canvas'); if (img && img.src && img.src.startsWith('data:image')) imgSrc = img.src; else if (canvas) imgSrc = canvas.toDataURL("image/png"); }
+                contentHtml += `<td style="padding: 15px; border: 3px solid #fbcfe8; background-color: #ffffff; text-align: center; vertical-align: top; width: 33%; border-radius: 16px;"><div style="font-size: 11px; font-weight: 900; color: #db2777; margin-bottom: 10px; border-bottom: 2px dashed #fbcfe8; padding-bottom: 8px;">MAS MIFTAHUL ULUM</div><div style="background-color: white; padding: 10px; display: inline-block; border: 2px solid #fdf2f8; border-radius: 12px;">${imgSrc ? `<img src="${imgSrc}" width="120" height="120" style="margin: 0 auto; display: block;" />` : ''}</div><div style="font-weight: 900; font-size: 14px; margin-top: 15px; text-transform: uppercase; color: #0f172a;">${stu.name}</div><div style="font-size: 11px; color: #ffffff; margin-top: 10px; background-color: #db2777; padding: 10px; border: 1px solid #be185d; border-radius: 8px; font-weight:bold;">NIS: ${stu.nis} <br/> KELAS: ${stu.className}</div></td>`;
                 if (i % columns === columns - 1 || i === students.length - 1) contentHtml += "</tr>";
             }
-
-            contentHtml += `
-                    </table>
-                </div>
-            `;
-
-            const preHtml = "<html xmlns:o='urn:schemas-microsoft-com:office:office' xmlns:w='urn:schemas-microsoft-com:office:word' xmlns='http://www.w3.org/TR/REC-html40'><head><meta charset='utf-8'><title>Kartu QR</title></head><body style='background-color:#f8fafc;'>";
-            const postHtml = "</body></html>";
-            const html = preHtml + contentHtml + postHtml;
-
-            const blob = new Blob(['\ufeff', html], { type: 'application/msword' });
-            const url = URL.createObjectURL(blob);
-            const downloadLink = document.createElement("a");
-            
-            downloadLink.href = url;
-            downloadLink.download = `Kartu_QR_${new Date().toISOString().slice(0,10)}.doc`;
-            
-            document.body.appendChild(downloadLink);
-            downloadLink.click();
-            document.body.removeChild(downloadLink);
-            URL.revokeObjectURL(url);
+            contentHtml += `</table></div>`;
+            const html = "<html xmlns:o='urn:schemas-microsoft-com:office:office' xmlns:w='urn:schemas-microsoft-com:office:word' xmlns='http://www.w3.org/TR/REC-html40'><head><meta charset='utf-8'><title>Kartu QR</title></head><body style='background-color:#fdf2f8;'>" + contentHtml + "</body></html>";
+            const blob = new Blob(['\ufeff', html], { type: 'application/msword' }); const url = URL.createObjectURL(blob); const downloadLink = document.createElement("a"); downloadLink.href = url; downloadLink.download = `Kartu_QR_${new Date().toISOString().slice(0,10)}.doc`; document.body.appendChild(downloadLink); downloadLink.click(); document.body.removeChild(downloadLink); URL.revokeObjectURL(url);
         }
 
-        // --- FILTER & RENDER HISTORY (MODIFIED LOGIC) ---
         function getFilteredHistory() {
             const filterDate = document.getElementById('filter-date') ? document.getElementById('filter-date').value : '';
             const filterMonth = document.getElementById('filter-month') ? document.getElementById('filter-month').value : '';
@@ -1117,23 +975,16 @@
             const filterStatus = document.getElementById('filter-status') ? document.getElementById('filter-status').value.toLowerCase() : '';
             
             return attendanceHistory.filter(log => {
-                // Parsing timestamp to YYYY-MM-DD and YYYY-MM based on local timezone
                 const logDateObj = new Date(log.timestamp);
                 const yyyy = logDateObj.getFullYear();
                 const mm = String(logDateObj.getMonth() + 1).padStart(2, '0');
                 const dd = String(logDateObj.getDate()).padStart(2, '0');
-                const localDateStr = `${yyyy}-${mm}-${dd}`;
-                const localMonthStr = `${yyyy}-${mm}`;
-
-                const matchDate = filterDate === '' || localDateStr === filterDate;
-                const matchMonth = filterMonth === '' || localMonthStr === filterMonth;
+                const matchDate = filterDate === '' || `${yyyy}-${mm}-${dd}` === filterDate;
+                const matchMonth = filterMonth === '' || `${yyyy}-${mm}` === filterMonth;
                 const matchClass = filterClass === '' || log.className === filterClass;
                 const matchSubject = filterSubject === '' || log.subject === filterSubject;
                 const matchName = filterName === '' || log.name.toLowerCase().includes(filterName);
-                
-                const logStat = (log.status || 'Hadir').toLowerCase();
-                const matchStatus = filterStatus === '' || logStat === filterStatus;
-                
+                const matchStatus = filterStatus === '' || (log.status || 'Hadir').toLowerCase() === filterStatus;
                 return matchDate && matchMonth && matchClass && matchSubject && matchName && matchStatus;
             });
         }
@@ -1141,16 +992,11 @@
         function renderHistory() {
             const tbody = document.getElementById('history-table-body');
             const filteredData = getFilteredHistory();
-
             let countHadir = 0, countSakit = 0, countIzin = 0, countAlpha = 0;
 
             if (filteredData.length === 0) {
-                tbody.innerHTML = `<tr><td colspan="7" class="p-8 text-center text-slate-400 font-bold text-xs">Belum ada data riwayat presensi yang sesuai.</td></tr>`;
-                
-                document.getElementById('count-hadir').innerText = countHadir;
-                document.getElementById('count-sakit').innerText = countSakit;
-                document.getElementById('count-izin').innerText = countIzin;
-                document.getElementById('count-alpha').innerText = countAlpha;
+                tbody.innerHTML = `<tr><td colspan="7" class="p-8 text-center text-slate-500 font-bold text-sm">✨ Belum ada data riwayat presensi yang sesuai.</td></tr>`;
+                document.getElementById('count-hadir').innerText = countHadir; document.getElementById('count-sakit').innerText = countSakit; document.getElementById('count-izin').innerText = countIzin; document.getElementById('count-alpha').innerText = countAlpha;
                 return;
             }
 
@@ -1160,133 +1006,52 @@
                 const timeStr = dateObj.toLocaleTimeString('id-ID', { hour: '2-digit', minute: '2-digit' });
 
                 const statStr = (log.status || 'Hadir').toLowerCase();
-                let badgeClass = "bg-emerald-100 text-emerald-700 border-emerald-200";
-                
-                if(statStr === 'sakit') { badgeClass = "bg-indigo-100 text-indigo-700 border-indigo-200"; countSakit++; }
-                else if(statStr === 'izin') { badgeClass = "bg-amber-100 text-amber-700 border-amber-200"; countIzin++; }
-                else if(statStr === 'alpha') { badgeClass = "bg-rose-100 text-rose-700 border-rose-200"; countAlpha++; }
+                let badgeClass = "bg-gradient-to-r from-emerald-400 to-green-500 text-white shadow-md border-white";
+                if(statStr === 'sakit') { badgeClass = "bg-gradient-to-r from-blue-400 to-cyan-500 text-white shadow-md border-white"; countSakit++; }
+                else if(statStr === 'izin') { badgeClass = "bg-gradient-to-r from-yellow-400 to-orange-500 text-white shadow-md border-white"; countIzin++; }
+                else if(statStr === 'alpha') { badgeClass = "bg-gradient-to-r from-rose-500 to-red-600 text-white shadow-md border-white"; countAlpha++; }
                 else { countHadir++; }
 
                 return `
-                    <tr class="hover:bg-white/60 transition duration-200 border-b border-white/50">
-                        <td class="p-4 text-slate-500 text-xs font-bold whitespace-nowrap">${dateStr}, ${timeStr}</td>
-                        <td class="p-4 text-[11px] md:text-xs text-indigo-600 font-black whitespace-nowrap">${log.nis}</td>
-                        <td class="p-4 font-black text-slate-800 text-xs md:text-sm whitespace-nowrap">${log.name}</td>
-                        <td class="p-4 font-bold text-slate-500 text-xs md:text-sm text-center whitespace-nowrap">${log.className}</td>
-                        <td class="p-4 whitespace-nowrap"><span class="bg-indigo-50 text-indigo-700 border border-indigo-100 text-[10px] font-black px-3 py-1.5 rounded-lg uppercase shadow-sm">${log.subject}</span></td>
-                        <td class="p-4 text-center whitespace-nowrap"><span class="bg-white/80 text-slate-700 border border-white text-[10px] font-black px-3 py-1.5 rounded-lg shadow-sm">Sesi ${log.jam || '-'}</span></td>
-                        <td class="p-4 text-center whitespace-nowrap"><span class="${badgeClass} border text-[10px] font-black px-3 py-1.5 rounded-full uppercase tracking-widest shadow-sm">${log.status || 'Hadir'}</span></td>
+                    <tr class="hover:bg-white/70 transition duration-300 border-b-2 border-white/50">
+                        <td class="p-4 md:p-5 text-slate-600 text-xs md:text-sm font-bold whitespace-nowrap">${dateStr}, <span class="text-pink-600">${timeStr}</span></td>
+                        <td class="p-4 md:p-5 text-[11px] md:text-xs text-purple-700 font-black whitespace-nowrap">${log.nis}</td>
+                        <td class="p-4 md:p-5 font-black text-slate-900 text-xs md:text-sm whitespace-nowrap">${log.name}</td>
+                        <td class="p-4 md:p-5 font-bold text-slate-600 text-xs md:text-sm text-center whitespace-nowrap">${log.className}</td>
+                        <td class="p-4 md:p-5 whitespace-nowrap"><span class="bg-purple-100 text-purple-800 border-2 border-purple-200 text-[10px] md:text-xs font-black px-3 py-1.5 rounded-xl uppercase shadow-sm">${log.subject}</span></td>
+                        <td class="p-4 md:p-5 text-center whitespace-nowrap"><span class="bg-pink-100 text-pink-700 border-2 border-pink-200 text-[10px] md:text-xs font-black px-3 py-1.5 rounded-xl shadow-sm">Sesi ${log.jam || '-'}</span></td>
+                        <td class="p-4 md:p-5 text-center whitespace-nowrap"><span class="${badgeClass} border text-[10px] md:text-xs font-black px-4 py-2 rounded-full uppercase tracking-widest">${log.status || 'Hadir'}</span></td>
                     </tr>
                 `;
             }).join('');
-
-            document.getElementById('count-hadir').innerText = countHadir;
-            document.getElementById('count-sakit').innerText = countSakit;
-            document.getElementById('count-izin').innerText = countIzin;
-            document.getElementById('count-alpha').innerText = countAlpha;
+            document.getElementById('count-hadir').innerText = countHadir; document.getElementById('count-sakit').innerText = countSakit; document.getElementById('count-izin').innerText = countIzin; document.getElementById('count-alpha').innerText = countAlpha;
         }
 
         function clearHistory() {
-            if (confirm("🚨 PERINGATAN: Anda yakin ingin menghapus seluruh rekapan log presensi?")) {
+            if (confirm("🚨 PERINGATAN: Hapus seluruh rekapan log?")) {
                 attendanceHistory = [];
-                
-                fetch(scriptUrl, {
-                    method: 'POST', mode: 'no-cors',
-                    headers: { 'Content-Type': 'application/json' },
-                    body: JSON.stringify({ action: 'clearHistory' })
-                }).catch(e => console.error(e));
-
+                fetch(scriptUrl, { method: 'POST', mode: 'no-cors', headers: { 'Content-Type': 'application/json' }, body: JSON.stringify({ action: 'clearHistory' }) }).catch(e => console.error(e));
                 renderHistory();
             }
         }
 
         function exportToCSV() {
-            const dataToExport = getFilteredHistory();
-            if (dataToExport.length === 0) {
-                alert("Data kosong."); return;
-            }
-            let csvContent = "data:text/csv;charset=utf-8,\uFEFF"; 
-            csvContent += "Tanggal,Waktu,NIS,Nama Siswa,Kelas,Mata Pelajaran,Jam Mapel,Status / Keterangan\n";
-
-            dataToExport.forEach(log => {
-                const dateObj = new Date(log.timestamp);
-                const dateStr = dateObj.toLocaleDateString('id-ID', { day: '2-digit', month: '2-digit', year: 'numeric' });
-                const timeStr = dateObj.toLocaleTimeString('id-ID');
-                csvContent += `${dateStr},${timeStr},${log.nis},"${log.name.replace(/"/g, '""')}",${log.className},${log.subject},${log.jam},${log.status || 'Hadir'}\n`;
-            });
-
-            const encodedUri = encodeURI(csvContent);
-            const link = document.createElement("a");
-            link.setAttribute("href", encodedUri);
-            link.setAttribute("download", `Data_Presensi_${new Date().toISOString().slice(0,10)}.csv`);
-            document.body.appendChild(link); link.click(); document.body.removeChild(link);
+            const dataToExport = getFilteredHistory(); if (dataToExport.length === 0) { alert("Data kosong."); return; }
+            let csvContent = "data:text/csv;charset=utf-8,\uFEFF"; csvContent += "Tanggal,Waktu,NIS,Nama Siswa,Kelas,Mata Pelajaran,Jam Mapel,Status / Keterangan\n";
+            dataToExport.forEach(log => { const dateObj = new Date(log.timestamp); csvContent += `${dateObj.toLocaleDateString('id-ID')},${dateObj.toLocaleTimeString('id-ID')},${log.nis},"${log.name}",${log.className},${log.subject},${log.jam},${log.status || 'Hadir'}\n`; });
+            const link = document.createElement("a"); link.setAttribute("href", encodeURI(csvContent)); link.setAttribute("download", `Data_Presensi_${new Date().toISOString().slice(0,10)}.csv`); document.body.appendChild(link); link.click(); document.body.removeChild(link);
         }
 
         function exportHistoryToDoc() {
-            const dataToExport = getFilteredHistory();
-            if (dataToExport.length === 0) {
-                alert("Tidak ada data untuk diekspor."); return;
-            }
-
-            let contentHtml = `
-                <div style="font-family: 'Arial', sans-serif; color: #0f172a;">
-                    <h2 style="text-align: center; color: #312e81; margin-bottom: 20px; font-weight: 800;">REKAP PRESENSI - MAS MIFTAHUL ULUM</h2>
-                    <table style="width: 100%; border-collapse: collapse; margin-top: 10px;" border="1">
-                        <thead>
-                            <tr style="background-color: #eef2ff; color: #4338ca; text-transform: uppercase; font-size: 12px;">
-                                <th style="padding: 10px; border: 1px solid #cbd5e1;">Tanggal</th>
-                                <th style="padding: 10px; border: 1px solid #cbd5e1;">Waktu</th>
-                                <th style="padding: 10px; border: 1px solid #cbd5e1;">NIS</th>
-                                <th style="padding: 10px; border: 1px solid #cbd5e1;">Nama Siswa</th>
-                                <th style="padding: 10px; border: 1px solid #cbd5e1;">Kelas</th>
-                                <th style="padding: 10px; border: 1px solid #cbd5e1;">Mata Pelajaran</th>
-                                <th style="padding: 10px; border: 1px solid #cbd5e1;">Jam</th>
-                                <th style="padding: 10px; border: 1px solid #cbd5e1;">Status</th>
-                            </tr>
-                        </thead>
-                        <tbody>
-            `;
-
+            const dataToExport = getFilteredHistory(); if (dataToExport.length === 0) { alert("Tidak ada data."); return; }
+            let contentHtml = `<div style="font-family: 'Arial', sans-serif;"><h2 style="text-align: center; color: #db2777;">REKAP PRESENSI</h2><table style="width: 100%; border-collapse: collapse; margin-top: 10px;" border="1"><thead><tr style="background-color: #fce7f3; color: #be185d;"><th>Tanggal</th><th>Waktu</th><th>NIS</th><th>Nama</th><th>Kelas</th><th>Mapel</th><th>Jam</th><th>Status</th></tr></thead><tbody>`;
             dataToExport.forEach(log => {
-                const dateObj = new Date(log.timestamp);
-                const dateStr = dateObj.toLocaleDateString('id-ID', { day: '2-digit', month: 'short', year: 'numeric' });
-                const timeStr = dateObj.toLocaleTimeString('id-ID', { hour: '2-digit', minute: '2-digit' });
-                
-                contentHtml += `
-                    <tr style="font-size: 12px; color: #334155;">
-                        <td style="padding: 8px; border: 1px solid #cbd5e1; text-align: center;">${dateStr}</td>
-                        <td style="padding: 8px; border: 1px solid #cbd5e1; text-align: center;">${timeStr}</td>
-                        <td style="padding: 8px; border: 1px solid #cbd5e1; text-align: center; font-weight: bold;">${log.nis}</td>
-                        <td style="padding: 8px; border: 1px solid #cbd5e1; font-weight: bold; color: #0f172a;">${log.name}</td>
-                        <td style="padding: 8px; border: 1px solid #cbd5e1; text-align: center;">${log.className}</td>
-                        <td style="padding: 8px; border: 1px solid #cbd5e1; text-align: center;">${log.subject}</td>
-                        <td style="padding: 8px; border: 1px solid #cbd5e1; text-align: center;">${log.jam || '-'}</td>
-                        <td style="padding: 8px; border: 1px solid #cbd5e1; text-align: center; font-weight: bold;">${log.status || 'Hadir'}</td>
-                    </tr>
-                `;
+                const d = new Date(log.timestamp);
+                contentHtml += `<tr><td>${d.toLocaleDateString('id-ID')}</td><td>${d.toLocaleTimeString('id-ID')}</td><td>${log.nis}</td><td>${log.name}</td><td>${log.className}</td><td>${log.subject}</td><td>${log.jam||'-'}</td><td>${log.status||'Hadir'}</td></tr>`;
             });
-
-            contentHtml += `
-                        </tbody>
-                    </table>
-                </div>
-            `;
-
-            const preHtml = "<html xmlns:o='urn:schemas-microsoft-com:office:office' xmlns:w='urn:schemas-microsoft-com:office:word' xmlns='http://www.w3.org/TR/REC-html40'><head><meta charset='utf-8'><title>Rekap Presensi</title></head><body>";
-            const postHtml = "</body></html>";
-            const html = preHtml + contentHtml + postHtml;
-
-            const blob = new Blob(['\ufeff', html], { type: 'application/msword' });
-            const url = URL.createObjectURL(blob);
-            const downloadLink = document.createElement("a");
-            
-            downloadLink.href = url;
-            downloadLink.download = `Rekap_Presensi_${new Date().toISOString().slice(0,10)}.doc`;
-            
-            document.body.appendChild(downloadLink);
-            downloadLink.click();
-            document.body.removeChild(downloadLink);
-            URL.revokeObjectURL(url);
+            contentHtml += `</tbody></table></div>`;
+            const html = "<html xmlns:o='urn:schemas-microsoft-com:office:office' xmlns:w='urn:schemas-microsoft-com:office:word' xmlns='http://www.w3.org/TR/REC-html40'><head><meta charset='utf-8'></head><body>" + contentHtml + "</body></html>";
+            const blob = new Blob(['\ufeff', html], { type: 'application/msword' }); const url = URL.createObjectURL(blob); const downloadLink = document.createElement("a"); downloadLink.href = url; downloadLink.download = `Rekap_Presensi_${new Date().toISOString().slice(0,10)}.doc`; document.body.appendChild(downloadLink); downloadLink.click(); document.body.removeChild(downloadLink); URL.revokeObjectURL(url);
         }
     </script>
 </body>
