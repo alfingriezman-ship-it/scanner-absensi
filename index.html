@@ -10,128 +10,137 @@
     <script src="https://unpkg.com/html5-qrcode" type="text/javascript"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/qrcodejs/1.0.0/qrcode.min.js"></script>
     
-    <!-- Fonts: Inter for modern, clean look -->
+    <!-- Fonts -->
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;500;600;700;800;900&display=swap" rel="stylesheet">
     
     <style>
-        body { 
-            font-family: 'Inter', sans-serif; 
-            color: #334155; 
+        body { font-family: 'Poppins', sans-serif; color: #1e293b; }
+        
+        /* Colorful Background Gradient */
+        .bg-colorful {
+            background: linear-gradient(135deg, #4f46e5 0%, #7c3aed 30%, #d946ef 60%, #ff1493 100%);
+            background-attachment: fixed;
         }
 
-        /* Clean Inputs */
+        /* Glassmorphism UI */
+        .glass-card {
+            background: rgba(255, 255, 255, 0.92);
+            backdrop-filter: blur(16px);
+            -webkit-backdrop-filter: blur(16px);
+            border: 2px solid rgba(255, 255, 255, 0.8);
+            box-shadow: 0 15px 35px rgba(0, 0, 0, 0.15);
+        }
+        
+        .glass-header {
+            background: rgba(255, 255, 255, 0.95);
+            backdrop-filter: blur(20px);
+            -webkit-backdrop-filter: blur(20px);
+            border-bottom: 2px solid #ffffff;
+        }
+
         .form-input {
             width: 100%;
-            padding: 0.625rem 0.875rem;
-            background-color: rgba(255, 255, 255, 0.9);
-            border: 1px solid #cbd5e1;
-            border-radius: 0.5rem;
+            padding: 0.65rem 0.9rem;
+            background-color: #f8fafc;
+            border: 2px solid #e2e8f0;
+            border-radius: 0.85rem;
             font-size: 0.875rem;
-            transition: all 0.2s ease-in-out;
+            font-weight: 600;
+            transition: all 0.2s ease;
             color: #1e293b;
         }
         
         .form-input:focus {
             outline: none;
-            border-color: #ef4444; /* Changed to red accent */
-            box-shadow: 0 0 0 3px rgba(239, 68, 68, 0.15);
+            background-color: #ffffff;
+            border-color: #d946ef;
+            box-shadow: 0 0 0 4px rgba(217, 70, 239, 0.15);
         }
 
-        /* Custom Scrollbar */
-        .table-scroll::-webkit-scrollbar { height: 6px; width: 6px; }
-        .table-scroll::-webkit-scrollbar-track { background: transparent; border-radius: 4px; }
-        .table-scroll::-webkit-scrollbar-thumb { background: #cbd5e1; border-radius: 4px; }
-        .table-scroll::-webkit-scrollbar-thumb:hover { background: #94a3b8; }
+        .table-scroll::-webkit-scrollbar { height: 8px; width: 8px; }
+        .table-scroll::-webkit-scrollbar-track { background: #f1f5f9; }
+        .table-scroll::-webkit-scrollbar-thumb { background: #c084fc; border-radius: 4px; }
 
-        /* HIDE ELEMENTS ON PRINT */
         @media print {
             @page { size: A4; margin: 1cm; }
             body * { visibility: hidden; }
             #print-area, #print-area * { visibility: visible; }
-            .no-print, nav, footer, #view-scan, #view-history, #wa-floating { display: none !important; }
-            #view-students > div:first-child,
-            #view-students > div:nth-child(2) > div:first-child { display: none !important; }
-            body, .min-h-screen, .max-w-7xl { background: white !important; margin: 0 !important; padding: 0 !important; height: auto !important; min-height: auto !important; }
-            #print-area { position: relative !important; left: 0; top: 0; width: 100% !important; display: grid !important; grid-template-columns: repeat(4, 1fr) !important; gap: 12px !important; }
-            .print-exact { page-break-inside: avoid !important; break-inside: avoid !important; margin-bottom: 10px !important; }
-            * { -webkit-print-color-adjust: exact !important; print-color-adjust: exact !important; }
+            .no-print, nav, footer, #view-scan, #view-history, #view-teachers, #wa-floating { display: none !important; }
+            body { background: white !important; margin: 0 !important; padding: 0 !important; }
+            #print-area { position: relative !important; width: 100% !important; display: grid !important; grid-template-columns: repeat(4, 1fr) !important; gap: 12px !important; }
+            .print-exact { page-break-inside: avoid !important; margin-bottom: 10px !important; border: 1px solid #000 !important; background: white !important; }
         }
+        
+        .fade-in { animation: fadeIn 0.3s ease-in-out; }
+        @keyframes fadeIn { from { opacity: 0; transform: translateY(10px); } to { opacity: 1; transform: translateY(0); } }
     </style>
 </head>
-<!-- Aksen latar belakang segar: gradasi merah dan kuning transparan -->
-<body class="min-h-screen flex flex-col justify-between selection:bg-red-100 selection:text-red-900 bg-gradient-to-br from-red-500/10 via-yellow-500/10 to-slate-50 bg-fixed">
+<body class="min-h-screen flex flex-col justify-between bg-colorful selection:bg-pink-300 selection:text-pink-900">
     
-    <!-- Top Accent Bar -->
-    <div class="h-1.5 bg-gradient-to-r from-red-500/60 to-yellow-500/60 w-full fixed top-0 z-[60] no-print"></div>
+    <div class="h-2 bg-gradient-to-r from-yellow-400 via-pink-500 to-cyan-400 w-full fixed top-0 z-[60] no-print"></div>
 
-    <!-- FLOATING CONTACT WA BUTTON -->
-    <a id="wa-floating" href="https://wa.me/6281515561069" target="_blank" class="fixed bottom-6 right-6 z-[99] bg-white/90 backdrop-blur-sm text-slate-700 px-4 py-3 rounded-full shadow-lg flex items-center gap-2 text-sm font-medium border border-slate-200 hover:bg-slate-50 hover:text-red-600 transition-colors">
-        <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="text-green-500"><path d="M22 16.92v3a2 2 0 0 1-2.18 2 19.79 19.79 0 0 1-8.63-3.07 19.5 19.5 0 0 1-6-6 19.79 19.79 0 0 1-3.07-8.67A2 2 0 0 1 4.11 2h3a2 2 0 0 1 2 1.72 12.84 12.84 0 0 0 .7 2.81 2 2 0 0 1-.45 2.11L8.09 9.91a16 16 0 0 0 6 6l1.27-1.27a2 2 0 0 1 2.11-.45 12.84 12.84 0 0 0 2.81.7A2 2 0 0 1 22 16.92z"></path></svg>
-        <span class="hidden md:inline">Mon Posang pece' edinnak kaangguy atanyah</span>
+    <!-- FLOATING WA BUTTON -->
+    <a id="wa-floating" href="https://wa.me/6281515561069" target="_blank" class="fixed bottom-6 right-6 z-[99] bg-emerald-500 text-white px-4 py-3 rounded-full flex items-center gap-2 text-sm font-bold shadow-xl border-2 border-white hover:bg-emerald-600 hover:scale-105 transition-all">
+        <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><path d="M22 16.92v3a2 2 0 0 1-2.18 2 19.79 19.79 0 0 1-8.63-3.07 19.5 19.5 0 0 1-6-6 19.79 19.79 0 0 1-3.07-8.67A2 2 0 0 1 4.11 2h3a2 2 0 0 1 2 1.72 12.84 12.84 0 0 0 .7 2.81 2 2 0 0 1-.45 2.11L8.09 9.91a16 16 0 0 0 6 6l1.27-1.27a2 2 0 0 1 2.11-.45 12.84 12.84 0 0 0 2.81.7A2 2 0 0 1 22 16.92z"></path></svg>
+        <span class="hidden md:inline">pencet ini utk Hubungi Alfin ketika ada masalah</span>
     </a>
 
-    <div class="flex-grow flex flex-col pt-1.5">
-        <!-- SYSTEM STATUS BAR & NAVBAR dengan efek Glassmorphism segar -->
-        <header class="bg-white/70 backdrop-blur-md border-b border-slate-200 sticky top-0 z-50 no-print">
+    <div class="flex-grow flex flex-col pt-2">
+        <!-- HEADER -->
+        <header class="glass-header sticky top-0 z-50 no-print shadow-md">
             <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-                <div class="flex justify-between items-center py-2 text-xs font-medium text-slate-500 border-b border-slate-200/50">
+                <div class="flex justify-between items-center py-2 text-xs font-bold text-slate-600 border-b border-slate-200">
                     <div class="flex items-center gap-2">
-                        <span id="network-indicator" class="w-2 h-2 rounded-full bg-green-500 animate-pulse"></span>
-                        <span id="network-text">Sistem Presensi: <span class="text-green-600 font-semibold">Online</span></span>
-                        <span id="sync-queue-count" class="hidden ml-2 bg-yellow-100 text-yellow-700 px-2 rounded-full font-bold">0 Pending</span>
+                        <span id="network-indicator" class="w-2.5 h-2.5 rounded-full bg-emerald-500 animate-pulse"></span>
+                        <span id="network-text">Sistem: <span class="text-emerald-600">Online</span></span>
+                        <span id="sync-queue-count" class="hidden ml-2 bg-amber-500 text-white px-2 py-0.5 rounded-full text-[10px]">0 Pending</span>
                     </div>
-                    <div id="live-clock" class="flex items-center gap-1 font-mono">
-                        Booting...
-                    </div>
+                    <div id="live-clock" class="font-mono bg-slate-100 px-2.5 py-0.5 rounded-md border text-slate-700">Booting...</div>
                 </div>
 
-                <div class="flex flex-col md:flex-row justify-between items-center py-4 gap-4">
+                <div class="flex flex-col md:flex-row justify-between items-center py-3 gap-4">
                     <div class="flex items-center gap-3">
-                        <img src="https://drive.google.com/thumbnail?id=1xj5AeEbWisIpBlXpwJ_tbW7wMM8NsjjQ&sz=w500" alt="Logo" class="w-10 h-10 object-contain drop-shadow-sm">
+                        <!-- LOGO MADRASAH -->
+                        <div class="bg-white p-2 rounded-xl border border-slate-200 shadow-sm flex items-center justify-center">
+                            <img src="https://drive.google.com/thumbnail?id=1xj5AeEbWisIpBlXpwJ_tbW7wMM8NsjjQ&sz=w500" alt="Logo Madrasah" class="w-10 h-10 object-contain">
+                        </div>
                         <div>
-                            <h1 class="font-bold text-lg text-slate-800 leading-tight">MAS MIFTAHUL ULUM</h1>
-                            <p class="text-xs text-slate-500 font-medium">Digital Presence Protocol &middot; Dev by ALFIN N.H</p>
+                            <h1 class="font-black text-xl bg-clip-text text-transparent bg-gradient-to-r from-indigo-700 via-purple-700 to-pink-600 leading-tight">MAS MIFTAHUL ULUM</h1>
+                            <p class="text-xs text-slate-500 font-bold">Digital Presence Protocol V1.3 &middot; Dev by ALFIN N.H</p>
                         </div>
                     </div>
                     
-                    <nav class="flex gap-1 bg-white/50 p-1 rounded-lg border border-slate-200/60 shadow-sm backdrop-blur-sm">
-                        <button onclick="switchTab('scan')" id="tab-scan" class="tab-btn px-4 py-2 text-sm font-semibold text-red-700 bg-white/90 rounded-md shadow-sm border border-red-100 transition-all flex items-center gap-2">
-                            Scanner
-                        </button>
-                        <button onclick="switchTab('students')" id="tab-students" class="tab-btn px-4 py-2 text-sm font-medium text-slate-600 hover:text-slate-900 hover:bg-white/50 rounded-md transition-all flex items-center gap-2">
-                            Data Siswa
-                        </button>
-                        <button onclick="switchTab('history')" id="tab-history" class="tab-btn px-4 py-2 text-sm font-medium text-slate-600 hover:text-slate-900 hover:bg-white/50 rounded-md transition-all flex items-center gap-2">
-                            Rekap Log
-                        </button>
+                    <nav class="flex flex-wrap justify-center gap-1.5 bg-slate-100/80 p-1.5 rounded-xl border border-slate-200">
+                        <button onclick="switchTab('scan')" id="tab-scan" class="px-3.5 py-2 text-xs font-extrabold text-white bg-gradient-to-r from-indigo-600 to-purple-600 rounded-lg shadow-sm">Scanner</button>
+                        <button onclick="switchTab('students')" id="tab-students" class="px-3.5 py-2 text-xs font-bold text-slate-600 hover:text-indigo-600 rounded-lg">Data Siswa</button>
+                        <button onclick="switchTab('history')" id="tab-history" class="px-3.5 py-2 text-xs font-bold text-slate-600 hover:text-indigo-600 rounded-lg">Rekap Log</button>
+                        <button onclick="switchTab('teachers')" id="tab-teachers" class="px-3.5 py-2 text-xs font-bold text-slate-600 hover:text-pink-600 rounded-lg">Daftar Guru</button>
                     </nav>
                 </div>
             </div>
         </header>
 
-        <main class="w-full max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-8 flex-grow">
+        <main class="w-full max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-6 flex-grow">
 
             <!-- TAB 1: SCANNER -->
             <div id="view-scan" class="space-y-6 fade-in">
-                <div id="browser-warning" class="hidden bg-red-50/80 backdrop-blur-sm text-red-700 p-4 rounded-lg border border-red-200 text-sm font-medium flex items-center gap-2">
-                    Akses tidak optimal: Buka via Browser Utama (Chrome/Safari) untuk fitur Kamera.
+                <div id="browser-warning" class="hidden bg-rose-500 text-white p-4 rounded-xl font-bold text-sm">
+                    ⚠️ Akses tidak optimal: Buka via Browser Utama (Chrome/Safari) untuk fitur Kamera.
                 </div>
 
-                <div class="bg-white/80 backdrop-blur-sm p-6 rounded-xl shadow-sm border border-slate-200 hover:shadow-md transition-shadow">
-                    <div class="flex flex-col md:flex-row md:items-center justify-between gap-4 mb-6 pb-4 border-b border-slate-100">
-                        <h2 class="text-lg font-semibold text-slate-800">Konfigurasi Sesi KBM</h2>
-                        <span id="cloud-status" class="text-xs font-medium px-3 py-1 rounded-full bg-slate-100/80 text-slate-600 flex items-center gap-2 border border-slate-200">
-                            Menghubungkan...
-                        </span>
+                <div class="glass-card p-6 rounded-2xl">
+                    <div class="flex flex-col md:flex-row md:items-center justify-between gap-4 mb-6 pb-4 border-b border-slate-200">
+                        <h2 class="text-lg font-black text-slate-800 uppercase">Konfigurasi Sesi KBM</h2>
+                        <span id="cloud-status" class="text-xs font-extrabold px-3 py-1 rounded-full bg-blue-100 text-blue-700 border border-blue-200">Menghubungkan ke Server...</span>
                     </div>
                     
                     <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4">
                         <div>
-                            <label class="block text-xs font-semibold text-slate-500 mb-1.5 uppercase tracking-wider">Mata Pelajaran <span class="text-red-500">*</span></label>
-                            <select id="select-subject" class="form-input cursor-pointer">
-                                <option value="">-- Pilih --</option>
+                            <label class="block text-xs font-extrabold text-slate-600 mb-1.5 uppercase">Mata Pelajaran <span class="text-rose-500">*</span></label>
+                            <select id="select-subject" class="form-input">
+                                <option value="">-- Pilih Mapel --</option>
                                 <option value="Akidah">Akidah</option>
                                 <option value="Alquran Hadits">Alquran Hadits</option>
                                 <option value="Bahasa Arab">Bahasa Arab</option>
@@ -155,9 +164,9 @@
                             </select>
                         </div>
                         <div>
-                            <label class="block text-xs font-semibold text-slate-500 mb-1.5 uppercase tracking-wider">Kelas <span class="text-red-500">*</span></label>
-                            <select id="select-class" class="form-input cursor-pointer">
-                                <option value="">-- Pilih --</option>
+                            <label class="block text-xs font-extrabold text-slate-600 mb-1.5 uppercase">Kelas <span class="text-rose-500">*</span></label>
+                            <select id="select-class" class="form-input">
+                                <option value="">-- Pilih Kelas --</option>
                                 <option value="X - A">X - A</option>
                                 <option value="X - B">X - B</option>
                                 <option value="XI - A">XI - A</option>
@@ -166,133 +175,102 @@
                             </select>
                         </div>
                         <div>
-                            <label class="block text-xs font-semibold text-slate-500 mb-1.5 uppercase tracking-wider">Jam Ke- <span class="text-red-500">*</span></label>
-                            <select id="select-jam" onchange="checkManualJam(this.value)" class="form-input cursor-pointer">
-                                <option value="">-- Pilih --</option>
-                                <option value="1">1</option>
-                                <option value="2">2</option>
-                                <option value="3">3</option>
-                                <option value="4">4</option>
-                                <option value="5">5</option>
-                                <option value="6">6</option>
-                                <option value="7">7</option>
-                                <option value="8">8</option>
-                                <option value="1-2">1-2</option>
-                                <option value="3-4">3-4</option>
-                                <option value="4-5">4-5</option>
-                                <option value="5-6">5-6</option>
-                                <option value="7-8">7-8</option>
+                            <label class="block text-xs font-extrabold text-slate-600 mb-1.5 uppercase">Jam Ke- <span class="text-rose-500">*</span></label>
+                            <select id="select-jam" onchange="checkManualJam(this.value)" class="form-input">
+                                <option value="">-- Pilih Jam --</option>
+                                <option value="1">1</option><option value="2">2</option><option value="3">3</option><option value="4">4</option>
+                                <option value="5">5</option><option value="6">6</option><option value="7">7</option><option value="8">8</option>
+                                <option value="1-2">1-2</option><option value="3-4">3-4</option><option value="4-5">4-5</option><option value="5-6">5-6</option><option value="7-8">7-8</option>
                                 <option value="manual">Manual...</option>
                             </select>
                             <input type="text" id="input-jam-manual" placeholder="Ketik manual..." class="hidden mt-2 form-input">
                         </div>
                         <div class="flex items-end">
-                            <button id="btn-start-session" onclick="startSession()" class="w-full bg-gradient-to-r from-red-500 to-yellow-500 hover:from-red-600 hover:to-yellow-600 text-white font-medium py-2.5 px-4 rounded-lg transition-colors shadow-sm text-sm flex justify-center items-center gap-2">
-                                Pece'Edinnak
-                            </button>
-                            <button id="btn-stop-session" onclick="stopSession()" class="w-full bg-slate-800 hover:bg-slate-900 text-white font-medium py-2.5 px-4 rounded-lg transition-colors hidden justify-center items-center gap-2 text-sm shadow-sm">
-                                Monla Mareh Pecek Reah
-                            </button>
+                            <button id="btn-start-session" onclick="startSession()" class="w-full bg-gradient-to-r from-indigo-600 via-purple-600 to-pink-500 hover:opacity-90 text-white font-extrabold py-2.5 px-4 rounded-xl shadow-md transition-all text-sm uppercase tracking-wide">pencet ediinak!</button>
+                            <button id="btn-stop-session" onclick="stopSession()" class="w-full bg-slate-800 hover:bg-slate-900 text-white font-extrabold py-2.5 px-4 rounded-xl shadow-md transition-all hidden justify-center items-center text-sm uppercase">Pecek reah monla mareh!</button>
                         </div>
                     </div>
                 </div>
 
                 <div id="scanner-section" class="hidden grid grid-cols-1 lg:grid-cols-12 gap-6 relative">
-                    <!-- LEFT: CAMERA -->
-                    <div class="lg:col-span-4 bg-white/80 backdrop-blur-sm p-6 rounded-xl shadow-sm border border-slate-200 hover:shadow-md transition-shadow flex flex-col">
-                        <div class="flex flex-col gap-4 mb-4">
-                            <h3 class="text-base font-semibold text-slate-800 border-b border-slate-100 pb-2">Kamera Scanner</h3>
+                    <div class="lg:col-span-4 glass-card p-5 rounded-2xl flex flex-col">
+                        <div class="flex flex-col gap-3 mb-3">
+                            <h3 class="text-base font-extrabold text-slate-800 border-b border-slate-200 pb-2">Kamera Scanner</h3>
                             <div id="camera-select-container" class="hidden">
                                 <select id="camera-select" onchange="switchCamera(this.value)" class="form-input text-xs"></select>
                             </div>
                         </div>
-                        <div class="relative w-full aspect-square bg-slate-100/50 rounded-lg overflow-hidden border border-slate-200">
-                            <div id="reader" class="w-full h-full flex items-center justify-center text-slate-500 text-sm">Memuat kamera...</div>
+                        <div class="relative w-full aspect-square bg-slate-900 rounded-xl overflow-hidden border-2 border-slate-300">
+                            <div id="reader" class="w-full h-full flex items-center justify-center text-slate-400 text-xs font-semibold">Memuat kamera...</div>
                         </div>
-                        <div class="mt-6">
-                            <div id="session-badge" class="bg-red-50/80 text-red-700 text-xs font-semibold px-4 py-2.5 rounded-lg border border-red-100 text-center w-full truncate"></div>
+                        <div class="mt-4">
+                            <div id="session-badge" class="bg-indigo-100 text-indigo-800 text-xs font-black px-3 py-2.5 rounded-xl border border-indigo-200 text-center w-full truncate"></div>
                         </div>
                     </div>
 
-                    <!-- RIGHT: LOG & MANUAL INPUT -->
-                    <div class="lg:col-span-8 bg-white/80 backdrop-blur-sm p-6 rounded-xl shadow-sm border border-slate-200 hover:shadow-md transition-shadow flex flex-col">
-                        <div class="flex justify-between items-center border-b border-slate-100 pb-3 mb-5">
-                            <h3 class="text-base font-semibold text-slate-800">Log Aktivitas Sesi</h3>
-                            <span class="text-xs font-medium text-slate-500 bg-white/80 px-3 py-1 rounded-md border border-slate-200">
-                                Terekam: <span id="count-session" class="font-semibold text-red-600">0</span>
-                            </span>
+                    <div class="lg:col-span-8 glass-card p-5 rounded-2xl flex flex-col">
+                        <div class="flex justify-between items-center border-b border-slate-200 pb-3 mb-4">
+                            <h3 class="text-base font-extrabold text-slate-800">Log Aktivitas Sesi</h3>
+                            <span class="text-xs font-bold text-white bg-indigo-600 px-3 py-1 rounded-lg">Terekam: <span id="count-session" class="text-yellow-300 font-extrabold">0</span></span>
                         </div>
                         
-                        <div class="mb-5 p-4 bg-slate-50/50 border border-slate-200 rounded-lg">
-                            <label class="block text-xs font-semibold text-slate-600 mb-2">Input Manual:</label>
-                            <div class="grid grid-cols-1 sm:grid-cols-12 gap-3">
-                                <select id="manual-student-nis" class="sm:col-span-6 form-input text-sm cursor-pointer bg-white">
-                                    <option value="">-- Cari Nama Siswa --</option>
+                        <div class="mb-4 p-3.5 bg-slate-50 border border-slate-200 rounded-xl">
+                            <label class="block text-xs font-bold text-slate-600 mb-2 uppercase">Input Manual:</label>
+                            <div class="grid grid-cols-1 sm:grid-cols-12 gap-2">
+                                <select id="manual-student-nis" class="sm:col-span-6 form-input text-xs"><option value="">-- Cari Nama Siswa --</option></select>
+                                <select id="manual-status" class="sm:col-span-3 form-input text-xs font-bold">
+                                    <option value="Hadir">Hadir</option><option value="Sakit">Sakit</option>
+                                    <option value="Izin">Izin</option><option value="Alpha">Alpha</option>
                                 </select>
-                                <select id="manual-status" class="sm:col-span-3 form-input text-sm cursor-pointer bg-white">
-                                    <option value="Hadir">Hadir</option>
-                                    <option value="Sakit">Sakit</option>
-                                    <option value="Izin">Izin</option>
-                                    <option value="Alpha">Alpha</option>
-                                </select>
-                                <button type="button" onclick="submitManualAttendance()" class="sm:col-span-3 bg-gradient-to-r from-red-500 to-yellow-500 hover:from-red-600 hover:to-yellow-600 shadow-sm text-white font-medium py-2 px-3 rounded-lg text-sm transition-colors w-full">
-                                    Simpan
-                                </button>
+                                <button type="button" onclick="submitManualAttendance()" class="sm:col-span-3 bg-emerald-500 hover:bg-emerald-600 text-white font-extrabold py-2 px-3 rounded-xl text-xs uppercase">Simpan</button>
                             </div>
                         </div>
 
-                        <div class="border border-slate-200 rounded-lg overflow-hidden flex-grow bg-white/50">
-                            <div class="overflow-x-auto overflow-y-auto max-h-[300px] table-scroll">
+                        <div class="border border-slate-200 rounded-xl overflow-hidden flex-grow bg-white">
+                            <div class="overflow-x-auto overflow-y-auto max-h-[280px] table-scroll">
                                 <table class="min-w-full text-left border-collapse">
-                                    <thead class="sticky top-0 bg-slate-50/90 backdrop-blur-sm border-b border-slate-200 z-10">
-                                        <tr class="text-slate-500 uppercase text-xs font-semibold tracking-wider">
+                                    <thead class="sticky top-0 bg-slate-800 text-white z-10 text-[11px] uppercase font-black">
+                                        <tr>
                                             <th class="px-4 py-3 whitespace-nowrap">Waktu</th>
                                             <th class="px-4 py-3 whitespace-nowrap">NIS</th>
                                             <th class="px-4 py-3 whitespace-nowrap">Nama Lengkap</th>
                                             <th class="px-4 py-3 text-center">Status</th>
                                         </tr>
                                     </thead>
-                                    <tbody id="session-log-body" class="divide-y divide-slate-100 bg-white/60 text-sm">
-                                        <tr>
-                                            <td colspan="4" class="px-4 py-8 text-center text-slate-500">Mulai pemindaian untuk melihat log...</td>
-                                        </tr>
+                                    <tbody id="session-log-body" class="divide-y divide-slate-100 text-xs font-semibold">
+                                        <tr><td colspan="4" class="px-4 py-8 text-center text-slate-400">Mulai pemindaian untuk melihat log...</td></tr>
                                     </tbody>
                                 </table>
                             </div>
                         </div>
-                        <div id="scan-alert" class="hidden mt-4 p-3 rounded-lg text-sm font-medium text-center transition-all border backdrop-blur-sm"></div>
+                        <div id="scan-alert" class="hidden mt-4 p-3 rounded-xl text-xs font-extrabold text-center border"></div>
                     </div>
                 </div>
             </div>
 
             <!-- TAB 2: DATA SISWA -->
             <div id="view-students" class="hidden space-y-6 fade-in">
-                <div class="bg-white/80 backdrop-blur-sm p-6 rounded-xl shadow-sm border border-slate-200 hover:shadow-md transition-shadow">
-                    <h2 class="text-lg font-semibold text-slate-800 mb-4 pb-3 border-b border-slate-100">Registrasi Data Siswa</h2>
+                <div class="glass-card p-6 rounded-2xl">
+                    <h2 class="text-lg font-black text-slate-800 uppercase mb-4 pb-2 border-b border-slate-200">Registrasi Data Siswa</h2>
                     <form id="form-add-student" onsubmit="addStudent(event)" class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4">
                         <input type="text" id="stu-nis" placeholder="NIS" required class="form-input">
                         <input type="text" id="stu-name" placeholder="Nama Lengkap" required class="form-input">
-                        <select id="stu-class" required class="form-input cursor-pointer">
+                        <select id="stu-class" required class="form-input">
                             <option value="">-- Pilih Kelas --</option>
-                            <option value="X - A">X - A</option>
-                            <option value="X - B">X - B</option>
-                            <option value="XI - A">XI - A</option>
-                            <option value="XII - A">XII - A</option>
-                            <option value="XII - B">XII - B</option>
+                            <option value="X - A">X - A</option><option value="X - B">X - B</option>
+                            <option value="XI - A">XI - A</option><option value="XII - A">XII - A</option><option value="XII - B">XII - B</option>
                         </select>
-                        <button type="submit" class="bg-gradient-to-r from-red-500 to-yellow-500 hover:from-red-600 hover:to-yellow-600 shadow-sm text-white font-medium py-2.5 px-4 rounded-lg text-sm transition-colors w-full">Tambah Data</button>
+                        <button type="submit" class="bg-gradient-to-r from-indigo-600 to-purple-600 text-white font-extrabold py-2 px-4 rounded-xl text-xs uppercase">Tambah Data</button>
                     </form>
                 </div>
 
-                <div class="bg-white/80 backdrop-blur-sm p-6 rounded-xl shadow-sm border border-slate-200 hover:shadow-md transition-shadow">
-                    <div class="flex flex-col lg:flex-row justify-between items-start lg:items-center mb-6 pb-4 border-b border-slate-100 gap-4">
-                        <div>
-                            <h2 class="text-lg font-semibold text-slate-800">Database & Kartu QR</h2>
-                        </div>
-                        <div class="flex flex-wrap gap-2 w-full lg:w-auto">
-                            <button onclick="exportQRToWord()" class="bg-white border border-slate-300 px-4 py-2 rounded-lg text-sm shadow-sm hover:bg-slate-50 transition-colors">Export Doc</button>
-                            <button onclick="printQRCodes()" class="bg-white border border-slate-300 px-4 py-2 rounded-lg text-sm shadow-sm hover:bg-slate-50 transition-colors">Print</button>
-                            <button onclick="clearStudents()" class="bg-red-50/80 text-red-600 border border-red-200 px-4 py-2 rounded-lg text-sm hover:bg-red-100 transition-colors">Hapus Semua</button>
+                <div class="glass-card p-6 rounded-2xl">
+                    <div class="flex flex-col lg:flex-row justify-between items-start lg:items-center mb-6 pb-4 border-b border-slate-200 gap-4">
+                        <h2 class="text-lg font-black text-slate-800 uppercase">Database & Kartu QR</h2>
+                        <div class="flex flex-wrap gap-2">
+                            <button onclick="exportQRToWord()" class="bg-indigo-100 text-indigo-700 px-4 py-2 rounded-xl text-xs font-extrabold border border-indigo-200">Export Doc</button>
+                            <button onclick="printQRCodes()" class="bg-pink-100 text-pink-700 px-4 py-2 rounded-xl text-xs font-extrabold border border-pink-200">Print</button>
+                            <button onclick="clearStudents()" class="bg-rose-500 text-white px-4 py-2 rounded-xl text-xs font-extrabold">Hapus Semua</button>
                         </div>
                     </div>
                     <div id="print-area" class="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 lg:grid-cols-5 gap-4 justify-items-center"></div>
@@ -301,109 +279,188 @@
 
             <!-- TAB 3: REKAP DATA -->
             <div id="view-history" class="hidden space-y-6 fade-in">
-                <div class="bg-white/80 backdrop-blur-sm p-6 rounded-xl shadow-sm border border-slate-200 hover:shadow-md transition-shadow">
-                    <div class="flex flex-col xl:flex-row justify-between items-start xl:items-center mb-6 pb-4 border-b border-slate-100 gap-4">
-                        <div class="w-full xl:w-1/4">
-                            <h2 class="text-lg font-semibold text-slate-800">Master Log Presensi</h2>
-                        </div>
-                        <div class="flex flex-col lg:flex-row gap-3 w-full xl:w-3/4 justify-end items-center">
-                            <div class="grid grid-cols-2 sm:grid-cols-3 xl:grid-cols-6 gap-3 w-full lg:w-auto flex-grow">
-                                <input type="date" id="filter-date" onchange="renderHistory()" class="form-input text-xs bg-white/90">
-                                <input type="month" id="filter-month" onchange="renderHistory()" class="form-input text-xs bg-white/90">
-                                <input type="text" id="filter-name" onkeyup="renderHistory()" placeholder="Cari Nama..." class="form-input text-xs bg-white/90">
-                                <select id="filter-class" onchange="renderHistory()" class="form-input text-xs cursor-pointer bg-white/90">
-                                    <option value="">Semua Kelas</option>
-                                    <option value="X - A">X - A</option>
-                                    <option value="X - B">X - B</option>
-                                    <option value="XI - A">XI - A</option>
-                                    <option value="XII - A">XII - A</option>
-                                    <option value="XII - B">XII - B</option>
+                <div class="glass-card p-6 rounded-2xl">
+                    
+                    <div class="flex flex-col xl:flex-row justify-between items-start xl:items-center mb-4 border-b border-slate-200 pb-4 gap-4">
+                        <div>
+                            <h2 class="text-lg font-black text-slate-800 uppercase">Master Log Presensi</h2>
+                            <!-- Toggle Mode Data (Local vs Realtime) -->
+                            <div class="flex items-center gap-2 mt-2 bg-slate-50 p-1.5 rounded-lg border border-slate-200 w-max">
+                                <label class="text-[11px] font-bold text-slate-600 px-2 uppercase">Sumber Data:</label>
+                                <select id="data-source-mode" onchange="changeDataSource()" class="form-input text-xs w-auto py-1 px-2 border-slate-300">
+                                    <option value="local">Mode Offline (Lokal)</option>
+                                    <option value="realtime">Mode Realtime (Spreadsheet)</option>
                                 </select>
-                                <select id="filter-subject" onchange="renderHistory()" class="form-input text-xs cursor-pointer bg-white/90">
+                                <span id="data-source-status" class="text-[10px] font-bold px-2 py-1 rounded bg-slate-200 text-slate-600">Lokal</span>
+                            </div>
+                        </div>
+                        
+                        <div class="flex flex-col lg:flex-row gap-3 w-full xl:w-auto justify-end items-center">
+                            <div class="grid grid-cols-2 sm:grid-cols-3 xl:grid-cols-6 gap-2 w-full lg:w-auto">
+                                <input type="date" id="filter-date" onchange="renderHistory()" class="form-input text-xs">
+                                <input type="month" id="filter-month" onchange="renderHistory()" class="form-input text-xs">
+                                <input type="text" id="filter-name" onkeyup="renderHistory()" placeholder="Cari Nama..." class="form-input text-xs">
+                                <select id="filter-class" onchange="renderHistory()" class="form-input text-xs">
+                                    <option value="">Semua Kelas</option>
+                                    <option value="X - A">X - A</option><option value="X - B">X - B</option>
+                                    <option value="XI - A">XI - A</option><option value="XII - A">XII - A</option><option value="XII - B">XII - B</option>
+                                </select>
+                                <select id="filter-subject" onchange="renderHistory()" class="form-input text-xs">
+                                    <!-- LIST SEMUA MAPEL -->
                                     <option value="">Semua Mapel</option>
                                     <option value="Akidah">Akidah</option>
                                     <option value="Alquran Hadits">Alquran Hadits</option>
+                                    <option value="Bahasa Arab">Bahasa Arab</option>
+                                    <option value="Bahasa Indonesia">Bahasa Indonesia</option>
+                                    <option value="Bahasa Inggris">Bahasa Inggris</option>
+                                    <option value="Biologi">Biologi</option>
+                                    <option value="Fisika">Fisika</option>
+                                    <option value="Ekonomi">Ekonomi</option>
+                                    <option value="Fikih">Fikih</option>
+                                    <option value="Geografi">Geografi</option>
+                                    <option value="Sejarah">Sejarah</option>
                                     <option value="Informatika">Informatika</option>
+                                    <option value="Kimia">Kimia</option>
+                                    <option value="Matematika">Matematika</option>
+                                    <option value="PJOK">PJOK</option>
+                                    <option value="PPKn">PPKn</option>
+                                    <option value="Seni Budaya">Seni Budaya</option>
+                                    <option value="SKI">SKI (Sejarah Kebudayaan Islam)</option>
+                                    <option value="Sosiologi">Sosiologi</option>
+                                    <option value="Taklim">Taklim</option>
                                 </select>
-                                <select id="filter-status" onchange="renderHistory()" class="form-input text-xs cursor-pointer bg-white/90">
-                                    <option value="">Semua Status</option>
-                                    <option value="Hadir">Hadir</option>
-                                    <option value="Sakit">Sakit</option>
-                                    <option value="Izin">Izin</option>
-                                    <option value="Alpha">Alpha</option>
+                                <select id="filter-status" onchange="renderHistory()" class="form-input text-xs">
+                                    <option value="">Semua Status</option><option value="Hadir">Hadir</option>
+                                    <option value="Sakit">Sakit</option><option value="Izin">Izin</option><option value="Alpha">Alpha</option>
                                 </select>
                             </div>
-                            <!-- Fitur Reset (Clear) dihapus dari area ini -->
-                            <div class="flex gap-2 w-full lg:w-auto shrink-0">
-                                <button onclick="exportHistoryToDoc()" class="bg-white border border-slate-300 px-4 py-2 rounded-lg text-xs shadow-sm hover:bg-slate-50 transition-colors">Export Doc</button>
-                                <button onclick="exportToCSV()" class="bg-white border border-slate-300 px-4 py-2 rounded-lg text-xs shadow-sm hover:bg-slate-50 transition-colors">Export CSV</button>
+                            <div class="flex gap-1.5 w-full lg:w-auto justify-end">
+                                <button onclick="exportHistoryToDoc()" class="bg-indigo-100 text-indigo-700 px-3 py-2 rounded-xl text-xs font-extrabold border">Doc</button>
+                                <button onclick="exportToCSV()" class="bg-emerald-100 text-emerald-700 px-3 py-2 rounded-xl text-xs font-extrabold border">CSV</button>
+                                <button onclick="clearHistoryWithPin()" class="bg-rose-500 text-white px-3 py-2 rounded-xl text-xs font-extrabold">Hapus</button>
                             </div>
                         </div>
                     </div>
                     
                     <div class="grid grid-cols-2 md:grid-cols-4 gap-4 mb-6">
-                        <div class="bg-emerald-50/80 backdrop-blur-sm border border-emerald-100 p-4 rounded-xl shadow-sm">
-                            <div class="text-xs font-semibold text-emerald-600 uppercase tracking-wider mb-1">Hadir</div>
-                            <div id="count-hadir" class="text-2xl font-bold text-emerald-700">0</div>
+                        <div class="bg-gradient-to-br from-emerald-400 to-teal-500 p-4 rounded-2xl text-white shadow-md">
+                            <div class="text-[11px] font-black uppercase tracking-wider mb-1">Hadir</div>
+                            <div id="count-hadir" class="text-3xl font-black">0</div>
                         </div>
-                        <div class="bg-yellow-50/80 backdrop-blur-sm border border-yellow-100 p-4 rounded-xl shadow-sm">
-                            <div class="text-xs font-semibold text-yellow-600 uppercase tracking-wider mb-1">Sakit</div>
-                            <div id="count-sakit" class="text-2xl font-bold text-yellow-700">0</div>
+                        <div class="bg-gradient-to-br from-amber-400 to-orange-500 p-4 rounded-2xl text-white shadow-md">
+                            <div class="text-[11px] font-black uppercase tracking-wider mb-1">Sakit</div>
+                            <div id="count-sakit" class="text-3xl font-black">0</div>
                         </div>
-                        <div class="bg-blue-50/80 backdrop-blur-sm border border-blue-100 p-4 rounded-xl shadow-sm">
-                            <div class="text-xs font-semibold text-blue-600 uppercase tracking-wider mb-1">Izin</div>
-                            <div id="count-izin" class="text-2xl font-bold text-blue-700">0</div>
+                        <div class="bg-gradient-to-br from-blue-400 to-indigo-500 p-4 rounded-2xl text-white shadow-md">
+                            <div class="text-[11px] font-black uppercase tracking-wider mb-1">Izin</div>
+                            <div id="count-izin" class="text-3xl font-black">0</div>
                         </div>
-                        <div class="bg-red-50/80 backdrop-blur-sm border border-red-100 p-4 rounded-xl shadow-sm">
-                            <div class="text-xs font-semibold text-red-600 uppercase tracking-wider mb-1">Alpha</div>
-                            <div id="count-alpha" class="text-2xl font-bold text-red-700">0</div>
+                        <div class="bg-gradient-to-br from-rose-400 to-red-500 p-4 rounded-2xl text-white shadow-md">
+                            <div class="text-[11px] font-black uppercase tracking-wider mb-1">Alpha</div>
+                            <div id="count-alpha" class="text-3xl font-black">0</div>
                         </div>
                     </div>
 
-                    <div class="border border-slate-200 rounded-lg overflow-hidden bg-white/50">
+                    <div class="border border-slate-200 rounded-xl overflow-hidden bg-white">
                         <div class="overflow-x-auto table-scroll w-full">
-                            <table class="min-w-full text-left border-collapse text-sm">
-                                <thead class="bg-slate-50/90 backdrop-blur-sm border-b border-slate-200 text-slate-500 uppercase text-xs tracking-wider">
+                            <table class="min-w-full text-left border-collapse text-xs font-semibold">
+                                <thead class="bg-slate-800 text-white uppercase text-[11px] font-black">
                                     <tr>
-                                        <th class="px-5 py-3 font-semibold whitespace-nowrap">Waktu</th>
-                                        <th class="px-5 py-3 font-semibold whitespace-nowrap">NIS</th>
-                                        <th class="px-5 py-3 font-semibold whitespace-nowrap">Nama Siswa</th>
-                                        <th class="px-5 py-3 font-semibold whitespace-nowrap text-center">Kelas</th>
-                                        <th class="px-5 py-3 font-semibold whitespace-nowrap">Mapel</th>
-                                        <th class="px-5 py-3 font-semibold whitespace-nowrap text-center">Jam</th> 
-                                        <th class="px-5 py-3 font-semibold whitespace-nowrap text-center">Status</th> 
+                                        <th class="px-4 py-3 whitespace-nowrap">Waktu</th>
+                                        <th class="px-4 py-3 whitespace-nowrap">NIS</th>
+                                        <th class="px-4 py-3 whitespace-nowrap">Nama Siswa</th>
+                                        <th class="px-4 py-3 text-center whitespace-nowrap">Kelas</th>
+                                        <th class="px-4 py-3 whitespace-nowrap">Mapel</th>
+                                        <th class="px-4 py-3 text-center whitespace-nowrap">Jam</th> 
+                                        <th class="px-4 py-3 text-center whitespace-nowrap">Status</th> 
                                     </tr>
                                 </thead>
-                                <tbody id="history-table-body" class="divide-y divide-slate-100 bg-white/60"></tbody>
+                                <tbody id="history-table-body" class="divide-y divide-slate-100"></tbody>
                             </table>
                         </div>
                     </div>
                 </div>
             </div>
+
+            <!-- TAB 4: DAFTAR GURU -->
+            <div id="view-teachers" class="hidden space-y-6 fade-in">
+                <div class="glass-card p-6 rounded-2xl">
+                    <div class="text-center mb-8">
+                        <h2 class="text-2xl font-black text-transparent bg-clip-text bg-gradient-to-r from-pink-600 via-purple-600 to-indigo-600 uppercase tracking-wide">Daftar Guru & Bidang Studi</h2>
+                        <p class="text-xs font-bold text-slate-500 mt-1">Tenaga Pendidik MAS Miftahul Ulum Lenteng</p>
+                    </div>
+                    <div id="teachers-grid" class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-4"></div>
+                </div>
+            </div>
+
         </main>
     </div>
 
     <!-- FOOTER -->
-    <footer class="bg-white/70 backdrop-blur-md border-t border-slate-200 mt-8 py-8 px-4 no-print text-center relative z-10">
+    <footer class="glass-header mt-8 py-6 px-4 no-print text-center border-t border-slate-200">
         <div class="max-w-3xl mx-auto space-y-4">
-            <div class="px-6 py-4 bg-gradient-to-br from-red-50/50 to-yellow-50/50 rounded-xl border border-red-100/50 shadow-sm">
-                <p id="teacher-quote" class="text-sm italic text-slate-700 font-medium leading-relaxed"></p>
-                <span class="block mt-3 text-xs font-semibold text-slate-500">— HAWANIF S.Ag.,M.M.Pd —</span>
+            <div class="px-5 py-4 bg-white rounded-2xl border border-slate-200 shadow-sm">
+                <p id="teacher-quote" class="text-xs italic text-slate-700 font-semibold leading-relaxed"></p>
+                <span class="block mt-2 text-[11px] font-black text-indigo-600 uppercase tracking-widest">— HAWANIF S.Ag.,M.M.Pd —</span>
             </div>
-            <div class="text-xs text-slate-400 flex flex-col md:flex-row justify-center items-center gap-1">
-                <span>&copy; 2026 Miftahul Ulum.</span> 
-                <span class="hidden md:inline">&bull;</span> 
-                <span>Dashboard Presensi Modern by Alfin N.H</span>
+            <div class="text-xs font-bold text-slate-600">
+                &copy; 2026 Miftahul Ulum &middot; Dashboard Presensi Modern by OPERATOR MADRASAH
             </div>
         </div>
     </footer>
 
     <script>
-        // CORE SCRIPT & OPTIMISASI PERFORMA
+        // DATA 24 GURU
+        const teacherList = [
+            { no: 1, name: "Alimil Khoir, S.Pd", subject: "PJOK" },
+            { no: 2, name: "Hari Yanto, S.EI, M.EI", subject: "Al Qur'an Hadits" },
+            { no: 3, name: "Bariyatin Nafiah, S.EI, M.EI", subject: "Sejarah" },
+            { no: 4, name: "Khoiriyah, S.Pd", subject: "Seni dan Budaya" },
+            { no: 5, name: "Siti Ulfiyah, S.Pd", subject: "Geografi" },
+            { no: 6, name: "Nur Aini, S.Pd", subject: "Bhs. Inggris" },
+            { no: 7, name: "Ach. Riyadi, S.Pd", subject: "Ekonomi" },
+            { no: 8, name: "Ibnu Fajar, S.Si", subject: "Matematika & Matematika TL" },
+            { no: 9, name: "Syamsul Arifin, S.Pd, M.Pd", subject: "Sejarah Kebudayaan Islam" },
+            { no: 10, name: "Hendri Yanto, S.Pd", subject: "Biologi" },
+            { no: 11, name: "Maliatul Khoiriyah, S.Pd, M.Pd", subject: "Biologi" },
+            { no: 12, name: "Alfin Nur Hidayatullah", subject: "Informatika" },
+            { no: 13, name: "Sri Nurhayati, S.Pd", subject: "Matematika" },
+            { no: 14, name: "Siti Anshoriyah, S.S", subject: "Bahasa Arab, Ta'limul Muta'alim" },
+            { no: 15, name: "Hozaimah, S.Pd", subject: "Bhs. Indonesia" },
+            { no: 16, name: "Moh. Naufal, S.Pd.I", subject: "Sosiologi" },
+            { no: 17, name: "Moltazam, S.Pd.I", subject: "PPKn" },
+            { no: 18, name: "Zulfatul Laili, S.Pd", subject: "Bhs. Inggris" },
+            { no: 19, name: "Muthi'ah, S.Sos.", subject: "Aqidah Akhlaq" },
+            { no: 20, name: "Heni Yuli Astuti, S.Pd", subject: "Matematika, Fisika" },
+            { no: 21, name: "Aisatin Hasanah, S.Pd", subject: "Bahasa Arab TL, Kimia, Ta'limul Muta'alim" },
+            { no: 22, name: "Lia Kustantina, S.Pd, M.Pd", subject: "Fikih" },
+            { no: 23, name: "Mufaruk, S.Pd.I, M.Pd", subject: "Ta'limul Muta'alim" },
+            { no: 24, name: "Khoirotun Nisa'iyah, S.Pd", subject: "BK" }
+        ];
+
+        const cardGradients = [
+            "from-rose-500 to-pink-500", "from-amber-500 to-orange-500", "from-emerald-500 to-teal-500",
+            "from-cyan-500 to-blue-500", "from-indigo-500 to-purple-500", "from-fuchsia-500 to-pink-500"
+        ];
+
+        function renderTeachers() {
+            const grid = document.getElementById('teachers-grid');
+            if(!grid) return;
+            grid.innerHTML = teacherList.map((t, idx) => {
+                const grad = cardGradients[idx % cardGradients.length];
+                return `<div class="bg-white rounded-xl overflow-hidden border border-slate-200 shadow-sm hover:shadow-md transition-all">
+                    <div class="bg-gradient-to-r ${grad} p-2 text-white font-black text-xs text-center tracking-wider">GURU NO. ${t.no}</div>
+                    <div class="p-4 text-center">
+                        <h3 class="font-extrabold text-sm text-slate-800 mb-1.5">${t.name}</h3>
+                        <span class="inline-block px-2.5 py-1 bg-slate-100 text-indigo-700 rounded-lg text-[11px] font-bold border border-slate-200">${t.subject}</span>
+                    </div>
+                </div>`;
+            }).join('');
+        }
+
         function updateClock() {
             const now = new Date();
-            const options = { timeZone: 'Asia/Jakarta', hour12: false, hour: '2-digit', minute: '2-digit', second: '2-digit' };
-            document.getElementById('live-clock').innerHTML = now.toLocaleTimeString('id-ID', options) + ' WIB';
+            document.getElementById('live-clock').innerHTML = now.toLocaleTimeString('id-ID', { timeZone: 'Asia/Jakarta', hour12: false, hour: '2-digit', minute: '2-digit', second: '2-digit' }) + ' WIB';
         }
         setInterval(updateClock, 1000); updateClock(); 
 
@@ -412,8 +469,7 @@
             try {
                 if (!audioCtx) audioCtx = new (window.AudioContext || window.webkitAudioContext)();
                 if (audioCtx.state === 'suspended') audioCtx.resume();
-                const osc = audioCtx.createOscillator();
-                const gain = audioCtx.createGain();
+                const osc = audioCtx.createOscillator(); const gain = audioCtx.createGain();
                 osc.connect(gain); gain.connect(audioCtx.destination);
                 osc.type = "sine"; osc.frequency.setValueAtTime(800, audioCtx.currentTime); 
                 osc.frequency.exponentialRampToValueAtTime(1200, audioCtx.currentTime + 0.1);
@@ -423,148 +479,126 @@
             } catch(e) {}
         }
 
-        let html5QrCode = null;
-        let isProcessingScan = false;
+        let html5QrCode = null; let isProcessingScan = false;
         let currentSubject = ""; let currentClass = ""; let currentJam = "";
         let isSessionActive = false; let sessionScans = [];
-        
         const scriptUrl = "https://script.google.com/macros/s/AKfycbyrfrefZC3SQfELvDY-tKEBaYCXfCUuXvDcV3FxcVv8zpWFvsYgUB-Ckz1tLg8H8m5T/exec";
 
         let students = JSON.parse(localStorage.getItem('db_students') || '[]');
         let attendanceHistory = JSON.parse(localStorage.getItem('db_history') || '[]');
-        let syncQueue = JSON.parse(localStorage.getItem('sync_queue') || '[]'); // ANTREAN DATA OFFLINE
+        let realtimeHistory = []; // Array khusus untuk data Realtime
+        let currentDataSource = 'local'; // Status Mode ('local' / 'realtime')
+        let syncQueue = JSON.parse(localStorage.getItem('sync_queue') || '[]');
 
         const quotesGuru = [
             "\"Teknologi mempermudah langkah, namun kedisiplinan dan ketulusan hati bapak/ibu gurulah yang mencetak peradaban mulia.\"",
-            "\"Di balik layar sistem yang canggih, terdapat doa dan dedikasi pengajar yang tak pernah lelah membimbing masa depan bangsa.\"",
+            "\"Di balik layar sistem yang canggih, terdapat doa dan dedikasi pengajar yang tak pernah lelah membimbing masa depan.\"",
             "\"Data tercatat dalam server, namun ilmu dan adab yang diajarkan akan terukir abadi di hati para siswa.\""
         ];
 
-        // LOAD DATA YANG LEBIH CEPAT (BACKGROUND FETCHING)
         async function loadData() {
             const cloudStatus = document.getElementById('cloud-status');
-            
-            // 1. Langsung tampilkan data dari LocalStorage tanpa jeda (Instan)
-            renderStudents(); 
-            renderHistory(); 
-            updateQueueUI();
-
+            renderStudents(); renderHistory(); renderTeachers(); updateQueueUI();
             try {
-                if(cloudStatus) {
-                    cloudStatus.innerHTML = 'Sabar pak/bu masih loading...';
-                    cloudStatus.className = "text-xs font-medium px-3 py-1 rounded-full bg-blue-50/80 text-blue-600 border border-blue-200 flex items-center gap-2";
-                }
-                
-                // 2. Fetch data 'Siswa' saja terlebih dahulu. 
+                if(cloudStatus) { cloudStatus.innerHTML = 'Sabar ya bro...'; cloudStatus.className = "text-xs font-extrabold px-3 py-1 rounded-full bg-blue-100 text-blue-700 border border-blue-200"; }
                 const respStudents = await fetch(scriptUrl + "?action=getStudents");
                 const dataStudents = await respStudents.json();
-
-                if(dataStudents && dataStudents.length > 0) {
-                    students = dataStudents;
-                    localStorage.setItem('db_students', JSON.stringify(students));
-                }
-
-                // 3. Render pembaruan data siswa dan SEGERA ubah status UI.
+                if(dataStudents && dataStudents.length > 0) { students = dataStudents; localStorage.setItem('db_students', JSON.stringify(students)); }
                 renderStudents();
-                if(cloudStatus) {
-                    cloudStatus.innerHTML = 'Sudah Tersambung bos (Realtime)';
-                    cloudStatus.className = "text-xs font-medium px-3 py-1 rounded-full bg-emerald-50/80 text-emerald-600 border border-emerald-200 flex items-center gap-2";
-                }
-                
-                // 4. Proses antrean data offline jika internet sempat terputus
+                if(cloudStatus) { cloudStatus.innerHTML = 'Online (Realtime)'; cloudStatus.className = "text-xs font-extrabold px-3 py-1 rounded-full bg-emerald-100 text-emerald-700 border border-emerald-200"; }
                 processQueue();
-
-                // 5. Ambil data 'History/Riwayat' secara diam-diam di latar belakang.
-                fetch(scriptUrl + "?action=getHistory")
-                    .then(res => res.json())
-                    .then(dataHistory => {
-                        if(dataHistory && dataHistory.length > 0) {
-                            attendanceHistory = dataHistory;
-                            localStorage.setItem('db_history', JSON.stringify(attendanceHistory));
-                            renderHistory(); 
+                
+                // Fetch History Asinkron di latar belakang
+                fetch(scriptUrl + "?action=getHistory").then(res => res.json()).then(dataHistory => {
+                    if(dataHistory && dataHistory.length > 0) {
+                        realtimeHistory = dataHistory; // Simpan ke variable realtime
+                        // Jika dalam mode offline/kosong, perbarui juga data offline agar relevan, tapi prioritas tetap local
+                        if(attendanceHistory.length === 0) {
+                            attendanceHistory = dataHistory; 
+                            localStorage.setItem('db_history', JSON.stringify(attendanceHistory)); 
                         }
-                    })
-                    .catch(e => console.log("Info: Sinkronisasi riwayat berjalan di latar belakang (delay aman)."));
-
+                        if(currentDataSource === 'realtime') renderHistory();
+                    }
+                }).catch(e => console.log("Background sync history complete."));
             } catch (error) {
-                if(cloudStatus) {
-                    cloudStatus.innerHTML = 'Mode Offline (Lokal)';
-                    cloudStatus.className = "text-xs font-medium px-3 py-1 rounded-full bg-yellow-50/80 text-yellow-600 border border-yellow-200 flex items-center gap-2";
-                }
+                if(cloudStatus) { cloudStatus.innerHTML = 'Mode Offline (Lokal)'; cloudStatus.className = "text-xs font-extrabold px-3 py-1 rounded-full bg-amber-100 text-amber-700 border border-amber-200"; }
             }
+        }
+
+        // FUNGSI GANTI MODE DATA SOURCE (Lokal vs Realtime)
+        async function changeDataSource() {
+            currentDataSource = document.getElementById('data-source-mode').value;
+            const statusEl = document.getElementById('data-source-status');
+            
+            if (currentDataSource === 'realtime') {
+                statusEl.className = "text-[10px] font-bold px-2 py-1 rounded bg-blue-100 text-blue-700 animate-pulse";
+                statusEl.innerText = "Mengambil data...";
+                try {
+                    const res = await fetch(scriptUrl + "?action=getHistory");
+                    const data = await res.json();
+                    if (data) {
+                        realtimeHistory = data;
+                        statusEl.className = "text-[10px] font-bold px-2 py-1 rounded bg-emerald-100 text-emerald-700";
+                        statusEl.innerText = "Realtime Tersinkron";
+                    }
+                } catch (e) {
+                    statusEl.className = "text-[10px] font-bold px-2 py-1 rounded bg-rose-100 text-rose-700";
+                    statusEl.innerText = "Gagal memuat Database.";
+                    document.getElementById('data-source-mode').value = 'local';
+                    currentDataSource = 'local';
+                }
+            } else {
+                statusEl.className = "text-[10px] font-bold px-2 py-1 rounded bg-slate-200 text-slate-600";
+                statusEl.innerText = "Lokal / Offline";
+            }
+            renderHistory();
         }
 
         document.addEventListener("DOMContentLoaded", () => {
             document.getElementById('teacher-quote').innerHTML = quotesGuru[Math.floor(Math.random() * quotesGuru.length)];
             const ua = navigator.userAgent || navigator.vendor || window.opera;
-            if (ua.indexOf('Instagram') > -1 || ua.indexOf('WhatsApp') > -1) {
-                document.getElementById('browser-warning').classList.remove('hidden');
-            }
-            loadData(); 
-            
-            // Listener untuk auto-sync jika internet kembali hidup
+            if (ua.indexOf('Instagram') > -1 || ua.indexOf('WhatsApp') > -1) document.getElementById('browser-warning').classList.remove('hidden');
+            loadData();
             window.addEventListener('online', () => {
-                document.getElementById('network-text').innerHTML = 'Sistem Presensi: <span class="text-green-600 font-semibold">Online</span>';
-                document.getElementById('network-indicator').className = 'w-2 h-2 rounded-full bg-green-500 animate-pulse';
+                document.getElementById('network-text').innerHTML = 'Sistem: <span class="text-emerald-600">Online</span>';
+                document.getElementById('network-indicator').className = 'w-2.5 h-2.5 rounded-full bg-emerald-500 animate-pulse';
                 processQueue();
             });
             window.addEventListener('offline', () => {
-                document.getElementById('network-text').innerHTML = 'Sistem Presensi: <span class="text-red-600 font-semibold">Offline</span>';
-                document.getElementById('network-indicator').className = 'w-2 h-2 rounded-full bg-red-500';
+                document.getElementById('network-text').innerHTML = 'Sistem: <span class="text-rose-600">Offline</span>';
+                document.getElementById('network-indicator').className = 'w-2.5 h-2.5 rounded-full bg-rose-500';
             });
         });
 
-        // ---------------- BACKGROUND SYNC MANAGER (ANTI-ERROR) ---------------- //
         let isSyncing = false;
         async function processQueue() {
-            if (syncQueue.length === 0 || isSyncing || !navigator.onLine) {
-                updateQueueUI(); return;
-            }
+            if (syncQueue.length === 0 || isSyncing || !navigator.onLine) { updateQueueUI(); return; }
             isSyncing = true;
             const task = syncQueue[0];
-
             try {
-                await fetch(scriptUrl, {
-                    method: 'POST', mode: 'no-cors', 
-                    headers: { 'Content-Type': 'application/json' },
-                    body: JSON.stringify(task.payload)
-                });
-                
-                // Hapus dari antrean jika berhasil (atau no-cors sukses)
-                syncQueue.shift();
-                localStorage.setItem('sync_queue', JSON.stringify(syncQueue));
-                isSyncing = false;
-                processQueue(); // Lanjut ke antrean berikutnya
-
-            } catch (e) {
-                isSyncing = false;
-                setTimeout(processQueue, 5000); // Coba lagi dalam 5 detik
-            }
+                await fetch(scriptUrl, { method: 'POST', mode: 'no-cors', headers: { 'Content-Type': 'application/json' }, body: JSON.stringify(task.payload) });
+                syncQueue.shift(); localStorage.setItem('sync_queue', JSON.stringify(syncQueue)); isSyncing = false; processQueue();
+            } catch (e) { isSyncing = false; setTimeout(processQueue, 5000); }
             updateQueueUI();
         }
 
         function updateQueueUI() {
             const badge = document.getElementById('sync-queue-count');
-            if(syncQueue.length > 0) {
-                badge.innerText = `${syncQueue.length} Tertunda (Syncing...)`;
-                badge.classList.remove('hidden');
-            } else {
-                badge.classList.add('hidden');
-            }
+            if(syncQueue.length > 0) { badge.innerText = `${syncQueue.length} Pending`; badge.classList.remove('hidden'); }
+            else { badge.classList.add('hidden'); }
         }
 
-        // FUNGSI PENGIRIMAN DATA (DILIMPAHKAN KE ANTREAN AGAR INSTAN)
         function kirimKeGoogleSheets(dataLog) {
             const payload = { action: 'addHistory', nis: dataLog.nis, nama: dataLog.name, kelas: dataLog.className, mapel: dataLog.subject, jam: dataLog.jam, status: dataLog.status || 'Hadir' };
             syncQueue.push({ id: Date.now(), payload: payload });
             localStorage.setItem('sync_queue', JSON.stringify(syncQueue));
-            
-            // Simpan ke history lokal juga
             localStorage.setItem('db_history', JSON.stringify(attendanceHistory));
             processQueue(); 
+            // Jika dalam mode realtime, update realtime list langsung (untuk simulasi tampilan instant sebelum fetch ulang)
+            realtimeHistory.unshift(dataLog);
+            if(currentDataSource === 'realtime') renderHistory();
         }
 
-        // ================== FUNGSI UI & SCANNER ================== //
         function checkManualJam(val) {
             const manualInput = document.getElementById('input-jam-manual');
             val === 'manual' ? (manualInput.classList.remove('hidden'), manualInput.focus()) : manualInput.classList.add('hidden');
@@ -572,14 +606,16 @@
 
         function switchTab(tabId) {
             document.querySelectorAll('[id^="view-"]').forEach(el => el.classList.add('hidden'));
-            const inactiveClass = "tab-btn px-4 py-2 text-sm font-medium text-slate-600 hover:text-slate-900 hover:bg-white/50 rounded-md transition-all flex items-center gap-2";
-            document.querySelectorAll('[id^="tab-"]').forEach(el => { 
-                el.className = inactiveClass; 
-                if(el.id === 'tab-' + tabId) el.className = "tab-btn px-4 py-2 text-sm font-semibold text-red-700 bg-white/90 rounded-md shadow-sm border border-red-100 transition-all flex items-center gap-2";
+            const inactiveStyle = "px-3.5 py-2 text-xs font-bold text-slate-600 hover:text-indigo-600 rounded-lg";
+            const activeStyle = "px-3.5 py-2 text-xs font-extrabold text-white bg-gradient-to-r from-indigo-600 to-purple-600 rounded-lg shadow-sm";
+            document.querySelectorAll('[id^="tab-"]').forEach(el => {
+                el.className = inactiveStyle;
+                if(el.id === 'tab-' + tabId) el.className = activeStyle;
             });
             document.getElementById(`view-${tabId}`).classList.remove('hidden');
             if (tabId === 'history') renderHistory();
             if (tabId === 'students') renderStudents();
+            if (tabId === 'teachers') renderTeachers();
         }
 
         function startSession() {
@@ -587,19 +623,14 @@
             const cls = document.getElementById('select-class').value;
             let jam = document.getElementById('select-jam').value;
             if (jam === 'manual') jam = document.getElementById('input-jam-manual').value.trim();
-
             if (!subject || !cls || !jam) return alert("Isi Parameter Kelas, Mapel, dan Jam terlebih dahulu!");
 
             currentSubject = subject; currentClass = cls; currentJam = jam;
             isSessionActive = true; isProcessingScan = false; sessionScans = [];
-            
             populateManualStudentDropdown(); updateSessionUI();
             ['select-subject', 'select-class', 'select-jam', 'input-jam-manual'].forEach(id => document.getElementById(id).disabled = true);
-            
             document.getElementById('btn-start-session').classList.add('hidden');
-            document.getElementById('btn-stop-session').classList.remove('hidden');
-            document.getElementById('btn-stop-session').classList.add('flex');
-            
+            document.getElementById('btn-stop-session').classList.remove('hidden'); document.getElementById('btn-stop-session').classList.add('flex');
             document.getElementById('scanner-section').classList.remove('hidden');
             document.getElementById('session-badge').innerText = `${cls} | ${subject} (Jam ${jam})`;
             startDefaultCamera();
@@ -617,28 +648,26 @@
             const nis = document.getElementById('manual-student-nis').value;
             const status = document.getElementById('manual-status').value;
             if (!nis) return alert("Pilih Nama Siswa.");
-
             const registeredStudent = students.find(s => s.nis === nis);
             if (!registeredStudent || sessionScans.some(s => s.nis === registeredStudent.nis)) return alert(`${registeredStudent?.name} sudah diverifikasi.`);
 
             const now = new Date();
             const logEntry = { timestamp: now.toISOString(), timeDisplay: now.toLocaleTimeString('id-ID', { hour: '2-digit', minute: '2-digit', second: '2-digit' }), nis: registeredStudent.nis, name: registeredStudent.name, className: currentClass, subject: currentSubject, jam: currentJam, status: status };
-
             sessionScans.unshift(logEntry); attendanceHistory.unshift(logEntry);
             kirimKeGoogleSheets(logEntry); updateSessionUI();
 
             const alertBox = document.getElementById('scan-alert'); alertBox.classList.remove('hidden');
             alertBox.innerHTML = `Disimpan: <b>${registeredStudent.name}</b> (${status})`;
-            alertBox.className = "mt-4 p-3 rounded-lg text-sm font-medium text-center transition-all border bg-emerald-50 text-emerald-700 border-emerald-200 block";
+            alertBox.className = "mt-4 p-3 rounded-xl text-xs font-bold text-center border bg-emerald-100 text-emerald-800 border-emerald-300 block";
             setTimeout(() => { if(isSessionActive) alertBox.classList.add('hidden'); }, 2500);
             document.getElementById('manual-student-nis').value = "";
         }
 
         function startDefaultCamera() {
-            document.getElementById('reader').innerHTML = "<div class='text-slate-400 text-center text-sm p-4'>Mengaktifkan kamera...</div>";
+            document.getElementById('reader').innerHTML = "<div class='text-slate-400 font-semibold text-center text-xs p-4'>Mengaktifkan kamera...</div>";
             if (html5QrCode) { try { html5QrCode.clear(); } catch(e){} }
             html5QrCode = new Html5Qrcode("reader");
-            const config = { fps: 10, qrbox: { width: 250, height: 250 }, aspectRatio: 1.0 };
+            const config = { fps: 10, qrbox: { width: 220, height: 220 }, aspectRatio: 1.0 };
             html5QrCode.start({ facingMode: "environment" }, config, onScanSuccess, onScanFailure)
             .then(populateCameraDropdown).catch(() => {
                 html5QrCode.start({ facingMode: "user" }, config, onScanSuccess, onScanFailure)
@@ -661,21 +690,20 @@
 
         function switchCamera(newDeviceId) {
             if (!newDeviceId || !html5QrCode || !isSessionActive) return;
-            const config = { fps: 10, qrbox: { width: 250, height: 250 }, aspectRatio: 1.0 };
+            const config = { fps: 10, qrbox: { width: 220, height: 220 }, aspectRatio: 1.0 };
             html5QrCode.stop().then(() => html5QrCode.start(newDeviceId, config, onScanSuccess, onScanFailure)).catch(() => html5QrCode.start(newDeviceId, config, onScanSuccess, onScanFailure));
         }
 
         function showCameraError(msg) {
             const box = document.getElementById('scan-alert'); box.classList.remove('hidden'); box.innerText = `Error: ${msg}`;
-            box.className = "mt-4 p-3 rounded-lg text-sm font-medium text-center transition-all border bg-red-50 text-red-700 border-red-200 block";
+            box.className = "mt-4 p-3 rounded-xl text-xs font-bold text-center border bg-rose-100 text-rose-800 border-rose-300 block";
         }
 
         function stopSession() {
             isSessionActive = false;
             ['select-subject', 'select-class', 'select-jam', 'input-jam-manual'].forEach(id => document.getElementById(id).disabled = false);
             document.getElementById('btn-start-session').classList.remove('hidden');
-            document.getElementById('btn-stop-session').classList.add('hidden');
-            document.getElementById('btn-stop-session').classList.remove('flex');
+            document.getElementById('btn-stop-session').classList.add('hidden'); document.getElementById('btn-stop-session').classList.remove('flex');
             document.getElementById('scanner-section').classList.add('hidden');
             if (html5QrCode) { try { html5QrCode.stop().then(() => { html5QrCode.clear(); document.getElementById('reader').innerHTML = ""; }); } catch (e) {} }
         }
@@ -684,86 +712,73 @@
             if (!isSessionActive || isProcessingScan) return;
             isProcessingScan = true;
             let studentData = null;
-
             try { studentData = JSON.parse(decodedText); } 
             catch (e) { const found = students.find(s => s.nis === decodedText.trim()); if (found) studentData = { nis: found.nis, name: found.name }; }
 
             const alertBox = document.getElementById('scan-alert'); alertBox.classList.remove('hidden');
             if (!studentData || !studentData.nis) {
-                alertBox.innerText = "Format QR tidak dikenal."; alertBox.className = "mt-4 p-3 rounded-lg text-sm font-medium text-center border bg-red-50 text-red-700 border-red-200 block";
+                alertBox.innerText = "Format QR tidak dikenal."; alertBox.className = "mt-4 p-3 rounded-xl text-xs font-bold text-center border bg-rose-100 text-rose-800 border-rose-300 block";
                 return resumeScannerAfterDelay(2000);
             }
-
             let registeredStudent = students.find(s => s.nis === studentData.nis);
             if (!registeredStudent) {
-                alertBox.innerText = `Ditolak: NIS ${studentData.nis} tidak terdaftar!`; alertBox.className = "mt-4 p-3 rounded-lg text-sm font-medium text-center border bg-red-50 text-red-700 border-red-200 block";
+                alertBox.innerText = `Ditolak: NIS ${studentData.nis} tidak terdaftar!`; alertBox.className = "mt-4 p-3 rounded-xl text-xs font-bold text-center border bg-rose-100 text-rose-800 border-rose-300 block";
                 return resumeScannerAfterDelay(2000);
             }
-
             if (registeredStudent.className !== currentClass) {
-                alertBox.innerText = `Beda Kelas: ${registeredStudent.name} (${registeredStudent.className})`; alertBox.className = "mt-4 p-3 rounded-lg text-sm font-medium text-center border bg-yellow-50 text-yellow-700 border-yellow-200 block";
+                alertBox.innerText = `Beda Kelas: ${registeredStudent.name} (${registeredStudent.className})`; alertBox.className = "mt-4 p-3 rounded-xl text-xs font-bold text-center border bg-amber-100 text-amber-800 border-amber-300 block";
                 return resumeScannerAfterDelay(2500);
             }
-
             if (sessionScans.some(s => s.nis === registeredStudent.nis)) {
-                alertBox.innerText = `${registeredStudent.name} sudah diverifikasi.`; alertBox.className = "mt-4 p-3 rounded-lg text-sm font-medium text-center border bg-blue-50 text-blue-700 border-blue-200 block";
+                alertBox.innerText = `${registeredStudent.name} sudah diverifikasi.`; alertBox.className = "mt-4 p-3 rounded-xl text-xs font-bold text-center border bg-blue-100 text-blue-800 border-blue-300 block";
                 return resumeScannerAfterDelay(2000);
             }
 
             playBeep();
             const now = new Date();
             const logEntry = { timestamp: now.toISOString(), timeDisplay: now.toLocaleTimeString('id-ID', { hour: '2-digit', minute: '2-digit', second: '2-digit' }), nis: registeredStudent.nis, name: registeredStudent.name, className: currentClass, subject: currentSubject, jam: currentJam, status: "Hadir" };
-
             sessionScans.unshift(logEntry); attendanceHistory.unshift(logEntry);
             kirimKeGoogleSheets(logEntry); updateSessionUI();
 
             alertBox.innerHTML = `Berhasil: <b>${registeredStudent.name}</b>`;
-            alertBox.className = "mt-4 p-3 rounded-lg text-sm font-medium text-center border bg-emerald-50 text-emerald-700 border-emerald-200 block";
+            alertBox.className = "mt-4 p-3 rounded-xl text-xs font-bold text-center border bg-emerald-100 text-emerald-800 border-emerald-300 block";
             resumeScannerAfterDelay(1500);
         }
 
         function onScanFailure() {}
-
-        function resumeScannerAfterDelay(ms) {
-            setTimeout(() => { isProcessingScan = false; if (isSessionActive) document.getElementById('scan-alert').classList.add('hidden'); }, ms);
-        }
+        function resumeScannerAfterDelay(ms) { setTimeout(() => { isProcessingScan = false; if (isSessionActive) document.getElementById('scan-alert').classList.add('hidden'); }, ms); }
 
         function updateSessionUI() {
             document.getElementById('count-session').innerText = sessionScans.length;
             const tbody = document.getElementById('session-log-body');
-            if (sessionScans.length === 0) { tbody.innerHTML = `<tr><td colspan="4" class="px-4 py-8 text-center text-slate-500">Belum ada data masuk...</td></tr>`; return; }
+            if (sessionScans.length === 0) { tbody.innerHTML = `<tr><td colspan="4" class="px-4 py-8 text-center text-slate-400">Belum ada data masuk...</td></tr>`; return; }
 
             tbody.innerHTML = sessionScans.map(log => {
                 const statStr = (log.status || 'Hadir').toLowerCase();
-                let badgeClass = "bg-green-100 text-green-700 border-green-200";
-                if(statStr === 'sakit') badgeClass = "bg-yellow-100 text-yellow-700 border-yellow-200";
-                if(statStr === 'izin') badgeClass = "bg-blue-100 text-blue-700 border-blue-200";
-                if(statStr === 'alpha') badgeClass = "bg-red-100 text-red-700 border-red-200";
+                let badgeClass = "bg-emerald-100 text-emerald-800 border-emerald-300";
+                if(statStr === 'sakit') badgeClass = "bg-amber-100 text-amber-800 border-amber-300";
+                if(statStr === 'izin') badgeClass = "bg-blue-100 text-blue-800 border-blue-300";
+                if(statStr === 'alpha') badgeClass = "bg-rose-100 text-rose-800 border-rose-300";
 
                 return `<tr class="hover:bg-slate-50 transition-colors">
-                    <td class="px-4 py-3 text-xs text-slate-500 whitespace-nowrap">${log.timeDisplay}</td>
-                    <td class="px-4 py-3 text-xs font-medium text-slate-700 whitespace-nowrap">${log.nis}</td>
-                    <td class="px-4 py-3 text-sm font-medium text-slate-900 whitespace-nowrap">${log.name}</td>
-                    <td class="px-4 py-3 text-center"><span class="px-2.5 py-1 text-[10px] font-semibold rounded-md border ${badgeClass}">${log.status || 'Hadir'}</span></td>
+                    <td class="px-4 py-3 text-[11px] text-slate-500 whitespace-nowrap">${log.timeDisplay}</td>
+                    <td class="px-4 py-3 text-[11px] font-bold text-slate-700 whitespace-nowrap">${log.nis}</td>
+                    <td class="px-4 py-3 text-xs font-bold text-slate-900 whitespace-nowrap">${log.name}</td>
+                    <td class="px-4 py-3 text-center"><span class="px-2.5 py-1 text-[10px] font-black uppercase rounded-md border ${badgeClass}">${log.status || 'Hadir'}</span></td>
                 </tr>`;
             }).join('');
         }
 
-        // ================= STUDENT & HISTORY MNGT ================= //
         function addStudent(e) {
             e.preventDefault();
             const nis = document.getElementById('stu-nis').value.trim();
             const name = document.getElementById('stu-name').value.trim();
             const className = document.getElementById('stu-class').value;
-
             if (students.some(s => s.nis === nis)) return alert("NIS sudah terdaftar!");
-
             students.push({ nis, name, className });
-            localStorage.setItem('db_students', JSON.stringify(students)); // Update Lokal
-
+            localStorage.setItem('db_students', JSON.stringify(students));
             syncQueue.push({ id: Date.now(), payload: { action: 'addStudent', nis, name, className } });
             localStorage.setItem('sync_queue', JSON.stringify(syncQueue)); processQueue();
-            
             renderStudents(); e.target.reset();
         }
 
@@ -774,6 +789,20 @@
                 localStorage.setItem('sync_queue', JSON.stringify(syncQueue)); processQueue();
                 renderStudents();
             }
+        }
+
+        function clearHistoryWithPin() {
+            if (attendanceHistory.length === 0) return alert("Data rekap sudah kosong.");
+            const pin = prompt("Masukkan kode akses untuk menghapus rekap log:");
+            if (pin === "12345") {
+                if (confirm("Hapus SEMUA data rekap absensi secara permanen?")) {
+                    attendanceHistory = []; localStorage.setItem('db_history', JSON.stringify(attendanceHistory));
+                    realtimeHistory = [];
+                    syncQueue.push({ id: Date.now(), payload: { action: 'clearHistory' } });
+                    localStorage.setItem('sync_queue', JSON.stringify(syncQueue)); processQueue();
+                    renderHistory(); alert("Sukses: Rekap absensi dihapus.");
+                }
+            } else if (pin !== null) { alert("Kode PIN salah!"); }
         }
 
         function deleteStudent(index) {
@@ -788,31 +817,31 @@
 
         function renderStudents() {
             const container = document.getElementById('print-area'); container.innerHTML = "";
-            if (students.length === 0) { container.innerHTML = `<p class="col-span-full text-center text-slate-500 py-8 text-sm">Belum ada data siswa.</p>`; return; }
+            if (students.length === 0) { container.innerHTML = `<p class="col-span-full text-center text-slate-400 py-8 font-semibold text-xs">Belum ada data siswa.</p>`; return; }
 
             students.forEach((stu, i) => {
-                const card = document.createElement('div'); card.className = "w-full max-w-[200px] bg-white border border-slate-200 p-4 rounded-xl flex flex-col items-center text-center print-exact relative shadow-sm";
-                card.innerHTML = `<button onclick="deleteStudent(${i})" class="no-print absolute -top-2 -right-2 bg-white text-slate-400 hover:text-red-500 border border-slate-200 w-6 h-6 rounded-full flex items-center justify-center text-lg leading-none shadow-sm transition-colors">&times;</button><div class="text-[10px] font-bold text-red-600 mb-3 tracking-wider uppercase">Miftahul Ulum</div><div id="qrcode-${stu.nis}" class="bg-white p-2 border border-slate-100 rounded-lg shadow-sm mb-3"></div><div class="w-full"><div class="font-semibold text-slate-800 text-sm truncate w-full px-1" title="${stu.name}">${stu.name}</div><div class="text-[10px] text-slate-500 mt-1">${stu.nis} &middot; ${stu.className}</div></div>`;
+                const card = document.createElement('div'); card.className = "w-full max-w-[190px] bg-white border border-slate-200 p-3.5 rounded-2xl flex flex-col items-center text-center print-exact relative shadow-sm";
+                card.innerHTML = `<button onclick="deleteStudent(${i})" class="no-print absolute -top-2 -right-2 bg-rose-100 text-rose-600 hover:bg-rose-500 hover:text-white border w-6 h-6 rounded-full flex items-center justify-center text-xs leading-none transition-all font-bold">&times;</button><div class="text-[10px] font-black text-indigo-600 mb-2 tracking-wider uppercase">Miftahul Ulum</div><div id="qrcode-${stu.nis}" class="bg-white p-1 border rounded-xl mb-2"></div><div class="w-full"><div class="font-extrabold text-slate-800 text-xs truncate w-full" title="${stu.name}">${stu.name}</div><div class="text-[10px] font-semibold text-slate-500 mt-0.5">${stu.nis} &middot; ${stu.className}</div></div>`;
                 container.appendChild(card);
-                new QRCode(document.getElementById(`qrcode-${stu.nis}`), { text: JSON.stringify({ nis: stu.nis, name: stu.name }), width: 100, height: 100, colorDark: "#1e293b", colorLight: "#ffffff", correctLevel: QRCode.CorrectLevel.H });
+                new QRCode(document.getElementById(`qrcode-${stu.nis}`), { text: JSON.stringify({ nis: stu.nis, name: stu.name }), width: 95, height: 95, colorDark: "#1e293b", colorLight: "#ffffff", correctLevel: QRCode.CorrectLevel.H });
             });
         }
 
         function printQRCodes() { window.print(); }
 
         function exportQRToWord() {
-            if (students.length === 0) return alert("Tidak ada data untuk diekspor.");
-            let contentHtml = `<div style="text-align: center; font-family: 'Arial', sans-serif;"><h2 style="color: #334155;">KARTU QR PRESENSI</h2><table style="width: 100%; border-collapse: separate; border-spacing: 15px; margin-top: 20px;">`;
+            if (students.length === 0) return alert("Tidak ada data.");
+            let contentHtml = `<div style="text-align: center; font-family: 'Arial', sans-serif;"><h2 style="color: #4f46e5;">KARTU QR PRESENSI</h2><table style="width: 100%; border-collapse: separate; border-spacing: 10px;">`;
             const columns = 3; 
             for (let i = 0; i < students.length; i++) {
                 if (i % columns === 0) contentHtml += "<tr>";
                 const stu = students[i]; const qrDiv = document.getElementById(`qrcode-${stu.nis}`);
                 let imgSrc = ''; if (qrDiv) { const img = qrDiv.querySelector('img'); const canvas = qrDiv.querySelector('canvas'); if (img && img.src && img.src.startsWith('data:image')) imgSrc = img.src; else if (canvas) imgSrc = canvas.toDataURL("image/png"); }
-                contentHtml += `<td style="padding: 15px; border: 1px solid #cbd5e1; background-color: #ffffff; text-align: center; vertical-align: top; width: 33%; border-radius: 8px;"><div style="font-size: 11px; font-weight: bold; color: #dc2626; margin-bottom: 10px; text-transform: uppercase;">Miftahul Ulum</div><div style="margin-bottom: 10px;">${imgSrc ? `<img src="${imgSrc}" width="120" height="120" style="margin: 0 auto; display: block;" />` : ''}</div><div style="font-weight: bold; font-size: 14px; color: #1e293b;">${stu.name}</div><div style="font-size: 11px; color: #64748b; margin-top: 5px;">${stu.nis} &middot; ${stu.className}</div></td>`;
+                contentHtml += `<td style="padding: 10px; border: 1px solid #ccc; text-align: center; vertical-align: top; width: 33%;"><div style="font-size: 10px; font-weight: bold; color: #4f46e5;">Miftahul Ulum</div><div>${imgSrc ? `<img src="${imgSrc}" width="100" height="100" style="margin: 5px auto;" />` : ''}</div><div style="font-weight: bold; font-size: 12px;">${stu.name}</div><div style="font-size: 10px; color: #666;">${stu.nis} &middot; ${stu.className}</div></td>`;
                 if (i % columns === columns - 1 || i === students.length - 1) contentHtml += "</tr>";
             }
             contentHtml += `</table></div>`;
-            const html = "<html xmlns:o='urn:schemas-microsoft-com:office:office' xmlns:w='urn:schemas-microsoft-com:office:word' xmlns='http://www.w3.org/TR/REC-html40'><head><meta charset='utf-8'><title>Kartu QR</title></head><body>" + contentHtml + "</body></html>";
+            const html = "<html xmlns:o='urn:schemas-microsoft-com:office:office' xmlns:w='urn:schemas-microsoft-com:office:word' xmlns='http://www.w3.org/TR/REC-html40'><head><meta charset='utf-8'></head><body>" + contentHtml + "</body></html>";
             const blob = new Blob(['\ufeff', html], { type: 'application/msword' }); const url = URL.createObjectURL(blob); const a = document.createElement("a"); a.href = url; a.download = `Kartu_QR_${new Date().toISOString().slice(0,10)}.doc`; document.body.appendChild(a); a.click(); document.body.removeChild(a); URL.revokeObjectURL(url);
         }
 
@@ -824,7 +853,10 @@
             const filterName = document.getElementById('filter-name') ? document.getElementById('filter-name').value.toLowerCase() : '';
             const filterStatus = document.getElementById('filter-status') ? document.getElementById('filter-status').value.toLowerCase() : '';
             
-            return attendanceHistory.filter(log => {
+            // Pilih datasource
+            const dataSource = currentDataSource === 'realtime' ? realtimeHistory : attendanceHistory;
+            
+            return dataSource.filter(log => {
                 const logDateObj = new Date(log.timestamp);
                 const yyyy = logDateObj.getFullYear(); const mm = String(logDateObj.getMonth() + 1).padStart(2, '0'); const dd = String(logDateObj.getDate()).padStart(2, '0');
                 return (filterDate === '' || `${yyyy}-${mm}-${dd}` === filterDate) && (filterMonth === '' || `${yyyy}-${mm}` === filterMonth) && (filterClass === '' || log.className === filterClass) && (filterSubject === '' || log.subject === filterSubject) && (filterName === '' || log.name.toLowerCase().includes(filterName)) && (filterStatus === '' || (log.status || 'Hadir').toLowerCase() === filterStatus);
@@ -835,29 +867,27 @@
             const tbody = document.getElementById('history-table-body');
             const filteredData = getFilteredHistory();
             let countHadir = 0, countSakit = 0, countIzin = 0, countAlpha = 0;
-
             if (filteredData.length === 0) {
-                tbody.innerHTML = `<tr><td colspan="7" class="px-5 py-8 text-center text-slate-500 text-sm">Tidak ada data riwayat presensi.</td></tr>`;
+                tbody.innerHTML = `<tr><td colspan="7" class="px-4 py-8 text-center text-slate-400">Tidak ada data riwayat.</td></tr>`;
                 document.getElementById('count-hadir').innerText = 0; document.getElementById('count-sakit').innerText = 0; document.getElementById('count-izin').innerText = 0; document.getElementById('count-alpha').innerText = 0; return;
             }
-
             tbody.innerHTML = filteredData.map(log => {
                 const dateObj = new Date(log.timestamp);
                 const statStr = (log.status || 'Hadir').toLowerCase();
-                let badgeClass = "bg-green-50 text-green-700 border-green-200";
-                if(statStr === 'sakit') { badgeClass = "bg-yellow-50 text-yellow-700 border-yellow-200"; countSakit++; }
-                else if(statStr === 'izin') { badgeClass = "bg-blue-50 text-blue-700 border-blue-200"; countIzin++; }
-                else if(statStr === 'alpha') { badgeClass = "bg-red-50 text-red-700 border-red-200"; countAlpha++; }
+                let badgeClass = "bg-emerald-100 text-emerald-800 border-emerald-300";
+                if(statStr === 'sakit') { badgeClass = "bg-amber-100 text-amber-800 border-amber-300"; countSakit++; }
+                else if(statStr === 'izin') { badgeClass = "bg-blue-100 text-blue-800 border-blue-300"; countIzin++; }
+                else if(statStr === 'alpha') { badgeClass = "bg-rose-100 text-rose-800 border-rose-300"; countAlpha++; }
                 else { countHadir++; }
 
                 return `<tr class="hover:bg-slate-50 transition-colors">
-                    <td class="px-5 py-3 text-xs text-slate-500 whitespace-nowrap">${dateObj.toLocaleDateString('id-ID', { day: '2-digit', month: 'short', year: 'numeric' })}, ${dateObj.toLocaleTimeString('id-ID', { hour: '2-digit', minute: '2-digit' })}</td>
-                    <td class="px-5 py-3 text-xs font-medium text-slate-600 whitespace-nowrap">${log.nis}</td>
-                    <td class="px-5 py-3 text-sm font-medium text-slate-800 whitespace-nowrap">${log.name}</td>
-                    <td class="px-5 py-3 text-xs text-slate-600 text-center whitespace-nowrap">${log.className}</td>
-                    <td class="px-5 py-3 text-xs text-slate-600 whitespace-nowrap">${log.subject}</td>
-                    <td class="px-5 py-3 text-xs text-slate-600 text-center whitespace-nowrap">${log.jam || '-'}</td>
-                    <td class="px-5 py-3 text-center whitespace-nowrap"><span class="px-2.5 py-1 rounded-md border text-[10px] font-semibold uppercase ${badgeClass}">${log.status || 'Hadir'}</span></td>
+                    <td class="px-4 py-3 text-slate-500 whitespace-nowrap">${dateObj.toLocaleDateString('id-ID', { day: '2-digit', month: 'short' })}, ${dateObj.toLocaleTimeString('id-ID', { hour: '2-digit', minute: '2-digit' })}</td>
+                    <td class="px-4 py-3 font-bold text-slate-700 whitespace-nowrap">${log.nis}</td>
+                    <td class="px-4 py-3 font-extrabold text-slate-900 whitespace-nowrap">${log.name}</td>
+                    <td class="px-4 py-3 text-center whitespace-nowrap">${log.className}</td>
+                    <td class="px-4 py-3 whitespace-nowrap">${log.subject}</td>
+                    <td class="px-4 py-3 text-center whitespace-nowrap">${log.jam || '-'}</td>
+                    <td class="px-4 py-3 text-center whitespace-nowrap"><span class="px-2 py-0.5 rounded text-[10px] font-black uppercase border ${badgeClass}">${log.status || 'Hadir'}</span></td>
                 </tr>`;
             }).join('');
             document.getElementById('count-hadir').innerText = countHadir; document.getElementById('count-sakit').innerText = countSakit; document.getElementById('count-izin').innerText = countIzin; document.getElementById('count-alpha').innerText = countAlpha;
@@ -867,12 +897,12 @@
             const dataToExport = getFilteredHistory(); if (dataToExport.length === 0) return alert("Data kosong.");
             let csvContent = "data:text/csv;charset=utf-8,\uFEFFTanggal,Waktu,NIS,Nama Siswa,Kelas,Mata Pelajaran,Jam Mapel,Status\n";
             dataToExport.forEach(log => { const d = new Date(log.timestamp); csvContent += `${d.toLocaleDateString('id-ID')},${d.toLocaleTimeString('id-ID')},${log.nis},"${log.name}",${log.className},${log.subject},${log.jam},${log.status || 'Hadir'}\n`; });
-            const link = document.createElement("a"); link.setAttribute("href", encodeURI(csvContent)); link.setAttribute("download", `Data_Presensi_${new Date().toISOString().slice(0,10)}.csv`); document.body.appendChild(link); link.click(); document.body.removeChild(link);
+            const link = document.createElement("a"); link.setAttribute("href", encodeURI(csvContent)); link.setAttribute("download", `Presensi_${new Date().toISOString().slice(0,10)}.csv`); document.body.appendChild(link); link.click(); document.body.removeChild(link);
         }
 
         function exportHistoryToDoc() {
             const dataToExport = getFilteredHistory(); if (dataToExport.length === 0) return alert("Tidak ada data.");
-            let contentHtml = `<div style="font-family: 'Arial', sans-serif;"><h2 style="text-align: center; color: #1e293b;">REKAP PRESENSI</h2><table style="width: 100%; border-collapse: collapse; margin-top: 10px;" border="1"><thead><tr style="background-color: #f1f5f9; color: #334155;"><th>Tanggal</th><th>Waktu</th><th>NIS</th><th>Nama</th><th>Kelas</th><th>Mapel</th><th>Jam</th><th>Status</th></tr></thead><tbody>`;
+            let contentHtml = `<div style="font-family: Arial;"><h2 style="text-align: center; color: #4f46e5;">REKAP PRESENSI</h2><table border="1" style="width:100%; border-collapse:collapse;"><thead><tr style="background:#f1f5f9;"><th>Tanggal</th><th>Waktu</th><th>NIS</th><th>Nama</th><th>Kelas</th><th>Mapel</th><th>Jam</th><th>Status</th></tr></thead><tbody>`;
             dataToExport.forEach(log => { const d = new Date(log.timestamp); contentHtml += `<tr><td>${d.toLocaleDateString('id-ID')}</td><td>${d.toLocaleTimeString('id-ID')}</td><td>${log.nis}</td><td>${log.name}</td><td>${log.className}</td><td>${log.subject}</td><td>${log.jam||'-'}</td><td>${log.status||'Hadir'}</td></tr>`; });
             contentHtml += `</tbody></table></div>`;
             const html = "<html xmlns:o='urn:schemas-microsoft-com:office:office' xmlns:w='urn:schemas-microsoft-com:office:word' xmlns='http://www.w3.org/TR/REC-html40'><head><meta charset='utf-8'></head><body>" + contentHtml + "</body></html>";
