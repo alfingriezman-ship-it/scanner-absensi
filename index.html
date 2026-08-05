@@ -449,7 +449,7 @@
 
             try {
                 if(cloudStatus) {
-                    cloudStatus.innerHTML = 'Memuat Data Siswa...';
+                    cloudStatus.innerHTML = 'Sabar pak/bu masih loading...';
                     cloudStatus.className = "text-xs font-medium px-3 py-1 rounded-full bg-blue-50 text-blue-600 border border-blue-200 flex items-center gap-2";
                 }
                 
@@ -466,7 +466,7 @@
                 // 3. Render pembaruan data siswa dan SEGERA ubah status UI.
                 renderStudents();
                 if(cloudStatus) {
-                    cloudStatus.innerHTML = 'Tersambung (Realtime)';
+                    cloudStatus.innerHTML = 'Sudah Tersambung bos (Realtime)';
                     cloudStatus.className = "text-xs font-medium px-3 py-1 rounded-full bg-emerald-50 text-emerald-600 border border-emerald-200 flex items-center gap-2";
                 }
                 
