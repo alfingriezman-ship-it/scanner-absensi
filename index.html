@@ -18,7 +18,6 @@
     <style>
         body { 
             font-family: 'Inter', sans-serif; 
-            background-color: #f8fafc; 
             color: #334155; 
         }
 
@@ -26,7 +25,7 @@
         .form-input {
             width: 100%;
             padding: 0.625rem 0.875rem;
-            background-color: #ffffff;
+            background-color: rgba(255, 255, 255, 0.9);
             border: 1px solid #cbd5e1;
             border-radius: 0.5rem;
             font-size: 0.875rem;
@@ -36,13 +35,13 @@
         
         .form-input:focus {
             outline: none;
-            border-color: #6366f1;
-            box-shadow: 0 0 0 3px rgba(99, 102, 241, 0.1);
+            border-color: #ef4444; /* Changed to red accent */
+            box-shadow: 0 0 0 3px rgba(239, 68, 68, 0.15);
         }
 
         /* Custom Scrollbar */
         .table-scroll::-webkit-scrollbar { height: 6px; width: 6px; }
-        .table-scroll::-webkit-scrollbar-track { background: #f1f5f9; border-radius: 4px; }
+        .table-scroll::-webkit-scrollbar-track { background: transparent; border-radius: 4px; }
         .table-scroll::-webkit-scrollbar-thumb { background: #cbd5e1; border-radius: 4px; }
         .table-scroll::-webkit-scrollbar-thumb:hover { background: #94a3b8; }
 
@@ -61,19 +60,23 @@
         }
     </style>
 </head>
-<body class="min-h-screen flex flex-col justify-between selection:bg-indigo-100 selection:text-indigo-900">
+<!-- Aksen latar belakang segar: gradasi merah dan kuning transparan -->
+<body class="min-h-screen flex flex-col justify-between selection:bg-red-100 selection:text-red-900 bg-gradient-to-br from-red-500/10 via-yellow-500/10 to-slate-50 bg-fixed">
     
+    <!-- Top Accent Bar -->
+    <div class="h-1.5 bg-gradient-to-r from-red-500/60 to-yellow-500/60 w-full fixed top-0 z-[60] no-print"></div>
+
     <!-- FLOATING CONTACT WA BUTTON -->
-    <a id="wa-floating" href="https://wa.me/6281515561069" target="_blank" class="fixed bottom-6 right-6 z-[99] bg-white text-slate-700 px-4 py-3 rounded-full shadow-lg flex items-center gap-2 text-sm font-medium border border-slate-200 hover:bg-slate-50 hover:text-indigo-600 transition-colors">
+    <a id="wa-floating" href="https://wa.me/6281515561069" target="_blank" class="fixed bottom-6 right-6 z-[99] bg-white/90 backdrop-blur-sm text-slate-700 px-4 py-3 rounded-full shadow-lg flex items-center gap-2 text-sm font-medium border border-slate-200 hover:bg-slate-50 hover:text-red-600 transition-colors">
         <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="text-green-500"><path d="M22 16.92v3a2 2 0 0 1-2.18 2 19.79 19.79 0 0 1-8.63-3.07 19.5 19.5 0 0 1-6-6 19.79 19.79 0 0 1-3.07-8.67A2 2 0 0 1 4.11 2h3a2 2 0 0 1 2 1.72 12.84 12.84 0 0 0 .7 2.81 2 2 0 0 1-.45 2.11L8.09 9.91a16 16 0 0 0 6 6l1.27-1.27a2 2 0 0 1 2.11-.45 12.84 12.84 0 0 0 2.81.7A2 2 0 0 1 22 16.92z"></path></svg>
         <span class="hidden md:inline">Mon Posang pece' edinnak kaangguy atanyah</span>
     </a>
 
-    <div class="flex-grow flex flex-col">
-        <!-- SYSTEM STATUS BAR & NAVBAR -->
-        <header class="bg-white border-b border-slate-200 sticky top-0 z-50 no-print">
+    <div class="flex-grow flex flex-col pt-1.5">
+        <!-- SYSTEM STATUS BAR & NAVBAR dengan efek Glassmorphism segar -->
+        <header class="bg-white/70 backdrop-blur-md border-b border-slate-200 sticky top-0 z-50 no-print">
             <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-                <div class="flex justify-between items-center py-2 text-xs font-medium text-slate-500 border-b border-slate-100">
+                <div class="flex justify-between items-center py-2 text-xs font-medium text-slate-500 border-b border-slate-200/50">
                     <div class="flex items-center gap-2">
                         <span id="network-indicator" class="w-2 h-2 rounded-full bg-green-500 animate-pulse"></span>
                         <span id="network-text">Sistem Presensi: <span class="text-green-600 font-semibold">Online</span></span>
@@ -86,21 +89,21 @@
 
                 <div class="flex flex-col md:flex-row justify-between items-center py-4 gap-4">
                     <div class="flex items-center gap-3">
-                        <img src="https://drive.google.com/thumbnail?id=1xj5AeEbWisIpBlXpwJ_tbW7wMM8NsjjQ&sz=w500" alt="Logo" class="w-10 h-10 object-contain">
+                        <img src="https://drive.google.com/thumbnail?id=1xj5AeEbWisIpBlXpwJ_tbW7wMM8NsjjQ&sz=w500" alt="Logo" class="w-10 h-10 object-contain drop-shadow-sm">
                         <div>
                             <h1 class="font-bold text-lg text-slate-800 leading-tight">MAS MIFTAHUL ULUM</h1>
                             <p class="text-xs text-slate-500 font-medium">Digital Presence Protocol &middot; Dev by ALFIN N.H</p>
                         </div>
                     </div>
                     
-                    <nav class="flex gap-1 bg-slate-100 p-1 rounded-lg">
-                        <button onclick="switchTab('scan')" id="tab-scan" class="tab-btn px-4 py-2 text-sm font-semibold text-indigo-700 bg-white rounded-md shadow-sm border border-slate-200 transition-all flex items-center gap-2">
+                    <nav class="flex gap-1 bg-white/50 p-1 rounded-lg border border-slate-200/60 shadow-sm backdrop-blur-sm">
+                        <button onclick="switchTab('scan')" id="tab-scan" class="tab-btn px-4 py-2 text-sm font-semibold text-red-700 bg-white/90 rounded-md shadow-sm border border-red-100 transition-all flex items-center gap-2">
                             Scanner
                         </button>
-                        <button onclick="switchTab('students')" id="tab-students" class="tab-btn px-4 py-2 text-sm font-medium text-slate-600 hover:text-slate-900 rounded-md transition-all flex items-center gap-2">
+                        <button onclick="switchTab('students')" id="tab-students" class="tab-btn px-4 py-2 text-sm font-medium text-slate-600 hover:text-slate-900 hover:bg-white/50 rounded-md transition-all flex items-center gap-2">
                             Data Siswa
                         </button>
-                        <button onclick="switchTab('history')" id="tab-history" class="tab-btn px-4 py-2 text-sm font-medium text-slate-600 hover:text-slate-900 rounded-md transition-all flex items-center gap-2">
+                        <button onclick="switchTab('history')" id="tab-history" class="tab-btn px-4 py-2 text-sm font-medium text-slate-600 hover:text-slate-900 hover:bg-white/50 rounded-md transition-all flex items-center gap-2">
                             Rekap Log
                         </button>
                     </nav>
@@ -112,14 +115,14 @@
 
             <!-- TAB 1: SCANNER -->
             <div id="view-scan" class="space-y-6 fade-in">
-                <div id="browser-warning" class="hidden bg-red-50 text-red-700 p-4 rounded-lg border border-red-200 text-sm font-medium flex items-center gap-2">
+                <div id="browser-warning" class="hidden bg-red-50/80 backdrop-blur-sm text-red-700 p-4 rounded-lg border border-red-200 text-sm font-medium flex items-center gap-2">
                     Akses tidak optimal: Buka via Browser Utama (Chrome/Safari) untuk fitur Kamera.
                 </div>
 
-                <div class="bg-white p-6 rounded-xl shadow-sm border border-slate-200">
+                <div class="bg-white/80 backdrop-blur-sm p-6 rounded-xl shadow-sm border border-slate-200 hover:shadow-md transition-shadow">
                     <div class="flex flex-col md:flex-row md:items-center justify-between gap-4 mb-6 pb-4 border-b border-slate-100">
                         <h2 class="text-lg font-semibold text-slate-800">Konfigurasi Sesi KBM</h2>
-                        <span id="cloud-status" class="text-xs font-medium px-3 py-1 rounded-full bg-slate-100 text-slate-600 flex items-center gap-2 border border-slate-200">
+                        <span id="cloud-status" class="text-xs font-medium px-3 py-1 rounded-full bg-slate-100/80 text-slate-600 flex items-center gap-2 border border-slate-200">
                             Menghubungkan...
                         </span>
                     </div>
@@ -184,10 +187,10 @@
                             <input type="text" id="input-jam-manual" placeholder="Ketik manual..." class="hidden mt-2 form-input">
                         </div>
                         <div class="flex items-end">
-                            <button id="btn-start-session" onclick="startSession()" class="w-full bg-indigo-600 hover:bg-indigo-700 text-white font-medium py-2.5 px-4 rounded-lg transition-colors text-sm flex justify-center items-center gap-2">
+                            <button id="btn-start-session" onclick="startSession()" class="w-full bg-gradient-to-r from-red-500 to-yellow-500 hover:from-red-600 hover:to-yellow-600 text-white font-medium py-2.5 px-4 rounded-lg transition-colors shadow-sm text-sm flex justify-center items-center gap-2">
                                 Pece'Edinnak
                             </button>
-                            <button id="btn-stop-session" onclick="stopSession()" class="w-full bg-red-600 hover:bg-red-700 text-white font-medium py-2.5 px-4 rounded-lg transition-colors hidden justify-center items-center gap-2 text-sm">
+                            <button id="btn-stop-session" onclick="stopSession()" class="w-full bg-slate-800 hover:bg-slate-900 text-white font-medium py-2.5 px-4 rounded-lg transition-colors hidden justify-center items-center gap-2 text-sm shadow-sm">
                                 Monla Mareh Pecek Reah
                             </button>
                         </div>
@@ -196,52 +199,52 @@
 
                 <div id="scanner-section" class="hidden grid grid-cols-1 lg:grid-cols-12 gap-6 relative">
                     <!-- LEFT: CAMERA -->
-                    <div class="lg:col-span-4 bg-white p-6 rounded-xl shadow-sm border border-slate-200 flex flex-col">
+                    <div class="lg:col-span-4 bg-white/80 backdrop-blur-sm p-6 rounded-xl shadow-sm border border-slate-200 hover:shadow-md transition-shadow flex flex-col">
                         <div class="flex flex-col gap-4 mb-4">
                             <h3 class="text-base font-semibold text-slate-800 border-b border-slate-100 pb-2">Kamera Scanner</h3>
                             <div id="camera-select-container" class="hidden">
                                 <select id="camera-select" onchange="switchCamera(this.value)" class="form-input text-xs"></select>
                             </div>
                         </div>
-                        <div class="relative w-full aspect-square bg-slate-100 rounded-lg overflow-hidden border border-slate-200">
+                        <div class="relative w-full aspect-square bg-slate-100/50 rounded-lg overflow-hidden border border-slate-200">
                             <div id="reader" class="w-full h-full flex items-center justify-center text-slate-500 text-sm">Memuat kamera...</div>
                         </div>
                         <div class="mt-6">
-                            <div id="session-badge" class="bg-indigo-50 text-indigo-700 text-xs font-semibold px-4 py-2.5 rounded-lg border border-indigo-100 text-center w-full truncate"></div>
+                            <div id="session-badge" class="bg-red-50/80 text-red-700 text-xs font-semibold px-4 py-2.5 rounded-lg border border-red-100 text-center w-full truncate"></div>
                         </div>
                     </div>
 
                     <!-- RIGHT: LOG & MANUAL INPUT -->
-                    <div class="lg:col-span-8 bg-white p-6 rounded-xl shadow-sm border border-slate-200 flex flex-col">
+                    <div class="lg:col-span-8 bg-white/80 backdrop-blur-sm p-6 rounded-xl shadow-sm border border-slate-200 hover:shadow-md transition-shadow flex flex-col">
                         <div class="flex justify-between items-center border-b border-slate-100 pb-3 mb-5">
                             <h3 class="text-base font-semibold text-slate-800">Log Aktivitas Sesi</h3>
-                            <span class="text-xs font-medium text-slate-500 bg-slate-100 px-3 py-1 rounded-md">
-                                Terekam: <span id="count-session" class="font-semibold text-indigo-600">0</span>
+                            <span class="text-xs font-medium text-slate-500 bg-white/80 px-3 py-1 rounded-md border border-slate-200">
+                                Terekam: <span id="count-session" class="font-semibold text-red-600">0</span>
                             </span>
                         </div>
                         
-                        <div class="mb-5 p-4 bg-slate-50 border border-slate-200 rounded-lg">
+                        <div class="mb-5 p-4 bg-slate-50/50 border border-slate-200 rounded-lg">
                             <label class="block text-xs font-semibold text-slate-600 mb-2">Input Manual:</label>
                             <div class="grid grid-cols-1 sm:grid-cols-12 gap-3">
-                                <select id="manual-student-nis" class="sm:col-span-6 form-input text-sm cursor-pointer">
+                                <select id="manual-student-nis" class="sm:col-span-6 form-input text-sm cursor-pointer bg-white">
                                     <option value="">-- Cari Nama Siswa --</option>
                                 </select>
-                                <select id="manual-status" class="sm:col-span-3 form-input text-sm cursor-pointer">
+                                <select id="manual-status" class="sm:col-span-3 form-input text-sm cursor-pointer bg-white">
                                     <option value="Hadir">Hadir</option>
                                     <option value="Sakit">Sakit</option>
                                     <option value="Izin">Izin</option>
                                     <option value="Alpha">Alpha</option>
                                 </select>
-                                <button type="button" onclick="submitManualAttendance()" class="sm:col-span-3 bg-slate-800 hover:bg-slate-700 text-white font-medium py-2 px-3 rounded-lg text-sm transition-colors w-full">
+                                <button type="button" onclick="submitManualAttendance()" class="sm:col-span-3 bg-gradient-to-r from-red-500 to-yellow-500 hover:from-red-600 hover:to-yellow-600 shadow-sm text-white font-medium py-2 px-3 rounded-lg text-sm transition-colors w-full">
                                     Simpan
                                 </button>
                             </div>
                         </div>
 
-                        <div class="border border-slate-200 rounded-lg overflow-hidden flex-grow">
+                        <div class="border border-slate-200 rounded-lg overflow-hidden flex-grow bg-white/50">
                             <div class="overflow-x-auto overflow-y-auto max-h-[300px] table-scroll">
                                 <table class="min-w-full text-left border-collapse">
-                                    <thead class="sticky top-0 bg-slate-50 border-b border-slate-200 z-10">
+                                    <thead class="sticky top-0 bg-slate-50/90 backdrop-blur-sm border-b border-slate-200 z-10">
                                         <tr class="text-slate-500 uppercase text-xs font-semibold tracking-wider">
                                             <th class="px-4 py-3 whitespace-nowrap">Waktu</th>
                                             <th class="px-4 py-3 whitespace-nowrap">NIS</th>
@@ -249,7 +252,7 @@
                                             <th class="px-4 py-3 text-center">Status</th>
                                         </tr>
                                     </thead>
-                                    <tbody id="session-log-body" class="divide-y divide-slate-100 bg-white text-sm">
+                                    <tbody id="session-log-body" class="divide-y divide-slate-100 bg-white/60 text-sm">
                                         <tr>
                                             <td colspan="4" class="px-4 py-8 text-center text-slate-500">Mulai pemindaian untuk melihat log...</td>
                                         </tr>
@@ -257,14 +260,14 @@
                                 </table>
                             </div>
                         </div>
-                        <div id="scan-alert" class="hidden mt-4 p-3 rounded-lg text-sm font-medium text-center transition-all border"></div>
+                        <div id="scan-alert" class="hidden mt-4 p-3 rounded-lg text-sm font-medium text-center transition-all border backdrop-blur-sm"></div>
                     </div>
                 </div>
             </div>
 
             <!-- TAB 2: DATA SISWA -->
             <div id="view-students" class="hidden space-y-6 fade-in">
-                <div class="bg-white p-6 rounded-xl shadow-sm border border-slate-200">
+                <div class="bg-white/80 backdrop-blur-sm p-6 rounded-xl shadow-sm border border-slate-200 hover:shadow-md transition-shadow">
                     <h2 class="text-lg font-semibold text-slate-800 mb-4 pb-3 border-b border-slate-100">Registrasi Data Siswa</h2>
                     <form id="form-add-student" onsubmit="addStudent(event)" class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4">
                         <input type="text" id="stu-nis" placeholder="NIS" required class="form-input">
@@ -277,19 +280,19 @@
                             <option value="XII - A">XII - A</option>
                             <option value="XII - B">XII - B</option>
                         </select>
-                        <button type="submit" class="bg-indigo-600 hover:bg-indigo-700 text-white font-medium py-2.5 px-4 rounded-lg text-sm transition-colors w-full">Tambah Data</button>
+                        <button type="submit" class="bg-gradient-to-r from-red-500 to-yellow-500 hover:from-red-600 hover:to-yellow-600 shadow-sm text-white font-medium py-2.5 px-4 rounded-lg text-sm transition-colors w-full">Tambah Data</button>
                     </form>
                 </div>
 
-                <div class="bg-white p-6 rounded-xl shadow-sm border border-slate-200">
+                <div class="bg-white/80 backdrop-blur-sm p-6 rounded-xl shadow-sm border border-slate-200 hover:shadow-md transition-shadow">
                     <div class="flex flex-col lg:flex-row justify-between items-start lg:items-center mb-6 pb-4 border-b border-slate-100 gap-4">
                         <div>
                             <h2 class="text-lg font-semibold text-slate-800">Database & Kartu QR</h2>
                         </div>
                         <div class="flex flex-wrap gap-2 w-full lg:w-auto">
-                            <button onclick="exportQRToWord()" class="bg-white border border-slate-300 px-4 py-2 rounded-lg text-sm shadow-sm">Export Doc</button>
-                            <button onclick="printQRCodes()" class="bg-white border border-slate-300 px-4 py-2 rounded-lg text-sm shadow-sm">Print</button>
-                            <button onclick="clearStudents()" class="bg-red-50 text-red-600 border border-red-200 px-4 py-2 rounded-lg text-sm">Hapus Semua</button>
+                            <button onclick="exportQRToWord()" class="bg-white border border-slate-300 px-4 py-2 rounded-lg text-sm shadow-sm hover:bg-slate-50 transition-colors">Export Doc</button>
+                            <button onclick="printQRCodes()" class="bg-white border border-slate-300 px-4 py-2 rounded-lg text-sm shadow-sm hover:bg-slate-50 transition-colors">Print</button>
+                            <button onclick="clearStudents()" class="bg-red-50/80 text-red-600 border border-red-200 px-4 py-2 rounded-lg text-sm hover:bg-red-100 transition-colors">Hapus Semua</button>
                         </div>
                     </div>
                     <div id="print-area" class="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 lg:grid-cols-5 gap-4 justify-items-center"></div>
@@ -298,17 +301,17 @@
 
             <!-- TAB 3: REKAP DATA -->
             <div id="view-history" class="hidden space-y-6 fade-in">
-                <div class="bg-white p-6 rounded-xl shadow-sm border border-slate-200">
+                <div class="bg-white/80 backdrop-blur-sm p-6 rounded-xl shadow-sm border border-slate-200 hover:shadow-md transition-shadow">
                     <div class="flex flex-col xl:flex-row justify-between items-start xl:items-center mb-6 pb-4 border-b border-slate-100 gap-4">
                         <div class="w-full xl:w-1/4">
                             <h2 class="text-lg font-semibold text-slate-800">Master Log Presensi</h2>
                         </div>
                         <div class="flex flex-col lg:flex-row gap-3 w-full xl:w-3/4 justify-end items-center">
                             <div class="grid grid-cols-2 sm:grid-cols-3 xl:grid-cols-6 gap-3 w-full lg:w-auto flex-grow">
-                                <input type="date" id="filter-date" onchange="renderHistory()" class="form-input text-xs">
-                                <input type="month" id="filter-month" onchange="renderHistory()" class="form-input text-xs">
-                                <input type="text" id="filter-name" onkeyup="renderHistory()" placeholder="Cari Nama..." class="form-input text-xs">
-                                <select id="filter-class" onchange="renderHistory()" class="form-input text-xs cursor-pointer">
+                                <input type="date" id="filter-date" onchange="renderHistory()" class="form-input text-xs bg-white/90">
+                                <input type="month" id="filter-month" onchange="renderHistory()" class="form-input text-xs bg-white/90">
+                                <input type="text" id="filter-name" onkeyup="renderHistory()" placeholder="Cari Nama..." class="form-input text-xs bg-white/90">
+                                <select id="filter-class" onchange="renderHistory()" class="form-input text-xs cursor-pointer bg-white/90">
                                     <option value="">Semua Kelas</option>
                                     <option value="X - A">X - A</option>
                                     <option value="X - B">X - B</option>
@@ -316,14 +319,13 @@
                                     <option value="XII - A">XII - A</option>
                                     <option value="XII - B">XII - B</option>
                                 </select>
-                                <select id="filter-subject" onchange="renderHistory()" class="form-input text-xs cursor-pointer">
+                                <select id="filter-subject" onchange="renderHistory()" class="form-input text-xs cursor-pointer bg-white/90">
                                     <option value="">Semua Mapel</option>
                                     <option value="Akidah">Akidah</option>
                                     <option value="Alquran Hadits">Alquran Hadits</option>
-                                    <!-- Potong opsi agar hemat visual, tapi sama dengan atas -->
                                     <option value="Informatika">Informatika</option>
                                 </select>
-                                <select id="filter-status" onchange="renderHistory()" class="form-input text-xs cursor-pointer">
+                                <select id="filter-status" onchange="renderHistory()" class="form-input text-xs cursor-pointer bg-white/90">
                                     <option value="">Semua Status</option>
                                     <option value="Hadir">Hadir</option>
                                     <option value="Sakit">Sakit</option>
@@ -331,37 +333,37 @@
                                     <option value="Alpha">Alpha</option>
                                 </select>
                             </div>
+                            <!-- Fitur Reset (Clear) dihapus dari area ini -->
                             <div class="flex gap-2 w-full lg:w-auto shrink-0">
-                                <button onclick="exportHistoryToDoc()" class="bg-white border border-slate-300 px-3 py-2 rounded-lg text-xs shadow-sm">Doc</button>
-                                <button onclick="exportToCSV()" class="bg-white border border-slate-300 px-3 py-2 rounded-lg text-xs shadow-sm">CSV</button>
-                                <button onclick="clearHistory()" class="bg-red-50 border border-red-200 text-red-600 px-3 py-2 rounded-lg text-xs">Clear</button>
+                                <button onclick="exportHistoryToDoc()" class="bg-white border border-slate-300 px-4 py-2 rounded-lg text-xs shadow-sm hover:bg-slate-50 transition-colors">Export Doc</button>
+                                <button onclick="exportToCSV()" class="bg-white border border-slate-300 px-4 py-2 rounded-lg text-xs shadow-sm hover:bg-slate-50 transition-colors">Export CSV</button>
                             </div>
                         </div>
                     </div>
                     
                     <div class="grid grid-cols-2 md:grid-cols-4 gap-4 mb-6">
-                        <div class="bg-emerald-50 border border-emerald-100 p-4 rounded-xl">
+                        <div class="bg-emerald-50/80 backdrop-blur-sm border border-emerald-100 p-4 rounded-xl shadow-sm">
                             <div class="text-xs font-semibold text-emerald-600 uppercase tracking-wider mb-1">Hadir</div>
                             <div id="count-hadir" class="text-2xl font-bold text-emerald-700">0</div>
                         </div>
-                        <div class="bg-yellow-50 border border-yellow-100 p-4 rounded-xl">
+                        <div class="bg-yellow-50/80 backdrop-blur-sm border border-yellow-100 p-4 rounded-xl shadow-sm">
                             <div class="text-xs font-semibold text-yellow-600 uppercase tracking-wider mb-1">Sakit</div>
                             <div id="count-sakit" class="text-2xl font-bold text-yellow-700">0</div>
                         </div>
-                        <div class="bg-blue-50 border border-blue-100 p-4 rounded-xl">
+                        <div class="bg-blue-50/80 backdrop-blur-sm border border-blue-100 p-4 rounded-xl shadow-sm">
                             <div class="text-xs font-semibold text-blue-600 uppercase tracking-wider mb-1">Izin</div>
                             <div id="count-izin" class="text-2xl font-bold text-blue-700">0</div>
                         </div>
-                        <div class="bg-red-50 border border-red-100 p-4 rounded-xl">
+                        <div class="bg-red-50/80 backdrop-blur-sm border border-red-100 p-4 rounded-xl shadow-sm">
                             <div class="text-xs font-semibold text-red-600 uppercase tracking-wider mb-1">Alpha</div>
                             <div id="count-alpha" class="text-2xl font-bold text-red-700">0</div>
                         </div>
                     </div>
 
-                    <div class="border border-slate-200 rounded-lg overflow-hidden">
+                    <div class="border border-slate-200 rounded-lg overflow-hidden bg-white/50">
                         <div class="overflow-x-auto table-scroll w-full">
                             <table class="min-w-full text-left border-collapse text-sm">
-                                <thead class="bg-slate-50 border-b border-slate-200 text-slate-500 uppercase text-xs tracking-wider">
+                                <thead class="bg-slate-50/90 backdrop-blur-sm border-b border-slate-200 text-slate-500 uppercase text-xs tracking-wider">
                                     <tr>
                                         <th class="px-5 py-3 font-semibold whitespace-nowrap">Waktu</th>
                                         <th class="px-5 py-3 font-semibold whitespace-nowrap">NIS</th>
@@ -372,7 +374,7 @@
                                         <th class="px-5 py-3 font-semibold whitespace-nowrap text-center">Status</th> 
                                     </tr>
                                 </thead>
-                                <tbody id="history-table-body" class="divide-y divide-slate-100 bg-white"></tbody>
+                                <tbody id="history-table-body" class="divide-y divide-slate-100 bg-white/60"></tbody>
                             </table>
                         </div>
                     </div>
@@ -382,10 +384,10 @@
     </div>
 
     <!-- FOOTER -->
-    <footer class="bg-white border-t border-slate-200 mt-8 py-8 px-4 no-print text-center">
+    <footer class="bg-white/70 backdrop-blur-md border-t border-slate-200 mt-8 py-8 px-4 no-print text-center relative z-10">
         <div class="max-w-3xl mx-auto space-y-4">
-            <div class="px-6 py-4 bg-slate-50 rounded-xl border border-slate-100">
-                <p id="teacher-quote" class="text-sm italic text-slate-600 font-medium leading-relaxed"></p>
+            <div class="px-6 py-4 bg-gradient-to-br from-red-50/50 to-yellow-50/50 rounded-xl border border-red-100/50 shadow-sm">
+                <p id="teacher-quote" class="text-sm italic text-slate-700 font-medium leading-relaxed"></p>
                 <span class="block mt-3 text-xs font-semibold text-slate-500">— HAWANIF S.Ag.,M.M.Pd —</span>
             </div>
             <div class="text-xs text-slate-400 flex flex-col md:flex-row justify-center items-center gap-1">
@@ -450,11 +452,10 @@
             try {
                 if(cloudStatus) {
                     cloudStatus.innerHTML = 'Sabar pak/bu masih loading...';
-                    cloudStatus.className = "text-xs font-medium px-3 py-1 rounded-full bg-blue-50 text-blue-600 border border-blue-200 flex items-center gap-2";
+                    cloudStatus.className = "text-xs font-medium px-3 py-1 rounded-full bg-blue-50/80 text-blue-600 border border-blue-200 flex items-center gap-2";
                 }
                 
                 // 2. Fetch data 'Siswa' saja terlebih dahulu. 
-                // Ukurannya kecil sehingga KBM bisa langsung dimulai.
                 const respStudents = await fetch(scriptUrl + "?action=getStudents");
                 const dataStudents = await respStudents.json();
 
@@ -467,21 +468,19 @@
                 renderStudents();
                 if(cloudStatus) {
                     cloudStatus.innerHTML = 'Sudah Tersambung bos (Realtime)';
-                    cloudStatus.className = "text-xs font-medium px-3 py-1 rounded-full bg-emerald-50 text-emerald-600 border border-emerald-200 flex items-center gap-2";
+                    cloudStatus.className = "text-xs font-medium px-3 py-1 rounded-full bg-emerald-50/80 text-emerald-600 border border-emerald-200 flex items-center gap-2";
                 }
                 
                 // 4. Proses antrean data offline jika internet sempat terputus
                 processQueue();
 
                 // 5. Ambil data 'History/Riwayat' secara diam-diam di latar belakang.
-                // Proses ini tidak menggunakan 'await', sehingga tidak memblokir UI di atas.
                 fetch(scriptUrl + "?action=getHistory")
                     .then(res => res.json())
                     .then(dataHistory => {
                         if(dataHistory && dataHistory.length > 0) {
                             attendanceHistory = dataHistory;
                             localStorage.setItem('db_history', JSON.stringify(attendanceHistory));
-                            // Refresh tabel riwayat secara otomatis jika tab Rekap Log sedang dibuka
                             renderHistory(); 
                         }
                     })
@@ -490,7 +489,7 @@
             } catch (error) {
                 if(cloudStatus) {
                     cloudStatus.innerHTML = 'Mode Offline (Lokal)';
-                    cloudStatus.className = "text-xs font-medium px-3 py-1 rounded-full bg-yellow-50 text-yellow-600 border border-yellow-200 flex items-center gap-2";
+                    cloudStatus.className = "text-xs font-medium px-3 py-1 rounded-full bg-yellow-50/80 text-yellow-600 border border-yellow-200 flex items-center gap-2";
                 }
             }
         }
@@ -573,10 +572,10 @@
 
         function switchTab(tabId) {
             document.querySelectorAll('[id^="view-"]').forEach(el => el.classList.add('hidden'));
-            const inactiveClass = "tab-btn px-4 py-2 text-sm font-medium text-slate-600 hover:text-slate-900 rounded-md transition-all flex items-center gap-2";
+            const inactiveClass = "tab-btn px-4 py-2 text-sm font-medium text-slate-600 hover:text-slate-900 hover:bg-white/50 rounded-md transition-all flex items-center gap-2";
             document.querySelectorAll('[id^="tab-"]').forEach(el => { 
                 el.className = inactiveClass; 
-                if(el.id === 'tab-' + tabId) el.className = "tab-btn px-4 py-2 text-sm font-semibold text-indigo-700 bg-white rounded-md shadow-sm border border-slate-200 transition-all flex items-center gap-2";
+                if(el.id === 'tab-' + tabId) el.className = "tab-btn px-4 py-2 text-sm font-semibold text-red-700 bg-white/90 rounded-md shadow-sm border border-red-100 transition-all flex items-center gap-2";
             });
             document.getElementById(`view-${tabId}`).classList.remove('hidden');
             if (tabId === 'history') renderHistory();
@@ -792,8 +791,8 @@
             if (students.length === 0) { container.innerHTML = `<p class="col-span-full text-center text-slate-500 py-8 text-sm">Belum ada data siswa.</p>`; return; }
 
             students.forEach((stu, i) => {
-                const card = document.createElement('div'); card.className = "w-full max-w-[200px] bg-white border border-slate-200 p-4 rounded-xl flex flex-col items-center text-center print-exact relative";
-                card.innerHTML = `<button onclick="deleteStudent(${i})" class="no-print absolute -top-2 -right-2 bg-white text-slate-400 hover:text-red-500 border border-slate-200 w-6 h-6 rounded-full flex items-center justify-center text-lg leading-none shadow-sm transition-colors">&times;</button><div class="text-[10px] font-bold text-indigo-600 mb-3 tracking-wider uppercase">Miftahul Ulum</div><div id="qrcode-${stu.nis}" class="bg-white p-2 border border-slate-100 rounded-lg shadow-sm mb-3"></div><div class="w-full"><div class="font-semibold text-slate-800 text-sm truncate w-full px-1" title="${stu.name}">${stu.name}</div><div class="text-[10px] text-slate-500 mt-1">${stu.nis} &middot; ${stu.className}</div></div>`;
+                const card = document.createElement('div'); card.className = "w-full max-w-[200px] bg-white border border-slate-200 p-4 rounded-xl flex flex-col items-center text-center print-exact relative shadow-sm";
+                card.innerHTML = `<button onclick="deleteStudent(${i})" class="no-print absolute -top-2 -right-2 bg-white text-slate-400 hover:text-red-500 border border-slate-200 w-6 h-6 rounded-full flex items-center justify-center text-lg leading-none shadow-sm transition-colors">&times;</button><div class="text-[10px] font-bold text-red-600 mb-3 tracking-wider uppercase">Miftahul Ulum</div><div id="qrcode-${stu.nis}" class="bg-white p-2 border border-slate-100 rounded-lg shadow-sm mb-3"></div><div class="w-full"><div class="font-semibold text-slate-800 text-sm truncate w-full px-1" title="${stu.name}">${stu.name}</div><div class="text-[10px] text-slate-500 mt-1">${stu.nis} &middot; ${stu.className}</div></div>`;
                 container.appendChild(card);
                 new QRCode(document.getElementById(`qrcode-${stu.nis}`), { text: JSON.stringify({ nis: stu.nis, name: stu.name }), width: 100, height: 100, colorDark: "#1e293b", colorLight: "#ffffff", correctLevel: QRCode.CorrectLevel.H });
             });
@@ -809,7 +808,7 @@
                 if (i % columns === 0) contentHtml += "<tr>";
                 const stu = students[i]; const qrDiv = document.getElementById(`qrcode-${stu.nis}`);
                 let imgSrc = ''; if (qrDiv) { const img = qrDiv.querySelector('img'); const canvas = qrDiv.querySelector('canvas'); if (img && img.src && img.src.startsWith('data:image')) imgSrc = img.src; else if (canvas) imgSrc = canvas.toDataURL("image/png"); }
-                contentHtml += `<td style="padding: 15px; border: 1px solid #cbd5e1; background-color: #ffffff; text-align: center; vertical-align: top; width: 33%; border-radius: 8px;"><div style="font-size: 11px; font-weight: bold; color: #4f46e5; margin-bottom: 10px; text-transform: uppercase;">Miftahul Ulum</div><div style="margin-bottom: 10px;">${imgSrc ? `<img src="${imgSrc}" width="120" height="120" style="margin: 0 auto; display: block;" />` : ''}</div><div style="font-weight: bold; font-size: 14px; color: #1e293b;">${stu.name}</div><div style="font-size: 11px; color: #64748b; margin-top: 5px;">${stu.nis} &middot; ${stu.className}</div></td>`;
+                contentHtml += `<td style="padding: 15px; border: 1px solid #cbd5e1; background-color: #ffffff; text-align: center; vertical-align: top; width: 33%; border-radius: 8px;"><div style="font-size: 11px; font-weight: bold; color: #dc2626; margin-bottom: 10px; text-transform: uppercase;">Miftahul Ulum</div><div style="margin-bottom: 10px;">${imgSrc ? `<img src="${imgSrc}" width="120" height="120" style="margin: 0 auto; display: block;" />` : ''}</div><div style="font-weight: bold; font-size: 14px; color: #1e293b;">${stu.name}</div><div style="font-size: 11px; color: #64748b; margin-top: 5px;">${stu.nis} &middot; ${stu.className}</div></td>`;
                 if (i % columns === columns - 1 || i === students.length - 1) contentHtml += "</tr>";
             }
             contentHtml += `</table></div>`;
@@ -862,15 +861,6 @@
                 </tr>`;
             }).join('');
             document.getElementById('count-hadir').innerText = countHadir; document.getElementById('count-sakit').innerText = countSakit; document.getElementById('count-izin').innerText = countIzin; document.getElementById('count-alpha').innerText = countAlpha;
-        }
-
-        function clearHistory() {
-            if (confirm("Peringatan: Hapus seluruh rekapan log?")) {
-                attendanceHistory = []; localStorage.setItem('db_history', JSON.stringify(attendanceHistory));
-                syncQueue.push({ id: Date.now(), payload: { action: 'clearHistory' } });
-                localStorage.setItem('sync_queue', JSON.stringify(syncQueue)); processQueue();
-                renderHistory();
-            }
         }
 
         function exportToCSV() {
