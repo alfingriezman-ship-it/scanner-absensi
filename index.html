@@ -394,7 +394,9 @@
                                     <option value="Sakit">Sakit</option><option value="Izin">Izin</option><option value="Alpha">Alpha</option>
                                 </select>
                             </div>
-                            <div class="flex gap-1.5 w-full lg:w-auto justify-end mt-2 lg:mt-0">
+                            <div class="flex flex-wrap gap-1.5 w-full lg:w-auto justify-end mt-2 lg:mt-0">
+                                <!-- Tombol Kirim Massal ada di Sini -->
+                                <button onclick="sendBulkWA()" class="bg-gradient-to-r from-emerald-500 to-teal-500 hover:scale-105 text-white px-4 py-2 rounded-xl text-xs font-black shadow-md border-2 border-emerald-300 transition-all">Kirim WA Massal</button>
                                 <button onclick="exportHistoryToDoc()" class="bg-indigo-100 text-indigo-700 px-3 py-2 rounded-xl text-xs font-extrabold border">Doc</button>
                                 <button onclick="exportToCSV()" class="bg-emerald-100 text-emerald-700 px-3 py-2 rounded-xl text-xs font-extrabold border">CSV</button>
                                 <button onclick="clearHistoryWithPin()" class="bg-rose-500 text-white px-3 py-2 rounded-xl text-xs font-extrabold">Hapus</button>
@@ -433,7 +435,14 @@
                                         <th class="px-3 md:px-4 py-2.5 md:py-3 whitespace-nowrap">Mapel</th>
                                         <th class="px-3 md:px-4 py-2.5 md:py-3 text-center whitespace-nowrap">Jam</th> 
                                         <th class="px-3 md:px-4 py-2.5 md:py-3 text-center whitespace-nowrap">Status</th> 
-                                        <th class="px-3 md:px-4 py-2.5 md:py-3 text-center whitespace-nowrap">Aksi WA</th>
+                                        <th class="px-3 md:px-4 py-2.5 md:py-3 text-center whitespace-nowrap">Kirim Personal</th>
+                                        <th class="px-3 md:px-4 py-2.5 md:py-3 text-center whitespace-nowrap bg-emerald-600">
+                                            <!-- Checkbox Check All Massal -->
+                                            <div class="flex items-center justify-center gap-1.5">
+                                                <input type="checkbox" id="checkAll" onclick="toggleCheckAll(this)" class="w-4 h-4 accent-white cursor-pointer" title="Pilih Semua">
+                                                <label for="checkAll" class="cursor-pointer">PILIH SEMUA</label>
+                                            </div>
+                                        </th>
                                     </tr>
                                 </thead>
                                 <tbody id="history-table-body" class="divide-y divide-slate-100"></tbody>
@@ -610,7 +619,7 @@
                 const dataStudents = await respStudents.json();
                 if(dataStudents && dataStudents.length > 0) { students = dataStudents; localStorage.setItem('db_students', JSON.stringify(students)); }
                 renderStudents();
-                renderHistory(); // <-- Baris tambahan untuk menyelaraskan sinkronisasi awal
+                renderHistory();
                 if(cloudStatus) { cloudStatus.innerHTML = 'Sinkronisasi Awal Selesai'; cloudStatus.className = "text-[10px] md:text-xs font-extrabold px-3 py-1 rounded-full bg-emerald-100 text-emerald-700 border border-emerald-200 text-center"; }
                 processQueue();
                 
@@ -987,7 +996,7 @@
                 processQueue();
                 
                 renderStudents();
-                renderHistory(); // <-- Baris tambahan agar sinkron real-time ke tab history
+                renderHistory();
                 closeEditModal();
             }
         }
@@ -1087,18 +1096,64 @@
             });
         }
 
+        // FUNGSI UNTUK MENCENTANG SEMUA CHECKBOX
+        function toggleCheckAll(source) {
+            const checkboxes = document.querySelectorAll('.wa-row-checkbox');
+            checkboxes.forEach(cb => {
+                cb.checked = source.checked;
+            });
+        }
+
+        // FUNGSI UNTUK KIRIM WA MASSAL
+        async function sendBulkWA() {
+            const checkboxes = document.querySelectorAll('.wa-row-checkbox:checked');
+            if (checkboxes.length === 0) {
+                return alert("Pilih minimal satu siswa dengan mencentang kotak di tabel untuk dikirimkan pesan WA.");
+            }
+
+            if (!confirm(`Anda akan mengirim pesan ke ${checkboxes.length} nomor WA secara otomatis. Pastikan browser Anda MENGIZINKAN POP-UP (Pop-ups allowed). Lanjutkan?`)) {
+                return;
+            }
+
+            for (let i = 0; i < checkboxes.length; i++) {
+                const cb = checkboxes[i];
+                const waNumber = cb.value;
+                const waMsg = cb.getAttribute('data-msg');
+                const url = `https://wa.me/${waNumber}?text=${waMsg}`;
+
+                // Membuka tab WA baru untuk tiap nomor
+                window.open(url, '_blank');
+
+                // Jeda 1200ms agar browser tidak mem-blokir semua pop-up yang dibuka
+                if (i < checkboxes.length - 1) {
+                    await new Promise(resolve => setTimeout(resolve, 1200));
+                }
+            }
+            
+            // Uncheck semua setelah diklik
+            checkboxes.forEach(cb => cb.checked = false);
+            const checkAll = document.getElementById('checkAll');
+            if(checkAll) checkAll.checked = false;
+        }
+
         function renderHistory() {
             const tbody = document.getElementById('history-table-body');
             const filteredData = getFilteredHistory();
             let countHadir = 0, countSakit = 0, countIzin = 0, countAlpha = 0;
             if (filteredData.length === 0) {
-                tbody.innerHTML = `<tr><td colspan="8" class="px-4 py-8 text-center text-slate-400 text-xs">Tidak ada data riwayat.</td></tr>`;
+                tbody.innerHTML = `<tr><td colspan="9" class="px-4 py-8 text-center text-slate-400 text-xs">Tidak ada data riwayat.</td></tr>`;
                 document.getElementById('count-hadir').innerText = 0; document.getElementById('count-sakit').innerText = 0; document.getElementById('count-izin').innerText = 0; document.getElementById('count-alpha').innerText = 0; return;
             }
+            
+            // Reset Check All setiap kali tabel di render ulang
+            const checkAll = document.getElementById('checkAll');
+            if(checkAll) checkAll.checked = false;
+            
             tbody.innerHTML = filteredData.map(log => {
                 const dateObj = new Date(log.timestamp);
                 const statStr = (log.status || 'Hadir').toLowerCase();
                 let badgeClass = "bg-emerald-100 text-emerald-800 border-emerald-300";
+                
                 if(statStr === 'sakit') { badgeClass = "bg-amber-100 text-amber-800 border-amber-300"; countSakit++; }
                 else if(statStr === 'izin') { badgeClass = "bg-blue-100 text-blue-800 border-blue-300"; countIzin++; }
                 else if(statStr === 'alpha') { badgeClass = "bg-rose-100 text-rose-800 border-rose-300"; countAlpha++; }
@@ -1112,10 +1167,22 @@
                     waNumber = log.wa;
                 }
                 
+                let waMsg = '';
+                // LOGIKA FORMAT TEKS WA BERDASARKAN STATUS
+                if (['sakit', 'izin', 'alpha'].includes(statStr)) {
+                    waMsg = encodeURIComponent(`Halo Bapak/Ibu Wali Murid, Ingin memberitahukan bahwa ananda *${log.name}* tidak masuk kelas pada mata pelajaran *${log.subject}* karena *${log.status}*.`);
+                } else {
+                    waMsg = encodeURIComponent(`Halo Bapak/Ibu Wali Murid, memberitahukan bahwa ananda *${log.name}* (NIS: ${log.nis}) telah melakukan presensi pada tanggal ${dateObj.toLocaleDateString('id-ID')} pukul ${dateObj.toLocaleTimeString('id-ID')} WIB untuk mata pelajaran *${log.subject}* dengan status: *${log.status || 'Hadir'}*.`);
+                }
+
                 let waButton = `<span class="text-[10px] text-slate-400">-</span>`;
+                let checkboxHtml = `<span class="text-[10px] text-slate-400">-</span>`;
+
                 if (waNumber) {
-                    const waMsg = encodeURIComponent(`Halo Bapak/Ibu Wali Murid, memberitahukan bahwa ananda *${log.name}* (NIS: ${log.nis}) telah melakukan presensi pada tanggal ${dateObj.toLocaleDateString('id-ID')} pukul ${dateObj.toLocaleTimeString('id-ID')} WIB dengan status: *${log.status || 'Hadir'}*.`);
                     waButton = `<a href="https://wa.me/${waNumber}?text=${waMsg}" target="_blank" class="bg-emerald-500 hover:bg-emerald-600 text-white px-2.5 py-1.5 rounded-lg text-[10px] md:text-[11px] font-extrabold inline-flex items-center gap-1.5 transition-all shadow-sm"><svg class="w-3.5 h-3.5" fill="currentColor" viewBox="0 0 24 24"><path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51a12.8 12.8 0 0 0-.57-.01c-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347m-5.421 7.403h-.004a9.87 9.87 0 0 1-5.031-1.378l-.361-.214-3.741.982.998-3.648-.235-.374a9.86 9.86 0 0 1-1.51-5.26c.001-5.45 4.436-9.884 9.888-9.884 2.64 0 5.122 1.03 6.988 2.898a9.825 9.825 0 0 1 2.893 6.994c-.003 5.45-4.437 9.884-9.885 9.884m8.413-18.297A11.815 11.815 0 0 0 12.05 0C5.495 0 .16 5.335.157 11.892c0 2.096.547 4.142 1.588 5.945L.057 24l6.305-1.654a11.882 11.882 0 0 0 5.683 1.448h.005c6.554 0 11.89-5.335 11.893-11.893a11.821 11.821 0 0 0-3.48-8.413z"/></svg> Kirim</a>`;
+                    
+                    // MENYIAPKAN CHECKBOX UNTUK BARIS INI (Kirim Massal)
+                    checkboxHtml = `<input type="checkbox" class="wa-row-checkbox w-4 h-4 accent-emerald-500 cursor-pointer" value="${waNumber}" data-msg="${waMsg}">`;
                 }
 
                 return `<tr class="hover:bg-slate-50 transition-colors">
@@ -1127,6 +1194,7 @@
                     <td class="px-3 md:px-4 py-2.5 md:py-3 text-center whitespace-nowrap">${log.jam || '-'}</td>
                     <td class="px-3 md:px-4 py-2.5 md:py-3 text-center whitespace-nowrap"><span class="px-2 py-0.5 rounded text-[9px] md:text-[10px] font-black uppercase border ${badgeClass}">${log.status || 'Hadir'}</span></td>
                     <td class="px-3 md:px-4 py-2.5 md:py-3 text-center whitespace-nowrap">${waButton}</td>
+                    <td class="px-3 md:px-4 py-2.5 md:py-3 text-center whitespace-nowrap bg-emerald-50">${checkboxHtml}</td>
                 </tr>`;
             }).join('');
             document.getElementById('count-hadir').innerText = countHadir; document.getElementById('count-sakit').innerText = countSakit; document.getElementById('count-izin').innerText = countIzin; document.getElementById('count-alpha').innerText = countAlpha;
