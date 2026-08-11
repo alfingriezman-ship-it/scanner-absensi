@@ -72,7 +72,7 @@
             @page { size: A4; margin: 1cm; }
             body * { visibility: hidden; }
             #print-area, #print-area * { visibility: visible; }
-            .no-print, nav, footer, #view-scan, #view-history, #view-teachers, #wa-floating, #initial-warning-modal, #edit-student-modal { display: none !important; }
+            .no-print, nav, footer, #view-scan, #view-history, #view-teachers, #wa-floating, #initial-warning-modal, #edit-student-modal, #missing-students-modal { display: none !important; }
             body { background: white !important; margin: 0 !important; padding: 0 !important; }
             #print-area { position: relative !important; width: 100% !important; display: grid !important; grid-template-columns: repeat(4, 1fr) !important; gap: 12px !important; }
             .print-exact { page-break-inside: avoid !important; margin-bottom: 10px !important; border: 1px solid #000 !important; background: white !important; }
@@ -147,6 +147,37 @@
                     <button type="submit" class="w-1/2 bg-gradient-to-r from-indigo-600 to-purple-600 hover:opacity-90 text-white font-extrabold py-2.5 rounded-xl text-xs uppercase tracking-wide transition-all shadow-md">Simpan Perubahan</button>
                 </div>
             </form>
+        </div>
+    </div>
+
+    <!-- MODAL SISWA BELUM PRESENSI -->
+    <div id="missing-students-modal" class="fixed inset-0 z-[110] hidden items-center justify-center bg-black/60 backdrop-blur-sm p-4 fade-in no-print">
+        <div class="bg-white rounded-2xl shadow-2xl max-w-lg w-full p-6 border-l-8 border-amber-500 relative flex flex-col max-h-[90vh]">
+            <div class="flex items-center justify-between mb-4 border-b pb-3">
+                <div class="flex items-center gap-2">
+                    <div class="bg-amber-100 p-2 rounded-full text-amber-600">
+                        <svg class="h-5 w-5" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2"><path stroke-linecap="round" stroke-linejoin="round" d="M12 8v4m0 4h.01M21 12a9 9 0 11-18 0 9 9 0 0118 0z" /></svg>
+                    </div>
+                    <h2 class="text-base md:text-lg font-black text-slate-800 uppercase" id="missing-modal-title">Siswa Belum Presensi</h2>
+                </div>
+                <button onclick="closeMissingModal()" class="text-slate-400 hover:text-slate-600 font-bold text-xl">&times;</button>
+            </div>
+            <div class="overflow-y-auto table-scroll flex-grow max-h-[50vh]">
+                <table class="min-w-full text-left border-collapse">
+                    <thead class="sticky top-0 bg-slate-100 text-slate-700 text-[10px] md:text-xs uppercase font-black z-10">
+                        <tr>
+                            <th class="px-3 py-2">NIS</th>
+                            <th class="px-3 py-2">Nama Lengkap</th>
+                            <th class="px-3 py-2 text-center">Aksi</th>
+                        </tr>
+                    </thead>
+                    <tbody id="missing-students-body" class="divide-y divide-slate-100 text-[11px] md:text-xs font-semibold">
+                    </tbody>
+                </table>
+            </div>
+            <div class="mt-4 pt-3 border-t flex justify-end">
+                <button onclick="closeMissingModal()" class="bg-slate-200 hover:bg-slate-300 text-slate-700 font-extrabold py-2.5 px-5 rounded-xl text-xs uppercase tracking-wide transition-all">Tutup</button>
+            </div>
         </div>
     </div>
     
@@ -282,7 +313,10 @@
                     <div class="lg:col-span-8 glass-card p-4 md:p-5 rounded-2xl flex flex-col">
                         <div class="flex justify-between items-center border-b border-slate-200 pb-2 mb-3">
                             <h3 class="text-sm md:text-base font-extrabold text-slate-800">Log Aktivitas Sesi</h3>
-                            <span class="text-[10px] md:text-xs font-bold text-white bg-indigo-600 px-2 md:px-3 py-1 rounded-lg">Terekam: <span id="count-session" class="text-yellow-300 font-extrabold">0</span></span>
+                            <div class="flex gap-2">
+                                <button onclick="checkMissingSession()" class="text-[10px] md:text-xs font-bold text-white bg-amber-500 hover:bg-amber-600 px-2 md:px-3 py-1 rounded-lg shadow-sm transition-all flex items-center gap-1"><svg xmlns="http://www.w3.org/2000/svg" class="h-3 w-3 hidden sm:block" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 8v4m0 4h.01M21 12a9 9 0 11-18 0 9 9 0 0118 0z" /></svg> Belum Presensi</button>
+                                <span class="text-[10px] md:text-xs font-bold text-white bg-indigo-600 px-2 md:px-3 py-1 rounded-lg">Terekam: <span id="count-session" class="text-yellow-300 font-extrabold">0</span></span>
+                            </div>
                         </div>
                         
                         <div class="mb-4 p-3 bg-slate-50 border border-slate-200 rounded-xl">
@@ -395,8 +429,10 @@
                                 </select>
                             </div>
                             <div class="flex flex-wrap gap-1.5 w-full lg:w-auto justify-end mt-2 lg:mt-0">
-                                <!-- Tombol Kirim Massal ada di Sini -->
-                                <button onclick="sendBulkWA()" class="bg-gradient-to-r from-emerald-500 to-teal-500 hover:scale-105 text-white px-4 py-2 rounded-xl text-xs font-black shadow-md border-2 border-emerald-300 transition-all">Kirim WA Massal</button>
+                                <!-- Tombol Cek Belum Hadir di Rekap -->
+                                <button onclick="checkMissingHistory()" class="bg-gradient-to-r from-amber-500 to-orange-500 hover:scale-105 text-white px-3 py-2 rounded-xl text-xs font-black shadow-md border-2 border-amber-300 transition-all">Cek Belum Presensi</button>
+                                <!-- Tombol Kirim Massal -->
+                                <button onclick="sendBulkWA()" class="bg-gradient-to-r from-emerald-500 to-teal-500 hover:scale-105 text-white px-3 py-2 rounded-xl text-xs font-black shadow-md border-2 border-emerald-300 transition-all">Kirim WA Massal</button>
                                 <button onclick="exportHistoryToDoc()" class="bg-indigo-100 text-indigo-700 px-3 py-2 rounded-xl text-xs font-extrabold border">Doc</button>
                                 <button onclick="exportToCSV()" class="bg-emerald-100 text-emerald-700 px-3 py-2 rounded-xl text-xs font-extrabold border">CSV</button>
                                 <button onclick="clearHistoryWithPin()" class="bg-rose-500 text-white px-3 py-2 rounded-xl text-xs font-extrabold">Hapus</button>
@@ -929,6 +965,71 @@
                 </tr>`;
             }).join('');
         }
+
+        /* ----- FUNGSI CEK BELUM PRESENSI ----- */
+        function showMissingModal(title, missingData, context) {
+            document.getElementById('missing-modal-title').innerText = title;
+            const tbody = document.getElementById('missing-students-body');
+            
+            if (missingData.length === 0) {
+                tbody.innerHTML = `<tr><td colspan="3" class="px-4 py-6 text-center text-emerald-600 font-bold">Semua siswa sudah melakukan presensi! 🎉</td></tr>`;
+            } else {
+                tbody.innerHTML = missingData.map(stu => {
+                    let actionBtn = `<span class="text-slate-400">-</span>`;
+                    if (context === 'session') {
+                        actionBtn = `<button onclick="fillManualInput('${stu.nis}')" class="bg-indigo-100 text-indigo-700 px-2.5 py-1.5 rounded-lg text-[10px] font-bold hover:bg-indigo-200 transition-all border border-indigo-200 shadow-sm">Input Manual</button>`;
+                    }
+                    return `
+                    <tr class="hover:bg-slate-50 border-b border-slate-100">
+                        <td class="px-3 py-2.5 text-slate-700 font-semibold">${stu.nis}</td>
+                        <td class="px-3 py-2.5 text-slate-900 font-bold">${stu.name}</td>
+                        <td class="px-3 py-2.5 text-center">${actionBtn}</td>
+                    </tr>`;
+                }).join('');
+            }
+            
+            const modal = document.getElementById('missing-students-modal');
+            modal.classList.remove('hidden');
+            modal.classList.add('flex');
+        }
+
+        function closeMissingModal() {
+            const modal = document.getElementById('missing-students-modal');
+            modal.classList.remove('flex');
+            modal.classList.add('hidden');
+        }
+        
+        function fillManualInput(nis) {
+            closeMissingModal();
+            const manualSelect = document.getElementById('manual-student-nis');
+            if (manualSelect) {
+                manualSelect.value = nis;
+                manualSelect.focus();
+            }
+        }
+
+        function checkMissingSession() {
+            if (!isSessionActive) return alert("Mulai sesi terlebih dahulu sebelum memeriksa siapa yang belum hadir!");
+            
+            const classStudents = students.filter(s => s.className === currentClass);
+            const presentNis = sessionScans.map(s => s.nis);
+            const missing = classStudents.filter(s => !presentNis.includes(s.nis));
+            
+            showMissingModal(`Belum Hadir - Kelas ${currentClass}`, missing, 'session');
+        }
+
+        function checkMissingHistory() {
+            const filterClass = document.getElementById('filter-class').value;
+            if (!filterClass) return alert("Silakan pilih SATU KELAS terlebih dahulu pada menu filter agar sistem tahu siapa saja yang absen!");
+            
+            const filteredData = getFilteredHistory();
+            const presentNis = filteredData.map(log => log.nis);
+            const classStudents = students.filter(s => s.className === filterClass);
+            const missing = classStudents.filter(s => !presentNis.includes(s.nis));
+            
+            showMissingModal(`Belum Presensi - Rekap ${filterClass}`, missing, 'history');
+        }
+        /* -------------------------------------- */
 
         function addStudent(e) {
             e.preventDefault();
