@@ -100,10 +100,10 @@
                 <h2 class="text-xl md:text-2xl font-black text-slate-800 uppercase tracking-tight">Peringatan!</h2>
             </div>
             <p class="text-sm md:text-base text-slate-600 font-semibold mb-8 leading-relaxed">
-                YTH Bapak/Ibu guru, Mohon (pake banget) input manual presensi siswa yang tidak hadir di kelas (Alpha, Izin, Sakit, atau tidak membawa kartu QR). <span class="text-rose-500 font-bold">Jangan jadi Guru Pemalas</span> yang nantinya merepotkan wali kelas saat rekap!
+                YTH Bapak/Ibu guru, Mohon input manual presensi siswa yang tidak hadir di kelas (Alpha, Izin, Sakit, atau tidak membawa kartu QR). <span class="text-rose-500 font-bold">Jangan jadi Guru Pemalas</span> yang nantinya merepotkan wali kelas saat rekap!
             </p>
             <button onclick="document.getElementById('initial-warning-modal').classList.add('hidden')" class="w-full bg-gradient-to-r from-blue-600 to-slate-500 hover:from-blue-700 hover:to-slate-600 text-white font-extrabold py-3.5 rounded-2xl shadow-lg hover:shadow-xl hover:-translate-y-1 transition-all text-sm uppercase tracking-wider">
-                Saya Mengerti 
+                Saya Mengerti & Siap Disiplin
             </button>
         </div>
     </div>
@@ -186,7 +186,7 @@
     <!-- FLOATING WA BUTTON -->
     <a id="wa-floating" href="https://wa.me/6281515561069" target="_blank" class="fixed bottom-6 right-6 z-[99] bg-gradient-to-r from-emerald-400 to-teal-500 text-white px-5 py-3.5 rounded-full flex items-center gap-2 text-sm font-black shadow-[0_10px_25px_rgba(16,185,129,0.4)] border-2 border-white/50 hover:scale-105 hover:shadow-[0_15px_35px_rgba(16,185,129,0.6)] transition-all">
         <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><path d="M22 16.92v3a2 2 0 0 1-2.18 2 19.79 19.79 0 0 1-8.63-3.07 19.5 19.5 0 0 1-6-6 19.79 19.79 0 0 1-3.07-8.67A2 2 0 0 1 4.11 2h3a2 2 0 0 1 2 1.72 12.84 12.84 0 0 0 .7 2.81 2 2 0 0 1-.45 2.11L8.09 9.91a16 16 0 0 0 6 6l1.27-1.27a2 2 0 0 1 2.11-.45 12.84 12.84 0 0 0 2.81.7A2 2 0 0 1 22 16.92z"></path></svg>
-        <span class="hidden md:inline tracking-wide">Bantuan</span>
+        <span class="hidden md:inline tracking-wide">WA OPM</span>
     </a>
 
     <div class="flex-grow flex flex-col pt-4">
@@ -194,7 +194,7 @@
         <header class="glass-header sticky top-4 z-50 mx-4 sm:mx-8 rounded-3xl mb-6">
             <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
                 <!-- Status Bar -->
-                <div class="flex justify-between items-center py-2 text-[10px] sm:text-xs font-bold text-slate-500 border-b border-slate-200/60">
+                <div class="flex flex-wrap justify-between items-center gap-2 py-2 text-[10px] sm:text-xs font-bold text-slate-500 border-b border-slate-200/60">
                     <div class="flex items-center gap-2">
                         <span id="network-indicator" class="w-2.5 h-2.5 rounded-full bg-emerald-500 animate-pulse shadow-[0_0_8px_rgba(16,185,129,0.8)]"></span>
                         <span id="network-text">Sistem: <span class="text-emerald-600">Online</span></span>
@@ -205,30 +205,35 @@
                     <div id="live-clock" class="font-mono bg-slate-100/80 px-3 py-1 rounded-lg border border-slate-200 text-slate-700 shadow-inner">Booting...</div>
                 </div>
 
-                <div class="flex flex-col lg:flex-row justify-between items-center py-4 gap-4">
-                    <!-- LOGO MADRASAH & KEMENAG (REVISI: LEBIH BESAR & TANPA BINGKAI PUTIH) -->
-                    <div class="flex items-center gap-4 w-full lg:w-auto justify-center lg:justify-start">
-                        <!-- Kemenag Logo -->
-                        <div class="flex items-center justify-center shrink-0">
-                            <img src="https://drive.google.com/thumbnail?id=19t4Wcx4shRklkMecTbxTiua1_7tUgiil&sz=w500" alt="Logo Kemenag" class="w-30 h-25 md:w-20 md:h-20 object-contain filter drop-shadow-md hover:scale-105 transition-transform">
-                        </div>
-                        <!-- Madrasah Logo -->
-                        <div class="flex items-center justify-center shrink-0">
-                            <img src="https://drive.google.com/thumbnail?id=1xj5AeEbWisIpBlXpwJ_tbW7wMM8NsjjQ&sz=w500" alt="Logo Madrasah" class="w-14 h-14 md:w-16 md:h-16 object-contain filter drop-shadow-md hover:scale-105 transition-transform">
+                <div class="flex flex-col lg:flex-row justify-between items-center py-4 gap-4 lg:gap-6">
+                    <!-- LOGO MADRASAH & KEMENAG (REVISI: RAPI, SEJAJAR, DENGAN BACKGROUND, MOBILE FRIENDLY) -->
+                    <div class="flex flex-col sm:flex-row items-center gap-3 sm:gap-4 w-full lg:w-auto justify-center lg:justify-start">
+                        
+                        <!-- Wrapper Logo -->
+                        <div class="flex items-center gap-2 sm:gap-3 shrink-0">
+                            <!-- Kemenag Logo -->
+                            <div class="flex items-center justify-center">
+                                <img src="https://drive.google.com/thumbnail?id=19t4Wcx4shRklkMecTbxTiua1_7tUgiil&sz=w500" alt="Logo Kemenag" class="w-12 h-12 sm:w-14 sm:h-14 md:w-16 md:h-16 object-contain filter drop-shadow-md hover:scale-105 transition-transform">
+                            </div>
+                            
+                            <!-- Madrasah Logo dengan Background Putih Glassmorphism -->
+                            <div class="flex items-center justify-center bg-white/90 backdrop-blur-sm p-1.5 sm:p-2 rounded-xl shadow-sm border border-slate-200/60">
+                                <img src="https://drive.google.com/thumbnail?id=1xj5AeEbWisIpBlXpwJ_tbW7wMM8NsjjQ&sz=w500" alt="Logo Madrasah" class="w-10 h-10 sm:w-12 sm:h-12 md:w-14 md:h-14 object-contain filter drop-shadow-md hover:scale-105 transition-transform">
+                            </div>
                         </div>
                         
-                        <div class="text-center lg:text-left min-w-[200px]">
-                            <h1 id="header-title" class="font-black text-lg md:text-2xl bg-clip-text text-transparent bg-gradient-to-r from-blue-700 via-blue-500 to-slate-500 tracking-tight leading-tight min-h-[30px]"></h1>
-                            <p id="header-subtitle" class="text-[10px] md:text-xs text-slate-500 font-bold min-h-[18px] tracking-wide"></p>
+                        <div class="text-center sm:text-left flex-1 mt-2 sm:mt-0">
+                            <h1 id="header-title" class="font-black text-sm sm:text-base md:text-xl lg:text-2xl bg-clip-text text-transparent bg-gradient-to-r from-blue-700 via-blue-500 to-slate-500 tracking-tight leading-tight min-h-[24px] md:min-h-[30px]"></h1>
+                            <p id="header-subtitle" class="text-[9px] sm:text-[10px] md:text-xs text-slate-500 font-bold min-h-[16px] md:min-h-[18px] tracking-wide mt-1"></p>
                         </div>
                     </div>
                     
                     <!-- NAVIGASI MODERN -->
                     <nav class="flex overflow-x-auto hide-scrollbar w-full lg:w-auto justify-start lg:justify-center gap-2 bg-slate-100/50 p-1.5 rounded-2xl border border-slate-200/50 shadow-inner whitespace-nowrap">
-                        <button onclick="switchTab('scan')" id="tab-scan" class="px-5 py-2.5 text-xs font-extrabold text-white bg-gradient-to-r from-blue-600 to-slate-500 rounded-xl shadow-md transition-all">Scanner KBM</button>
-                        <button onclick="switchTab('students')" id="tab-students" class="px-5 py-2.5 text-xs font-bold text-slate-600 hover:text-blue-600 hover:bg-white/60 rounded-xl transition-all">Data Siswa</button>
-                        <button onclick="switchTab('history')" id="tab-history" class="px-5 py-2.5 text-xs font-bold text-slate-600 hover:text-blue-600 hover:bg-white/60 rounded-xl transition-all">Rekap Log</button>
-                        <button onclick="switchTab('teachers')" id="tab-teachers" class="px-5 py-2.5 text-xs font-bold text-slate-600 hover:text-blue-600 hover:bg-white/60 rounded-xl transition-all">Daftar Guru</button>
+                        <button onclick="switchTab('scan')" id="tab-scan" class="px-4 sm:px-5 py-2.5 text-xs font-extrabold text-white bg-gradient-to-r from-blue-600 to-slate-500 rounded-xl shadow-md transition-all">Scanner KBM</button>
+                        <button onclick="switchTab('students')" id="tab-students" class="px-4 sm:px-5 py-2.5 text-xs font-bold text-slate-600 hover:text-blue-600 hover:bg-white/60 rounded-xl transition-all">Data Siswa</button>
+                        <button onclick="switchTab('history')" id="tab-history" class="px-4 sm:px-5 py-2.5 text-xs font-bold text-slate-600 hover:text-blue-600 hover:bg-white/60 rounded-xl transition-all">Rekap Log</button>
+                        <button onclick="switchTab('teachers')" id="tab-teachers" class="px-4 sm:px-5 py-2.5 text-xs font-bold text-slate-600 hover:text-blue-600 hover:bg-white/60 rounded-xl transition-all">Daftar Guru</button>
                     </nav>
                 </div>
             </div>
@@ -242,13 +247,13 @@
                     ⚠️ Akses tidak optimal: Buka via Browser Utama (Chrome/Safari) untuk fitur Kamera yang lancar.
                 </div>
 
-                <div class="glass-card p-6 md:p-8">
+                <div class="glass-card p-4 md:p-8">
                     <div class="flex flex-col sm:flex-row sm:items-center justify-between gap-4 mb-6 pb-4 border-b border-slate-200/60">
-                        <h2 class="text-lg md:text-xl font-black text-slate-800 uppercase tracking-tight flex items-center gap-2">
-                            <span class="bg-blue-100 text-blue-600 p-1.5 rounded-lg"><svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M10.325 4.317c.426-1.756 2.924-1.756 3.35 0a1.724 1.724 0 002.573 1.066c1.543-.94 3.31.826 2.37 2.37a1.724 1.724 0 001.065 2.572c1.756.426 1.756 2.924 0 3.35a1.724 1.724 0 00-1.066 2.573c.94 1.543-.826 3.31-2.37 2.37a1.724 1.724 0 00-2.572 1.065c-.426 1.756-2.924 1.756-3.35 0a1.724 1.724 0 00-2.573-1.066c-1.543.94-3.31-.826-2.37-2.37a1.724 1.724 0 00-1.065-2.572c-1.756-.426-1.756-2.924 0-3.35a1.724 1.724 0 001.066-2.573c-.94-1.543.826-3.31 2.37-2.37.996.608 2.296.07 2.572-1.065z"></path><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 12a3 3 0 11-6 0 3 3 0 016 0z"></path></svg></span>
-                            Konfigurasi Sesi KBM
+                        <h2 class="text-base md:text-xl font-black text-slate-800 uppercase tracking-tight flex items-center gap-2">
+                            <span class="bg-blue-100 text-blue-600 p-1.5 rounded-lg"><svg class="w-4 h-4 md:w-5 md:h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M10.325 4.317c.426-1.756 2.924-1.756 3.35 0a1.724 1.724 0 002.573 1.066c1.543-.94 3.31.826 2.37 2.37a1.724 1.724 0 001.065 2.572c1.756.426 1.756 2.924 0 3.35a1.724 1.724 0 00-1.066 2.573c.94 1.543-.826 3.31-2.37 2.37a1.724 1.724 0 00-2.572 1.065c-.426 1.756-2.924 1.756-3.35 0a1.724 1.724 0 00-2.573-1.066c-1.543.94-3.31-.826-2.37-2.37a1.724 1.724 0 00-1.065-2.572c-1.756-.426-1.756-2.924 0-3.35a1.724 1.724 0 001.066-2.573c-.94-1.543.826-3.31 2.37-2.37.996.608 2.296.07 2.572-1.065z"></path><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 12a3 3 0 11-6 0 3 3 0 016 0z"></path></svg></span>
+                            Konfigurasi Sesi
                         </h2>
-                        <span id="cloud-status" class="text-xs font-extrabold px-4 py-1.5 rounded-full bg-slate-100 text-slate-600 border border-slate-200 text-center shadow-inner">Menyiapkan Sistem...</span>
+                        <span id="cloud-status" class="text-[10px] sm:text-xs font-extrabold px-3 py-1.5 rounded-full bg-slate-100 text-slate-600 border border-slate-200 text-center shadow-inner">Menyiapkan Sistem...</span>
                     </div>
                     
                     <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-5 gap-4 md:gap-5">
@@ -305,9 +310,9 @@
 
                 <div id="scanner-section" class="hidden grid grid-cols-1 lg:grid-cols-12 gap-6 relative">
                     <!-- Scanner Area -->
-                    <div class="lg:col-span-4 glass-card p-6 flex flex-col">
+                    <div class="lg:col-span-4 glass-card p-4 md:p-6 flex flex-col">
                         <div class="flex flex-col gap-3 mb-4 border-b border-slate-200/60 pb-3">
-                            <h3 class="text-base font-extrabold text-slate-800 uppercase flex items-center gap-2">
+                            <h3 class="text-sm md:text-base font-extrabold text-slate-800 uppercase flex items-center gap-2">
                                 <span class="bg-blue-100 text-blue-600 p-1 rounded"><svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M3 9a2 2 0 012-2h.93a2 2 0 001.664-.89l.812-1.22A2 2 0 0110.07 4h3.86a2 2 0 011.664.89l.812 1.22A2 2 0 0018.07 7H19a2 2 0 012 2v9a2 2 0 01-2 2H5a2 2 0 01-2-2V9z"></path><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 13a3 3 0 11-6 0 3 3 0 016 0z"></path></svg></span>
                                 Kamera Scanner
                             </h3>
@@ -319,20 +324,20 @@
                             <div id="reader" class="w-full h-full flex items-center justify-center text-slate-400 text-xs font-semibold">Memuat kamera...</div>
                         </div>
                         <div class="mt-5">
-                            <div id="session-badge" class="bg-blue-50 text-blue-800 text-sm font-black px-4 py-3 rounded-xl border border-blue-200 text-center shadow-sm w-full truncate tracking-wide"></div>
+                            <div id="session-badge" class="bg-blue-50 text-blue-800 text-xs sm:text-sm font-black px-3 sm:px-4 py-3 rounded-xl border border-blue-200 text-center shadow-sm w-full truncate tracking-wide"></div>
                         </div>
                     </div>
 
                     <!-- Log Area -->
-                    <div class="lg:col-span-8 glass-card p-6 flex flex-col">
-                        <div class="flex justify-between items-center border-b border-slate-200/60 pb-4 mb-4">
-                            <h3 class="text-base font-extrabold text-slate-800 uppercase flex items-center gap-2">
+                    <div class="lg:col-span-8 glass-card p-4 md:p-6 flex flex-col">
+                        <div class="flex flex-col sm:flex-row justify-between items-start sm:items-center border-b border-slate-200/60 pb-4 mb-4 gap-3">
+                            <h3 class="text-sm md:text-base font-extrabold text-slate-800 uppercase flex items-center gap-2">
                                 <span class="bg-emerald-100 text-emerald-600 p-1 rounded"><svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5H7a2 2 0 00-2 2v12a2 2 0 002 2h10a2 2 0 002-2V7a2 2 0 00-2-2h-2M9 5a2 2 0 002 2h2a2 2 0 002-2M9 5a2 2 0 012-2h2a2 2 0 012 2m-6 9l2 2 4-4"></path></svg></span>
                                 Log Aktivitas
                             </h3>
-                            <div class="flex gap-2">
-                                <button onclick="checkMissingSession()" class="text-xs font-bold text-white bg-amber-500 hover:bg-amber-600 px-3 py-1.5 rounded-lg shadow-sm transition-all flex items-center gap-1.5"><svg xmlns="http://www.w3.org/2000/svg" class="h-3.5 w-3.5 hidden sm:block" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 8v4m0 4h.01M21 12a9 9 0 11-18 0 9 9 0 0118 0z" /></svg> Belum Presensi</button>
-                                <span class="text-xs font-bold text-white bg-slate-700 px-3 py-1.5 rounded-lg shadow-sm border border-slate-600">Terekam: <span id="count-session" class="text-emerald-400 font-extrabold">0</span></span>
+                            <div class="flex flex-wrap gap-2 w-full sm:w-auto">
+                                <button onclick="checkMissingSession()" class="flex-1 sm:flex-none justify-center text-xs font-bold text-white bg-amber-500 hover:bg-amber-600 px-3 py-2 rounded-lg shadow-sm transition-all flex items-center gap-1.5"><svg xmlns="http://www.w3.org/2000/svg" class="h-3.5 w-3.5 block" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 8v4m0 4h.01M21 12a9 9 0 11-18 0 9 9 0 0118 0z" /></svg> Belum Presensi</button>
+                                <span class="flex-1 sm:flex-none justify-center text-xs font-bold text-white bg-slate-700 px-3 py-2 rounded-lg shadow-sm border border-slate-600 text-center">Terekam: <span id="count-session" class="text-emerald-400 font-extrabold">0</span></span>
                             </div>
                         </div>
                         
@@ -372,8 +377,8 @@
 
             <!-- TAB 2: DATA SISWA -->
             <div id="view-students" class="hidden space-y-6 fade-in">
-                <div class="glass-card p-6 md:p-8">
-                    <h2 class="text-lg md:text-xl font-black text-slate-800 uppercase mb-5 pb-3 border-b border-slate-200/60 tracking-tight">Registrasi Data Siswa</h2>
+                <div class="glass-card p-4 md:p-8">
+                    <h2 class="text-base md:text-xl font-black text-slate-800 uppercase mb-5 pb-3 border-b border-slate-200/60 tracking-tight">Registrasi Data Siswa</h2>
                     <form id="form-add-student" onsubmit="addStudent(event)" class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-5 gap-4">
                         <input type="text" id="stu-nis" placeholder="NIS" required class="form-input">
                         <input type="text" id="stu-name" placeholder="Nama Lengkap" required class="form-input">
@@ -387,33 +392,33 @@
                     </form>
                 </div>
 
-                <div class="glass-card p-6 md:p-8">
+                <div class="glass-card p-4 md:p-8">
                     <div class="flex flex-col lg:flex-row justify-between items-start lg:items-center mb-6 pb-4 border-b border-slate-200/60 gap-4">
-                        <h2 class="text-lg md:text-xl font-black text-slate-800 uppercase tracking-tight">Database & Kartu QR</h2>
-                        <div class="flex flex-wrap gap-2">
-                            <button onclick="exportQRToWord()" class="bg-blue-100 text-blue-700 hover:bg-blue-200 px-4 py-2.5 rounded-xl text-xs font-extrabold border border-blue-200 transition-colors">Export Doc</button>
-                            <button onclick="printQRCodes()" class="bg-slate-700 text-white hover:bg-slate-800 px-4 py-2.5 rounded-xl text-xs font-extrabold transition-colors">Print QR</button>
-                            <button onclick="clearStudents()" class="bg-rose-500 text-white hover:bg-rose-600 px-4 py-2.5 rounded-xl text-xs font-extrabold shadow-sm transition-colors">Hapus Semua</button>
+                        <h2 class="text-base md:text-xl font-black text-slate-800 uppercase tracking-tight">Database & Kartu QR</h2>
+                        <div class="flex flex-wrap gap-2 w-full lg:w-auto">
+                            <button onclick="exportQRToWord()" class="flex-1 lg:flex-none text-center bg-blue-100 text-blue-700 hover:bg-blue-200 px-4 py-2.5 rounded-xl text-xs font-extrabold border border-blue-200 transition-colors">Export Doc</button>
+                            <button onclick="printQRCodes()" class="flex-1 lg:flex-none text-center bg-slate-700 text-white hover:bg-slate-800 px-4 py-2.5 rounded-xl text-xs font-extrabold transition-colors">Print QR</button>
+                            <button onclick="clearStudents()" class="flex-1 lg:flex-none text-center bg-rose-500 text-white hover:bg-rose-600 px-4 py-2.5 rounded-xl text-xs font-extrabold shadow-sm transition-colors">Hapus Semua</button>
                         </div>
                     </div>
-                    <div id="print-area" class="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 lg:grid-cols-5 gap-4 md:gap-5 justify-items-center"></div>
+                    <div id="print-area" class="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 lg:grid-cols-5 gap-3 md:gap-5 justify-items-center"></div>
                 </div>
             </div>
 
             <!-- TAB 3: REKAP DATA -->
             <div id="view-history" class="hidden space-y-6 fade-in">
-                <div class="glass-card p-6 md:p-8">
+                <div class="glass-card p-4 md:p-8">
                     
                     <div class="flex flex-col xl:flex-row justify-between items-start xl:items-center mb-6 border-b border-slate-200/60 pb-5 gap-4">
                         <div>
-                            <h2 class="text-lg md:text-xl font-black text-slate-800 uppercase tracking-tight">Master Log Presensi</h2>
-                            <div class="flex items-center gap-2 mt-3 bg-slate-50/80 p-2 rounded-xl border border-slate-200 shadow-inner w-max">
-                                <label class="text-[11px] font-bold text-slate-500 px-2 uppercase tracking-wide">Sumber Data:</label>
-                                <select id="data-source-mode" onchange="changeDataSource()" class="form-input text-xs w-auto py-1.5 px-3 border-slate-300 bg-white">
+                            <h2 class="text-base md:text-xl font-black text-slate-800 uppercase tracking-tight">Master Log Presensi</h2>
+                            <div class="flex items-center gap-2 mt-3 bg-slate-50/80 p-2 rounded-xl border border-slate-200 shadow-inner w-max max-w-full overflow-hidden">
+                                <label class="text-[10px] md:text-[11px] font-bold text-slate-500 px-2 uppercase tracking-wide whitespace-nowrap">Sumber Data:</label>
+                                <select id="data-source-mode" onchange="changeDataSource()" class="form-input text-xs w-auto py-1.5 px-2 md:px-3 border-slate-300 bg-white">
                                     <option value="local">Mode Offline (Lokal)</option>
                                     <option value="realtime">Mode Realtime (Spreadsheet)</option>
                                 </select>
-                                <span id="data-source-status" class="text-[10px] font-bold px-2 py-1 rounded bg-slate-200 text-slate-600">Lokal</span>
+                                <span id="data-source-status" class="text-[9px] md:text-[10px] font-bold px-2 py-1 rounded bg-slate-200 text-slate-600 whitespace-nowrap">Lokal</span>
                             </div>
                         </div>
                         
@@ -446,36 +451,36 @@
                                 </select>
                             </div>
                             <div class="flex flex-wrap gap-2 w-full lg:w-auto justify-end mt-2 lg:mt-0">
-                                <button onclick="checkMissingHistory()" class="bg-gradient-to-r from-amber-400 to-orange-500 hover:scale-105 text-white px-4 py-2 rounded-xl text-xs font-black shadow-md transition-all">Cek Absen</button>
-                                <button onclick="sendBulkWA()" class="bg-gradient-to-r from-emerald-500 to-teal-500 hover:scale-105 text-white px-4 py-2 rounded-xl text-xs font-black shadow-md transition-all">Kirim WA</button>
-                                <button onclick="exportHistoryToDoc()" class="bg-blue-100 text-blue-700 hover:bg-blue-200 px-3 py-2 rounded-xl text-xs font-extrabold border border-blue-200 transition-colors">Doc</button>
-                                <button onclick="exportToCSV()" class="bg-emerald-100 text-emerald-700 hover:bg-emerald-200 px-3 py-2 rounded-xl text-xs font-extrabold border border-emerald-200 transition-colors">CSV</button>
-                                <button onclick="clearHistoryWithPin()" class="bg-rose-500 text-white hover:bg-rose-600 px-3 py-2 rounded-xl text-xs font-extrabold transition-colors">Hapus</button>
+                                <button onclick="checkMissingHistory()" class="flex-1 sm:flex-none text-center bg-gradient-to-r from-amber-400 to-orange-500 hover:scale-105 text-white px-3 md:px-4 py-2 rounded-xl text-xs font-black shadow-md transition-all">Cek Absen</button>
+                                <button onclick="sendBulkWA()" class="flex-1 sm:flex-none text-center bg-gradient-to-r from-emerald-500 to-teal-500 hover:scale-105 text-white px-3 md:px-4 py-2 rounded-xl text-xs font-black shadow-md transition-all">Kirim WA</button>
+                                <button onclick="exportHistoryToDoc()" class="flex-1 sm:flex-none text-center bg-blue-100 text-blue-700 hover:bg-blue-200 px-3 py-2 rounded-xl text-xs font-extrabold border border-blue-200 transition-colors">Doc</button>
+                                <button onclick="exportToCSV()" class="flex-1 sm:flex-none text-center bg-emerald-100 text-emerald-700 hover:bg-emerald-200 px-3 py-2 rounded-xl text-xs font-extrabold border border-emerald-200 transition-colors">CSV</button>
+                                <button onclick="clearHistoryWithPin()" class="flex-1 sm:flex-none text-center bg-rose-500 text-white hover:bg-rose-600 px-3 py-2 rounded-xl text-xs font-extrabold transition-colors">Hapus</button>
                             </div>
                         </div>
                     </div>
                     
                     <!-- Stats Dashboard -->
-                    <div class="grid grid-cols-2 md:grid-cols-4 gap-4 mb-6">
-                        <div class="bg-gradient-to-br from-blue-500 to-cyan-500 p-5 rounded-2xl text-white shadow-lg relative overflow-hidden">
-                            <div class="absolute -right-4 -top-4 opacity-20"><svg class="w-20 h-20" fill="currentColor" viewBox="0 0 20 20"><path fill-rule="evenodd" d="M10 18a8 8 0 100-16 8 8 0 000 16zm3.707-9.293a1 1 0 00-1.414-1.414L9 10.586 7.707 9.293a1 1 0 00-1.414 1.414l2 2a1 1 0 001.414 0l4-4z" clip-rule="evenodd"></path></svg></div>
-                            <div class="text-[11px] font-black uppercase tracking-widest mb-1 opacity-90">Hadir</div>
-                            <div id="count-hadir" class="text-3xl md:text-4xl font-black">0</div>
+                    <div class="grid grid-cols-2 md:grid-cols-4 gap-3 md:gap-4 mb-6">
+                        <div class="bg-gradient-to-br from-blue-500 to-cyan-500 p-4 md:p-5 rounded-2xl text-white shadow-lg relative overflow-hidden">
+                            <div class="absolute -right-4 -top-4 opacity-20"><svg class="w-16 h-16 md:w-20 md:h-20" fill="currentColor" viewBox="0 0 20 20"><path fill-rule="evenodd" d="M10 18a8 8 0 100-16 8 8 0 000 16zm3.707-9.293a1 1 0 00-1.414-1.414L9 10.586 7.707 9.293a1 1 0 00-1.414 1.414l2 2a1 1 0 001.414 0l4-4z" clip-rule="evenodd"></path></svg></div>
+                            <div class="text-[10px] md:text-[11px] font-black uppercase tracking-widest mb-1 opacity-90">Hadir</div>
+                            <div id="count-hadir" class="text-2xl sm:text-3xl md:text-4xl font-black">0</div>
                         </div>
-                        <div class="bg-gradient-to-br from-amber-400 to-orange-500 p-5 rounded-2xl text-white shadow-lg relative overflow-hidden">
-                            <div class="absolute -right-4 -top-4 opacity-20"><svg class="w-20 h-20" fill="currentColor" viewBox="0 0 20 20"><path fill-rule="evenodd" d="M10 18a8 8 0 100-16 8 8 0 000 16zM8.707 7.293a1 1 0 00-1.414 1.414L8.586 10l-1.293 1.293a1 1 0 101.414 1.414L10 11.414l1.293 1.293a1 1 0 001.414-1.414L11.414 10l1.293-1.293a1 1 0 00-1.414-1.414L10 8.586 8.707 7.293z" clip-rule="evenodd"></path></svg></div>
-                            <div class="text-[11px] font-black uppercase tracking-widest mb-1 opacity-90">Sakit</div>
-                            <div id="count-sakit" class="text-3xl md:text-4xl font-black">0</div>
+                        <div class="bg-gradient-to-br from-amber-400 to-orange-500 p-4 md:p-5 rounded-2xl text-white shadow-lg relative overflow-hidden">
+                            <div class="absolute -right-4 -top-4 opacity-20"><svg class="w-16 h-16 md:w-20 md:h-20" fill="currentColor" viewBox="0 0 20 20"><path fill-rule="evenodd" d="M10 18a8 8 0 100-16 8 8 0 000 16zM8.707 7.293a1 1 0 00-1.414 1.414L8.586 10l-1.293 1.293a1 1 0 101.414 1.414L10 11.414l1.293 1.293a1 1 0 001.414-1.414L11.414 10l1.293-1.293a1 1 0 00-1.414-1.414L10 8.586 8.707 7.293z" clip-rule="evenodd"></path></svg></div>
+                            <div class="text-[10px] md:text-[11px] font-black uppercase tracking-widest mb-1 opacity-90">Sakit</div>
+                            <div id="count-sakit" class="text-2xl sm:text-3xl md:text-4xl font-black">0</div>
                         </div>
-                        <div class="bg-gradient-to-br from-slate-400 to-slate-600 p-5 rounded-2xl text-white shadow-lg relative overflow-hidden">
-                            <div class="absolute -right-4 -top-4 opacity-20"><svg class="w-20 h-20" fill="currentColor" viewBox="0 0 20 20"><path fill-rule="evenodd" d="M18 10a8 8 0 11-16 0 8 8 0 0116 0zm-7-4a1 1 0 11-2 0 1 1 0 012 0zM9 9a1 1 0 000 2v3a1 1 0 001 1h1a1 1 0 100-2v-3a1 1 0 00-1-1H9z" clip-rule="evenodd"></path></svg></div>
-                            <div class="text-[11px] font-black uppercase tracking-widest mb-1 opacity-90">Izin</div>
-                            <div id="count-izin" class="text-3xl md:text-4xl font-black">0</div>
+                        <div class="bg-gradient-to-br from-slate-400 to-slate-600 p-4 md:p-5 rounded-2xl text-white shadow-lg relative overflow-hidden">
+                            <div class="absolute -right-4 -top-4 opacity-20"><svg class="w-16 h-16 md:w-20 md:h-20" fill="currentColor" viewBox="0 0 20 20"><path fill-rule="evenodd" d="M18 10a8 8 0 11-16 0 8 8 0 0116 0zm-7-4a1 1 0 11-2 0 1 1 0 012 0zM9 9a1 1 0 000 2v3a1 1 0 001 1h1a1 1 0 100-2v-3a1 1 0 00-1-1H9z" clip-rule="evenodd"></path></svg></div>
+                            <div class="text-[10px] md:text-[11px] font-black uppercase tracking-widest mb-1 opacity-90">Izin</div>
+                            <div id="count-izin" class="text-2xl sm:text-3xl md:text-4xl font-black">0</div>
                         </div>
-                        <div class="bg-gradient-to-br from-rose-500 to-pink-600 p-5 rounded-2xl text-white shadow-lg relative overflow-hidden">
-                            <div class="absolute -right-4 -top-4 opacity-20"><svg class="w-20 h-20" fill="currentColor" viewBox="0 0 20 20"><path fill-rule="evenodd" d="M10 18a8 8 0 100-16 8 8 0 000 16zM8.28 7.22a.75.75 0 00-1.06 1.06L8.94 10l-1.72 1.72a.75.75 0 101.06 1.06L10 11.06l1.72 1.72a.75.75 0 101.06-1.06L11.06 10l1.72-1.72a.75.75 0 00-1.06-1.06L10 8.94 8.28 7.22z" clip-rule="evenodd"></path></svg></div>
-                            <div class="text-[11px] font-black uppercase tracking-widest mb-1 opacity-90">Alpha</div>
-                            <div id="count-alpha" class="text-3xl md:text-4xl font-black">0</div>
+                        <div class="bg-gradient-to-br from-rose-500 to-pink-600 p-4 md:p-5 rounded-2xl text-white shadow-lg relative overflow-hidden">
+                            <div class="absolute -right-4 -top-4 opacity-20"><svg class="w-16 h-16 md:w-20 md:h-20" fill="currentColor" viewBox="0 0 20 20"><path fill-rule="evenodd" d="M10 18a8 8 0 100-16 8 8 0 000 16zM8.28 7.22a.75.75 0 00-1.06 1.06L8.94 10l-1.72 1.72a.75.75 0 101.06 1.06L10 11.06l1.72 1.72a.75.75 0 101.06-1.06L11.06 10l1.72-1.72a.75.75 0 00-1.06-1.06L10 8.94 8.28 7.22z" clip-rule="evenodd"></path></svg></div>
+                            <div class="text-[10px] md:text-[11px] font-black uppercase tracking-widest mb-1 opacity-90">Alpha</div>
+                            <div id="count-alpha" class="text-2xl sm:text-3xl md:text-4xl font-black">0</div>
                         </div>
                     </div>
 
@@ -509,11 +514,11 @@
 
             <!-- TAB 4: DAFTAR GURU -->
             <div id="view-teachers" class="hidden space-y-6 fade-in">
-                <div class="glass-card p-6 md:p-8">
+                <div class="glass-card p-4 md:p-8">
                     <div class="text-center mb-8">
                         <h2 class="text-xl md:text-3xl font-black text-transparent bg-clip-text bg-gradient-to-r from-blue-700 via-blue-500 to-slate-500 uppercase tracking-tight">Daftar Guru & Bidang Studi</h2>
-                        <div class="h-1 w-20 bg-blue-500 mx-auto rounded-full mt-3 mb-2"></div>
-                        <p class="text-xs font-bold text-slate-500">PARA PEJUANG MAS Miftahul Ulum Lenteng</p>
+                        <div class="h-1 w-16 md:w-20 bg-blue-500 mx-auto rounded-full mt-3 mb-2"></div>
+                        <p class="text-[10px] md:text-xs font-bold text-slate-500">Tenaga Pendidik MAS Miftahul Ulum Lenteng</p>
                     </div>
                     <div id="teachers-grid" class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-4 md:gap-5"></div>
                 </div>
@@ -525,13 +530,13 @@
     <!-- FOOTER -->
     <footer class="glass-header mt-8 py-6 px-4 no-print text-center">
         <div class="max-w-3xl mx-auto space-y-5">
-            <div class="px-6 py-5 bg-white/60 backdrop-blur-sm rounded-3xl border border-slate-200/60 shadow-sm relative overflow-hidden">
+            <div class="px-4 md:px-6 py-5 bg-white/60 backdrop-blur-sm rounded-3xl border border-slate-200/60 shadow-sm relative overflow-hidden">
                 <div class="absolute -left-4 -top-4 text-blue-100 opacity-50"><svg width="60" height="60" viewBox="0 0 24 24" fill="currentColor"><path d="M14.017 21v-7.391c0-5.714 4.017-8.609 3.25-11.609h-3.75c-.862 3.125-2.75 6.25-2.75 9.375v9.625h3.25zm-11 0v-7.391c0-5.714 4.017-8.609 3.25-11.609h-3.75c-.862 3.125-2.75 6.25-2.75 9.375v9.625h3.25z"/></svg></div>
-                <p id="teacher-quote" class="text-xs italic text-slate-700 font-semibold leading-relaxed min-h-[45px] relative z-10"></p>
-                <span class="block mt-3 text-[11px] font-black text-blue-700 uppercase tracking-widest relative z-10">— HAWANIF S.Ag., M.M.Pd —</span>
+                <p id="teacher-quote" class="text-[11px] md:text-xs italic text-slate-700 font-semibold leading-relaxed min-h-[45px] relative z-10"></p>
+                <span class="block mt-3 text-[10px] md:text-[11px] font-black text-blue-700 uppercase tracking-widest relative z-10">— HAWANIF S.Ag., M.M.Pd —</span>
             </div>
-            <div class="text-[11px] font-bold text-slate-500 tracking-wide">
-                &copy; 2026 Miftahul Ulum &middot; Dashboard Presensi Modern by ALFIN NUR HIDAYATULLAH
+            <div class="text-[10px] md:text-[11px] font-bold text-slate-500 tracking-wide">
+                &copy; 2026 Miftahul Ulum &middot; Dashboard Presensi Modern by OPERATOR MADRASAH
             </div>
         </div>
     </footer>
@@ -560,7 +565,7 @@
         ];
         
         const quotesGuru = [
-            "\"Semoga Langkah Kecil Penerapan Digitalisasi ini Tidak sampai disini saja.\"",
+            "\"Teknologi mempermudah langkah, namun kedisiplinan dan ketulusan hati bapak/ibu gurulah yang mencetak peradaban mulia.\"",
             "\"Di balik layar sistem yang canggih, terdapat doa dan dedikasi pengajar yang tak pernah lelah membimbing masa depan.\"",
             "\"Data tercatat dalam server, namun ilmu dan adab yang diajarkan akan terukir abadi di hati para siswa.\""
         ];
@@ -672,13 +677,13 @@
             const cloudStatus = document.getElementById('cloud-status');
             renderStudents(); renderHistory(); renderTeachers(); updateQueueUI();
             try {
-                if(cloudStatus) { cloudStatus.innerHTML = 'Memuat Data...'; cloudStatus.className = "text-xs font-extrabold px-4 py-1.5 rounded-full bg-blue-100 text-blue-700 border border-blue-200 text-center animate-pulse"; }
+                if(cloudStatus) { cloudStatus.innerHTML = 'Memuat Data...'; cloudStatus.className = "text-[10px] sm:text-xs font-extrabold px-3 py-1.5 rounded-full bg-blue-100 text-blue-700 border border-blue-200 text-center animate-pulse"; }
                 const respStudents = await fetch(scriptUrl + "?action=getStudents");
                 const dataStudents = await respStudents.json();
                 if(dataStudents && dataStudents.length > 0) { students = dataStudents; localStorage.setItem('db_students', JSON.stringify(students)); }
                 renderStudents();
                 renderHistory();
-                if(cloudStatus) { cloudStatus.innerHTML = 'Sinkronisasi Selesai'; cloudStatus.className = "text-xs font-extrabold px-4 py-1.5 rounded-full bg-emerald-100 text-emerald-700 border border-emerald-200 text-center"; }
+                if(cloudStatus) { cloudStatus.innerHTML = 'Sinkronisasi Selesai'; cloudStatus.className = "text-[10px] sm:text-xs font-extrabold px-3 py-1.5 rounded-full bg-emerald-100 text-emerald-700 border border-emerald-200 text-center"; }
                 processQueue();
                 
                 fetch(scriptUrl + "?action=getHistory").then(res => res.json()).then(dataHistory => {
@@ -692,7 +697,7 @@
                     }
                 }).catch(e => console.log("Background sync complete."));
             } catch (error) {
-                if(cloudStatus) { cloudStatus.innerHTML = 'Siap (Mode Offline)'; cloudStatus.className = "text-xs font-extrabold px-4 py-1.5 rounded-full bg-slate-200 text-slate-700 border border-slate-300 text-center"; }
+                if(cloudStatus) { cloudStatus.innerHTML = 'Siap (Mode Offline)'; cloudStatus.className = "text-[10px] sm:text-xs font-extrabold px-3 py-1.5 rounded-full bg-slate-200 text-slate-700 border border-slate-300 text-center"; }
             }
         }
 
@@ -701,24 +706,24 @@
             const statusEl = document.getElementById('data-source-status');
             
             if (currentDataSource === 'realtime') {
-                statusEl.className = "text-[10px] font-bold px-2 py-1 rounded bg-blue-100 text-blue-700 animate-pulse";
+                statusEl.className = "text-[9px] md:text-[10px] font-bold px-2 py-1 rounded bg-blue-100 text-blue-700 animate-pulse whitespace-nowrap";
                 statusEl.innerText = "Memuat...";
                 try {
                     const res = await fetch(scriptUrl + "?action=getHistory");
                     const data = await res.json();
                     if (data) {
                         realtimeHistory = data;
-                        statusEl.className = "text-[10px] font-bold px-2 py-1 rounded bg-emerald-100 text-emerald-700";
+                        statusEl.className = "text-[9px] md:text-[10px] font-bold px-2 py-1 rounded bg-emerald-100 text-emerald-700 whitespace-nowrap";
                         statusEl.innerText = "Sinkron";
                     }
                 } catch (e) {
-                    statusEl.className = "text-[10px] font-bold px-2 py-1 rounded bg-rose-100 text-rose-700";
+                    statusEl.className = "text-[9px] md:text-[10px] font-bold px-2 py-1 rounded bg-rose-100 text-rose-700 whitespace-nowrap";
                     statusEl.innerText = "Gagal memuat";
                     document.getElementById('data-source-mode').value = 'local';
                     currentDataSource = 'local';
                 }
             } else {
-                statusEl.className = "text-[10px] font-bold px-2 py-1 rounded bg-slate-200 text-slate-600";
+                statusEl.className = "text-[9px] md:text-[10px] font-bold px-2 py-1 rounded bg-slate-200 text-slate-600 whitespace-nowrap";
                 statusEl.innerText = "Lokal / Offline";
             }
             renderHistory();
@@ -799,7 +804,7 @@
             const cloudStatus = document.getElementById('cloud-status');
             
             if (currentSessionMode === 'realtime') {
-                if(cloudStatus) { cloudStatus.innerHTML = 'Mengirim...'; cloudStatus.className = "text-xs font-extrabold px-4 py-1.5 rounded-full bg-blue-100 text-blue-700 border border-blue-200 animate-pulse text-center"; }
+                if(cloudStatus) { cloudStatus.innerHTML = 'Mengirim...'; cloudStatus.className = "text-[10px] sm:text-xs font-extrabold px-3 py-1.5 rounded-full bg-blue-100 text-blue-700 border border-blue-200 animate-pulse text-center"; }
                 
                 try {
                     await fetch(scriptUrl, { 
@@ -808,16 +813,16 @@
                         headers: { 'Content-Type': 'text/plain;charset=utf-8' }, 
                         body: JSON.stringify(payload) 
                     });
-                    if(cloudStatus) { cloudStatus.innerHTML = 'Terkirim!'; cloudStatus.className = "text-xs font-extrabold px-4 py-1.5 rounded-full bg-emerald-100 text-emerald-700 border border-emerald-200 text-center"; }
+                    if(cloudStatus) { cloudStatus.innerHTML = 'Terkirim!'; cloudStatus.className = "text-[10px] sm:text-xs font-extrabold px-3 py-1.5 rounded-full bg-emerald-100 text-emerald-700 border border-emerald-200 text-center"; }
                     setTimeout(() => { if(cloudStatus && currentSessionMode === 'realtime' && isSessionActive) cloudStatus.innerHTML = 'Sesi Aktif'; }, 2000);
                 } catch (e) {
-                    if(cloudStatus) { cloudStatus.innerHTML = 'Masuk Antrean'; cloudStatus.className = "text-xs font-extrabold px-4 py-1.5 rounded-full bg-amber-100 text-amber-700 border border-amber-200 text-center"; }
+                    if(cloudStatus) { cloudStatus.innerHTML = 'Masuk Antrean'; cloudStatus.className = "text-[10px] sm:text-xs font-extrabold px-3 py-1.5 rounded-full bg-amber-100 text-amber-700 border border-amber-200 text-center"; }
                     syncQueue.push({ id: Date.now(), payload: payload });
                     localStorage.setItem('sync_queue', JSON.stringify(syncQueue));
                     processQueue();
                 }
             } else {
-                if(cloudStatus) { cloudStatus.innerHTML = 'Antrean Offline'; cloudStatus.className = "text-xs font-extrabold px-4 py-1.5 rounded-full bg-slate-200 text-slate-700 border border-slate-300 text-center"; }
+                if(cloudStatus) { cloudStatus.innerHTML = 'Antrean Offline'; cloudStatus.className = "text-[10px] sm:text-xs font-extrabold px-3 py-1.5 rounded-full bg-slate-200 text-slate-700 border border-slate-300 text-center"; }
                 syncQueue.push({ id: Date.now(), payload: payload });
                 localStorage.setItem('sync_queue', JSON.stringify(syncQueue));
                 processQueue();
@@ -833,8 +838,8 @@
         function switchTab(tabId) {
             document.querySelectorAll('[id^="view-"]').forEach(el => el.classList.add('hidden'));
             
-            const inactiveStyle = "px-5 py-2.5 text-xs font-bold text-slate-600 hover:text-blue-600 hover:bg-white/60 rounded-xl transition-all";
-            const activeStyle = "px-5 py-2.5 text-xs font-extrabold text-white bg-gradient-to-r from-blue-600 to-slate-500 rounded-xl shadow-md transition-all";
+            const inactiveStyle = "px-4 sm:px-5 py-2.5 text-xs font-bold text-slate-600 hover:text-blue-600 hover:bg-white/60 rounded-xl transition-all";
+            const activeStyle = "px-4 sm:px-5 py-2.5 text-xs font-extrabold text-white bg-gradient-to-r from-blue-600 to-slate-500 rounded-xl shadow-md transition-all";
             
             document.querySelectorAll('[id^="tab-"]').forEach(el => {
                 el.className = inactiveStyle;
@@ -871,7 +876,7 @@
             document.getElementById('session-badge').innerText = `${cls} | ${subject} (Jam ${jam})`;
             
             const cloudStatus = document.getElementById('cloud-status');
-            if(cloudStatus) { cloudStatus.innerHTML = `Sesi Aktif (${modeText})`; cloudStatus.className = currentSessionMode === 'realtime' ? "text-xs font-extrabold px-4 py-1.5 rounded-full bg-blue-100 text-blue-700 border border-blue-200 text-center" : "text-xs font-extrabold px-4 py-1.5 rounded-full bg-slate-200 text-slate-700 border border-slate-300 text-center"; }
+            if(cloudStatus) { cloudStatus.innerHTML = `Sesi Aktif (${modeText})`; cloudStatus.className = currentSessionMode === 'realtime' ? "text-[10px] sm:text-xs font-extrabold px-3 py-1.5 rounded-full bg-blue-100 text-blue-700 border border-blue-200 text-center" : "text-[10px] sm:text-xs font-extrabold px-3 py-1.5 rounded-full bg-slate-200 text-slate-700 border border-slate-300 text-center"; }
             
             startDefaultCamera();
         }
@@ -949,7 +954,7 @@
             document.getElementById('scanner-section').classList.add('hidden');
             if (html5QrCode) { try { html5QrCode.stop().then(() => { html5QrCode.clear(); document.getElementById('reader').innerHTML = ""; }); } catch (e) {} }
             const cloudStatus = document.getElementById('cloud-status');
-            if(cloudStatus) { cloudStatus.innerHTML = 'Sesi Selesai'; cloudStatus.className = "text-xs font-extrabold px-4 py-1.5 rounded-full bg-slate-100 text-slate-500 border border-slate-200 text-center"; }
+            if(cloudStatus) { cloudStatus.innerHTML = 'Sesi Selesai'; cloudStatus.className = "text-[10px] sm:text-xs font-extrabold px-3 py-1.5 rounded-full bg-slate-100 text-slate-500 border border-slate-200 text-center"; }
         }
 
         function onScanSuccess(decodedText) {
