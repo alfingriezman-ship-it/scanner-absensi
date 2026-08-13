@@ -76,7 +76,7 @@
             @page { size: A4; margin: 1cm; }
             body * { visibility: hidden; }
             #print-area, #print-area * { visibility: visible; }
-            .no-print, nav, footer, #view-scan, #view-history, #view-teachers, #wa-floating, #initial-warning-modal, #edit-student-modal, #missing-students-modal { display: none !important; }
+            .no-print, nav, footer, #view-scan, #view-history, #view-teachers, #wa-floating, #initial-warning-modal, #edit-student-modal, #missing-students-modal, #welcome-modal { display: none !important; }
             body { background: white !important; margin: 0 !important; padding: 0 !important; }
             #print-area { position: relative !important; width: 100% !important; display: grid !important; grid-template-columns: repeat(4, 1fr) !important; gap: 12px !important; }
             .print-exact { page-break-inside: avoid !important; margin-bottom: 10px !important; border: 1px solid #000 !important; background: white !important; }
@@ -84,10 +84,66 @@
         
         .fade-in { animation: fadeIn 0.4s cubic-bezier(0.4, 0, 0.2, 1); }
         @keyframes fadeIn { from { opacity: 0; transform: translateY(15px); } to { opacity: 1; transform: translateY(0); } }
+
+        /* ANIMASI POPUP WELCOME KEREN */
+        @keyframes popupAnim {
+            0% {
+                opacity: 0;
+                transform: scale(0.6) translateY(40px);
+            }
+            70% {
+                transform: scale(1.04) translateY(-8px);
+            }
+            100% {
+                opacity: 1;
+                transform: scale(1) translateY(0);
+            }
+        }
+        .animate-popup {
+            animation: popupAnim 0.65s cubic-bezier(0.16, 1, 0.3, 1) forwards;
+        }
+        .welcome-exit {
+            opacity: 0 !important;
+            transform: scale(0.9) translateY(-20px) !important;
+            pointer-events: none;
+            transition: all 0.4s cubic-bezier(0.4, 0, 0.2, 1);
+        }
     </style>
 </head>
 <body class="min-h-screen flex flex-col justify-between bg-theme selection:bg-blue-300 selection:text-blue-900">
     
+    <!-- POPUP WELCOME ANIMATION (SAAT AWAL MEMBUKA WEBSITE) -->
+    <div id="welcome-modal" class="fixed inset-0 z-[150] flex items-center justify-center bg-slate-950/80 backdrop-blur-xl p-4 no-print">
+        <div class="bg-gradient-to-br from-slate-900 via-blue-950 to-slate-900 border border-blue-500/30 rounded-3xl p-6 sm:p-10 max-w-lg w-full text-center shadow-[0_0_60px_rgba(59,130,246,0.35)] animate-popup relative overflow-hidden">
+            <!-- Glow Background Effect -->
+            <div class="absolute -top-12 -right-12 w-40 h-40 bg-blue-500/20 rounded-full blur-3xl pointer-events-none"></div>
+            <div class="absolute -bottom-12 -left-12 w-40 h-40 bg-indigo-500/20 rounded-full blur-3xl pointer-events-none"></div>
+            
+            <!-- Icon Animated Badge -->
+            <div class="mx-auto w-16 h-16 sm:w-20 sm:h-20 bg-gradient-to-tr from-blue-600 via-indigo-600 to-sky-400 rounded-2xl flex items-center justify-center shadow-lg shadow-blue-500/40 mb-6 animate-bounce">
+                <svg xmlns="http://www.w3.org/2000/svg" class="h-8 w-8 sm:h-10 sm:w-10 text-white" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2">
+                    <path stroke-linecap="round" stroke-linejoin="round" d="M12 11c0 3.517-1.009 6.799-2.753 9.571m-3.44-2.04l.054-.09A13.916 13.916 0 008 11a4 4 0 118 0c0 1.017-.07 2.019-.203 3m-2.118 6.844A21.88 21.88 0 0015.171 17m3.839 1.132c.645-2.266.99-4.659.99-7.132A8 8 0 008 4.07M3 15.364c.64-1.319 1-2.8 1-4.364 0-1.457.39-2.823 1.07-4" />
+                </svg>
+            </div>
+            
+            <!-- Title Pop-up -->
+            <h1 class="text-xl sm:text-2xl md:text-3xl font-black text-white uppercase tracking-tight leading-snug mb-3">
+                Selamat Datang di Web Presensi <br>
+                <span class="bg-clip-text text-transparent bg-gradient-to-r from-blue-400 via-sky-300 to-indigo-300">MA MIFTAHUL ULUM</span>
+            </h1>
+            
+            <p class="text-xs sm:text-sm text-slate-300 font-semibold mb-8 tracking-wide">
+                Sistem Informasi Presensi Digital & Realtime KBM
+            </p>
+            
+            <!-- Tombol Lanjut -->
+            <button onclick="closeWelcomeModal()" class="w-full bg-gradient-to-r from-blue-600 via-indigo-600 to-blue-500 hover:from-blue-500 hover:to-indigo-500 text-white font-extrabold py-3.5 px-6 rounded-2xl shadow-xl shadow-blue-600/30 hover:scale-[1.02] active:scale-95 transition-all duration-300 text-sm uppercase tracking-wider flex items-center justify-center gap-2">
+                <span>Masuk Ke Aplikasi</span>
+                <svg xmlns="http://www.w3.org/2000/svg" class="h-4 w-4" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2.5"><path stroke-linecap="round" stroke-linejoin="round" d="M14 5l7 7m0 0l-7 7m7-7H3" /></svg>
+            </button>
+        </div>
+    </div>
+
     <!-- POPUP PERINGATAN AWAL -->
     <div id="initial-warning-modal" class="fixed inset-0 z-[100] flex items-center justify-center bg-slate-900/70 backdrop-blur-md p-4 fade-in no-print">
         <div class="bg-white rounded-3xl shadow-2xl max-w-md w-full p-8 border-t-8 border-rose-500 relative">
@@ -206,7 +262,7 @@
                 </div>
 
                 <div class="flex flex-col lg:flex-row justify-between items-center py-4 gap-4 lg:gap-6">
-                    <!-- LOGO MADRASAH & KEMENAG (REVISI: RAPI, SEJAJAR, DENGAN BACKGROUND, MOBILE FRIENDLY) -->
+                    <!-- LOGO MADRASAH & KEMENAG -->
                     <div class="flex flex-col sm:flex-row items-center gap-3 sm:gap-4 w-full lg:w-auto justify-center lg:justify-start">
                         
                         <!-- Wrapper Logo -->
@@ -542,6 +598,17 @@
     </footer>
 
     <script>
+        // FUNGSI TUPUP WELCOME MODAL
+        function closeWelcomeModal() {
+            const welcomeModal = document.getElementById('welcome-modal');
+            if (welcomeModal) {
+                welcomeModal.classList.add('welcome-exit');
+                setTimeout(() => {
+                    welcomeModal.classList.add('hidden');
+                }, 400);
+            }
+        }
+
         // DATA GURU
         const teacherList = [
             { no: 1, name: "Alimil Khoir, S.Pd", subject: "PJOK" }, { no: 2, name: "Hari Yanto, S.EI, M.EI", subject: "Al Qur'an Hadits" },
@@ -786,7 +853,6 @@
             else { badge.classList.add('hidden'); }
         }
 
-        // FUNGSI SINKRONISASI DIPERBAIKI (MENGGUNAKAN text/plain UNTUK HINDARI CORS LOCKOUT DI GAS)
         async function kirimKeGoogleSheets(dataLog) {
             const payload = { 
                 action: 'addHistory', 
