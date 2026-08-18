@@ -5,12 +5,10 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
     <title>Sistem Presensi QR Code - MAS MIFTAHUL ULUM LENTENG</title>
     
-    <!-- Scripts -->
     <script src="https://cdn.tailwindcss.com"></script>
     <script src="https://unpkg.com/html5-qrcode" type="text/javascript"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/qrcodejs/1.0.0/qrcode.min.js"></script>
     
-    <!-- Fonts -->
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;500;600;700;800;900&display=swap" rel="stylesheet">
@@ -87,17 +85,9 @@
 
         /* ANIMASI POPUP WELCOME KEREN */
         @keyframes popupAnim {
-            0% {
-                opacity: 0;
-                transform: scale(0.6) translateY(40px);
-            }
-            70% {
-                transform: scale(1.04) translateY(-8px);
-            }
-            100% {
-                opacity: 1;
-                transform: scale(1) translateY(0);
-            }
+            0% { opacity: 0; transform: scale(0.6) translateY(40px); }
+            70% { transform: scale(1.04) translateY(-8px); }
+            100% { opacity: 1; transform: scale(1) translateY(0); }
         }
         .animate-popup {
             animation: popupAnim 0.65s cubic-bezier(0.16, 1, 0.3, 1) forwards;
@@ -112,62 +102,41 @@
 </head>
 <body class="min-h-screen flex flex-col justify-between bg-theme selection:bg-blue-300 selection:text-blue-900">
     
-    <!-- POPUP KEMERDEKAAN RI (Tampil Paling Awal) -->
     <div id="kemerdekaan-modal" class="fixed inset-0 z-[200] flex items-center justify-center bg-slate-950/80 backdrop-blur-xl p-4 no-print">
         <div class="bg-white border-4 border-red-600 rounded-3xl p-5 sm:p-8 max-w-lg w-full text-center shadow-[0_0_60px_rgba(220,38,38,0.4)] animate-popup relative overflow-hidden">
-            
-            <!-- Tombol Close (X) -->
             <button onclick="closeKemerdekaanModal()" class="absolute top-3 right-3 bg-red-100 text-red-600 hover:bg-red-600 hover:text-white rounded-full p-2 transition-colors z-10">
                 <svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2">
                     <path stroke-linecap="round" stroke-linejoin="round" d="M6 18L18 6M6 6l12 12" />
                 </svg>
             </button>
-
-            <!-- Judul -->
-            <h1 class="text-2xl sm:text-3xl font-black text-red-600 uppercase tracking-tight leading-snug mb-2">
-                DIRGAHAYU REPUBLIK INDONESIA
-            </h1>
-            <p class="text-sm text-slate-500 font-semibold mb-5 tracking-wide">
-                Merdeka Belajar, Merdeka Mengajar!
-            </p>
-            
-            <!-- GAMBAR DARI GOOGLE DRIVE (Telah Disesuaikan Link-nya) -->
+            <h1 class="text-2xl sm:text-3xl font-black text-red-600 uppercase tracking-tight leading-snug mb-2">DIRGAHAYU REPUBLIK INDONESIA</h1>
+            <p class="text-sm text-slate-500 font-semibold mb-5 tracking-wide">Merdeka Belajar, Merdeka Mengajar!</p>
             <div class="rounded-xl overflow-hidden shadow-lg border border-red-200 mb-6">
                 <img src="https://drive.google.com/thumbnail?id=1z7gzsy-QYrLTXCE5LFTQdhZQ7EyrSYgX&sz=w1000" alt="HUT RI" class="w-full h-auto object-cover hover:scale-105 transition-transform duration-500">
             </div>
-            
-            <!-- Tombol Lanjut -->
             <button onclick="closeKemerdekaanModal()" class="w-full bg-gradient-to-r from-red-600 via-red-500 to-red-600 hover:from-red-500 hover:to-red-400 text-white font-extrabold py-3.5 px-6 rounded-2xl shadow-xl shadow-red-600/30 hover:scale-[1.02] active:scale-95 transition-all duration-300 text-sm uppercase tracking-wider">
                 Lanjutkan ke Aplikasi Presensi
             </button>
         </div>
     </div>
 
-    <!-- POPUP WELCOME ANIMATION (Tampil setelah modal kemerdekaan) -->
     <div id="welcome-modal" class="fixed inset-0 z-[150] flex items-center justify-center bg-slate-950/80 backdrop-blur-xl p-4 no-print hidden">
         <div class="bg-gradient-to-br from-slate-900 via-blue-950 to-slate-900 border border-blue-500/30 rounded-3xl p-6 sm:p-10 max-w-lg w-full text-center shadow-[0_0_60px_rgba(59,130,246,0.35)] animate-popup relative overflow-hidden">
-            <!-- Glow Background Effect -->
             <div class="absolute -top-12 -right-12 w-40 h-40 bg-blue-500/20 rounded-full blur-3xl pointer-events-none"></div>
             <div class="absolute -bottom-12 -left-12 w-40 h-40 bg-indigo-500/20 rounded-full blur-3xl pointer-events-none"></div>
             
-            <!-- Icon Animated Badge -->
             <div class="mx-auto w-16 h-16 sm:w-20 sm:h-20 bg-gradient-to-tr from-blue-600 via-indigo-600 to-sky-400 rounded-2xl flex items-center justify-center shadow-lg shadow-blue-500/40 mb-6 animate-bounce">
                 <svg xmlns="http://www.w3.org/2000/svg" class="h-8 w-8 sm:h-10 sm:w-10 text-white" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2">
                     <path stroke-linecap="round" stroke-linejoin="round" d="M12 11c0 3.517-1.009 6.799-2.753 9.571m-3.44-2.04l.054-.09A13.916 13.916 0 008 11a4 4 0 118 0c0 1.017-.07 2.019-.203 3m-2.118 6.844A21.88 21.88 0 0015.171 17m3.839 1.132c.645-2.266.99-4.659.99-7.132A8 8 0 008 4.07M3 15.364c.64-1.319 1-2.8 1-4.364 0-1.457.39-2.823 1.07-4" />
                 </svg>
             </div>
             
-            <!-- Title Pop-up -->
             <h1 class="text-xl sm:text-2xl md:text-3xl font-black text-white uppercase tracking-tight leading-snug mb-3">
                 Selamat Datang di Web Presensi <br>
                 <span class="bg-clip-text text-transparent bg-gradient-to-r from-blue-400 via-sky-300 to-indigo-300">MA MIFTAHUL ULUM</span>
             </h1>
+            <p class="text-xs sm:text-sm text-slate-300 font-semibold mb-8 tracking-wide">Sistem Informasi Presensi Digital & Realtime KBM</p>
             
-            <p class="text-xs sm:text-sm text-slate-300 font-semibold mb-8 tracking-wide">
-                Sistem Informasi Presensi Digital & Realtime KBM
-            </p>
-            
-            <!-- Tombol Lanjut -->
             <button onclick="closeWelcomeModal()" class="w-full bg-gradient-to-r from-blue-600 via-indigo-600 to-blue-500 hover:from-blue-500 hover:to-indigo-500 text-white font-extrabold py-3.5 px-6 rounded-2xl shadow-xl shadow-blue-600/30 hover:scale-[1.02] active:scale-95 transition-all duration-300 text-sm uppercase tracking-wider flex items-center justify-center gap-2">
                 <span>Masuk Ke Aplikasi</span>
                 <svg xmlns="http://www.w3.org/2000/svg" class="h-4 w-4" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2.5"><path stroke-linecap="round" stroke-linejoin="round" d="M14 5l7 7m0 0l-7 7m7-7H3" /></svg>
@@ -175,14 +144,11 @@
         </div>
     </div>
 
-    <!-- POPUP PERINGATAN AWAL -->
     <div id="initial-warning-modal" class="fixed inset-0 z-[100] flex items-center justify-center bg-slate-900/70 backdrop-blur-md p-4 fade-in no-print hidden">
         <div class="bg-white rounded-3xl shadow-2xl max-w-md w-full p-8 border-t-8 border-rose-500 relative">
             <div class="flex items-center gap-4 mb-4">
                 <div class="bg-rose-100 p-3 rounded-2xl text-rose-600 shadow-inner">
-                    <svg xmlns="http://www.w3.org/2000/svg" class="h-8 w-8" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2">
-                        <path stroke-linecap="round" stroke-linejoin="round" d="M12 9v2m0 4h.01m-6.938 4h13.856c1.54 0 2.502-1.667 1.732-3L13.732 4c-.77-1.333-2.694-1.333-3.464 0L3.34 16c-.77 1.333.192 3 1.732 3z" />
-                    </svg>
+                    <svg xmlns="http://www.w3.org/2000/svg" class="h-8 w-8" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2"><path stroke-linecap="round" stroke-linejoin="round" d="M12 9v2m0 4h.01m-6.938 4h13.856c1.54 0 2.502-1.667 1.732-3L13.732 4c-.77-1.333-2.694-1.333-3.464 0L3.34 16c-.77 1.333.192 3 1.732 3z" /></svg>
                 </div>
                 <h2 class="text-xl md:text-2xl font-black text-slate-800 uppercase tracking-tight">Peringatan!</h2>
             </div>
@@ -195,7 +161,6 @@
         </div>
     </div>
 
-    <!-- MODAL EDIT SISWA -->
     <div id="edit-student-modal" class="fixed inset-0 z-[110] hidden items-center justify-center bg-slate-900/70 backdrop-blur-md p-4 fade-in no-print">
         <div class="bg-white rounded-3xl shadow-2xl max-w-md w-full p-6 border-t-8 border-blue-500 relative">
             <div class="flex items-center justify-between mb-4 border-b pb-3">
@@ -236,7 +201,6 @@
         </div>
     </div>
 
-    <!-- MODAL SISWA BELUM PRESENSI -->
     <div id="missing-students-modal" class="fixed inset-0 z-[110] hidden items-center justify-center bg-slate-900/70 backdrop-blur-md p-4 fade-in no-print">
         <div class="bg-white rounded-3xl shadow-2xl max-w-2xl w-full p-6 border-t-8 border-amber-400 relative flex flex-col max-h-[90vh]">
             <div class="flex items-center justify-between mb-4 border-b pb-3">
@@ -254,7 +218,7 @@
                         <tr id="missing-modal-thead-tr">
                             <th class="px-4 py-3">NIS</th>
                             <th class="px-4 py-3">Nama Lengkap</th>
-                            <th class="px-4 py-3 text-center">Aksi</th>
+                            <th class="px-4 py-3 text-center">Status</th>
                         </tr>
                     </thead>
                     <tbody id="missing-students-body" class="divide-y divide-slate-100 text-xs font-semibold">
@@ -267,20 +231,16 @@
         </div>
     </div>
     
-    <!-- Top Colorful Progress Line -->
     <div class="h-1.5 bg-gradient-to-r from-blue-400 via-emerald-400 via-amber-400 to-pink-500 w-full fixed top-0 z-[60] no-print"></div>
 
-    <!-- FLOATING WA BUTTON -->
     <a id="wa-floating" href="https://wa.me/6281515561069" target="_blank" class="fixed bottom-6 right-6 z-[99] bg-gradient-to-r from-emerald-400 to-teal-500 text-white px-5 py-3.5 rounded-full flex items-center gap-2 text-sm font-black shadow-[0_10px_25px_rgba(16,185,129,0.4)] border-2 border-white/50 hover:scale-105 hover:shadow-[0_15px_35px_rgba(16,185,129,0.6)] transition-all">
         <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><path d="M22 16.92v3a2 2 0 0 1-2.18 2 19.79 19.79 0 0 1-8.63-3.07 19.5 19.5 0 0 1-6-6 19.79 19.79 0 0 1-3.07-8.67A2 2 0 0 1 4.11 2h3a2 2 0 0 1 2 1.72 12.84 12.84 0 0 0 .7 2.81 2 2 0 0 1-.45 2.11L8.09 9.91a16 16 0 0 0 6 6l1.27-1.27a2 2 0 0 1 2.11-.45 12.84 12.84 0 0 0 2.81.7A2 2 0 0 1 22 16.92z"></path></svg>
         <span class="hidden md:inline tracking-wide">help</span>
     </a>
 
     <div class="flex-grow flex flex-col pt-4">
-        <!-- HEADER -->
         <header class="glass-header sticky top-4 z-50 mx-4 sm:mx-8 rounded-3xl mb-6">
             <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-                <!-- Status Bar -->
                 <div class="flex flex-wrap justify-between items-center gap-2 py-2 text-[10px] sm:text-xs font-bold text-slate-500 border-b border-slate-200/60">
                     <div class="flex items-center gap-2">
                         <span id="network-indicator" class="w-2.5 h-2.5 rounded-full bg-emerald-500 animate-pulse shadow-[0_0_8px_rgba(16,185,129,0.8)]"></span>
@@ -293,29 +253,21 @@
                 </div>
 
                 <div class="flex flex-col lg:flex-row justify-between items-center py-4 gap-4 lg:gap-6">
-                    <!-- LOGO MADRASAH & KEMENAG -->
                     <div class="flex flex-col sm:flex-row items-center gap-3 sm:gap-4 w-full lg:w-auto justify-center lg:justify-start">
-                        
-                        <!-- Wrapper Logo -->
                         <div class="flex items-center gap-2 sm:gap-3 shrink-0">
-                            <!-- Kemenag Logo -->
                             <div class="flex items-center justify-center">
                                 <img src="https://drive.google.com/thumbnail?id=19t4Wcx4shRklkMecTbxTiua1_7tUgiil&sz=w500" alt="Logo Kemenag" class="w-12 h-12 sm:w-14 sm:h-14 md:w-16 md:h-16 object-contain filter drop-shadow-md hover:scale-105 transition-transform">
                             </div>
-                            
-                            <!-- Madrasah Logo dengan Background Putih Glassmorphism -->
                             <div class="flex items-center justify-center bg-white/90 backdrop-blur-sm p-1.5 sm:p-2 rounded-xl shadow-sm border border-slate-200/60">
                                 <img src="https://drive.google.com/thumbnail?id=1xj5AeEbWisIpBlXpwJ_tbW7wMM8NsjjQ&sz=w500" alt="Logo Madrasah" class="w-10 h-10 sm:w-12 sm:h-12 md:w-14 md:h-14 object-contain filter drop-shadow-md hover:scale-105 transition-transform">
                             </div>
                         </div>
-                        
                         <div class="text-center sm:text-left flex-1 mt-2 sm:mt-0">
                             <h1 id="header-title" class="font-black text-sm sm:text-base md:text-xl lg:text-2xl bg-clip-text text-transparent bg-gradient-to-r from-blue-700 via-blue-500 to-slate-500 tracking-tight leading-tight min-h-[24px] md:min-h-[30px]"></h1>
                             <p id="header-subtitle" class="text-[9px] sm:text-[10px] md:text-xs text-slate-500 font-bold min-h-[16px] md:min-h-[18px] tracking-wide mt-1"></p>
                         </div>
                     </div>
                     
-                    <!-- NAVIGASI MODERN -->
                     <nav class="flex overflow-x-auto hide-scrollbar w-full lg:w-auto justify-start lg:justify-center gap-2 bg-slate-100/50 p-1.5 rounded-2xl border border-slate-200/50 shadow-inner whitespace-nowrap">
                         <button onclick="switchTab('scan')" id="tab-scan" class="px-4 sm:px-5 py-2.5 text-xs font-extrabold text-white bg-gradient-to-r from-blue-600 to-slate-500 rounded-xl shadow-md transition-all">Scanner KBM</button>
                         <button onclick="switchTab('students')" id="tab-students" class="px-4 sm:px-5 py-2.5 text-xs font-bold text-slate-600 hover:text-blue-600 hover:bg-white/60 rounded-xl transition-all">Data Siswa</button>
@@ -328,7 +280,6 @@
 
         <main class="w-full max-w-7xl mx-auto px-4 sm:px-8 pb-8 flex-grow">
 
-            <!-- TAB 1: SCANNER -->
             <div id="view-scan" class="space-y-6 fade-in">
                 <div id="browser-warning" class="hidden bg-rose-500/90 backdrop-blur-sm text-white p-4 rounded-2xl font-bold text-sm shadow-lg border border-rose-400">
                     ⚠️ Akses tidak optimal: Buka via Browser Utama (Chrome/Safari) untuk fitur Kamera yang lancar.
@@ -396,7 +347,6 @@
                 </div>
 
                 <div id="scanner-section" class="hidden grid grid-cols-1 lg:grid-cols-12 gap-6 relative">
-                    <!-- Scanner Area -->
                     <div class="lg:col-span-4 glass-card p-4 md:p-6 flex flex-col">
                         <div class="flex flex-col gap-3 mb-4 border-b border-slate-200/60 pb-3">
                             <h3 class="text-sm md:text-base font-extrabold text-slate-800 uppercase flex items-center gap-2">
@@ -415,7 +365,6 @@
                         </div>
                     </div>
 
-                    <!-- Log Area -->
                     <div class="lg:col-span-8 glass-card p-4 md:p-6 flex flex-col">
                         <div class="flex flex-col sm:flex-row justify-between items-start sm:items-center border-b border-slate-200/60 pb-4 mb-4 gap-3">
                             <h3 class="text-sm md:text-base font-extrabold text-slate-800 uppercase flex items-center gap-2">
@@ -462,7 +411,6 @@
                 </div>
             </div>
 
-            <!-- TAB 2: DATA SISWA -->
             <div id="view-students" class="hidden space-y-6 fade-in">
                 <div class="glass-card p-4 md:p-8">
                     <h2 class="text-base md:text-xl font-black text-slate-800 uppercase mb-5 pb-3 border-b border-slate-200/60 tracking-tight">Registrasi Data Siswa</h2>
@@ -483,7 +431,6 @@
                     <div class="flex flex-col lg:flex-row justify-between items-start lg:items-center mb-6 pb-4 border-b border-slate-200/60 gap-4">
                         <h2 class="text-base md:text-xl font-black text-slate-800 uppercase tracking-tight">Database & Kartu QR</h2>
                         <div class="flex flex-wrap gap-2 w-full lg:w-auto">
-                            <button onclick="exportQRToWord()" class="flex-1 lg:flex-none text-center bg-blue-100 text-blue-700 hover:bg-blue-200 px-4 py-2.5 rounded-xl text-xs font-extrabold border border-blue-200 transition-colors">Export Doc</button>
                             <button onclick="printQRCodes()" class="flex-1 lg:flex-none text-center bg-slate-700 text-white hover:bg-slate-800 px-4 py-2.5 rounded-xl text-xs font-extrabold transition-colors">Print QR</button>
                             <button onclick="clearStudents()" class="flex-1 lg:flex-none text-center bg-rose-500 text-white hover:bg-rose-600 px-4 py-2.5 rounded-xl text-xs font-extrabold shadow-sm transition-colors">Hapus Semua</button>
                         </div>
@@ -492,7 +439,6 @@
                 </div>
             </div>
 
-            <!-- TAB 3: REKAP DATA -->
             <div id="view-history" class="hidden space-y-6 fade-in">
                 <div class="glass-card p-4 md:p-8">
                     
@@ -539,15 +485,12 @@
                             </div>
                             <div class="flex flex-wrap gap-2 w-full lg:w-auto justify-end mt-2 lg:mt-0">
                                 <button onclick="checkMissingHistory()" class="flex-1 sm:flex-none text-center bg-gradient-to-r from-amber-400 to-orange-500 hover:scale-105 text-white px-3 md:px-4 py-2 rounded-xl text-xs font-black shadow-md transition-all">Cek Absen</button>
-                                <button onclick="sendBulkWA()" class="flex-1 sm:flex-none text-center bg-gradient-to-r from-emerald-500 to-teal-500 hover:scale-105 text-white px-3 md:px-4 py-2 rounded-xl text-xs font-black shadow-md transition-all">Kirim WA</button>
-                                <button onclick="exportHistoryToDoc()" class="flex-1 sm:flex-none text-center bg-blue-100 text-blue-700 hover:bg-blue-200 px-3 py-2 rounded-xl text-xs font-extrabold border border-blue-200 transition-colors">Doc</button>
-                                <button onclick="exportToCSV()" class="flex-1 sm:flex-none text-center bg-emerald-100 text-emerald-700 hover:bg-emerald-200 px-3 py-2 rounded-xl text-xs font-extrabold border border-emerald-200 transition-colors">CSV</button>
-                                <button onclick="clearHistoryWithPin()" class="flex-1 sm:flex-none text-center bg-rose-500 text-white hover:bg-rose-600 px-3 py-2 rounded-xl text-xs font-extrabold transition-colors">Hapus</button>
+                                <button onclick="exportToCSV()" class="flex-1 sm:flex-none text-center bg-emerald-100 text-emerald-700 hover:bg-emerald-200 px-3 py-2 rounded-xl text-xs font-extrabold border border-emerald-200 transition-colors">Export CSV</button>
+                                <button onclick="clearHistoryWithPin()" class="flex-1 sm:flex-none text-center bg-rose-500 text-white hover:bg-rose-600 px-3 py-2 rounded-xl text-xs font-extrabold transition-colors">Hapus Rekap</button>
                             </div>
                         </div>
                     </div>
                     
-                    <!-- Stats Dashboard -->
                     <div class="grid grid-cols-2 md:grid-cols-4 gap-3 md:gap-4 mb-6">
                         <div class="bg-gradient-to-br from-blue-500 to-cyan-500 p-4 md:p-5 rounded-2xl text-white shadow-lg relative overflow-hidden">
                             <div class="absolute -right-4 -top-4 opacity-20"><svg class="w-16 h-16 md:w-20 md:h-20" fill="currentColor" viewBox="0 0 20 20"><path fill-rule="evenodd" d="M10 18a8 8 0 100-16 8 8 0 000 16zm3.707-9.293a1 1 0 00-1.414-1.414L9 10.586 7.707 9.293a1 1 0 00-1.414 1.414l2 2a1 1 0 001.414 0l4-4z" clip-rule="evenodd"></path></svg></div>
@@ -584,12 +527,6 @@
                                         <th class="px-4 py-3 text-center whitespace-nowrap">Jam</th> 
                                         <th class="px-4 py-3 text-center whitespace-nowrap">Status</th> 
                                         <th class="px-4 py-3 text-center whitespace-nowrap">Personal WA</th>
-                                        <th class="px-4 py-3 text-center whitespace-nowrap bg-blue-600 border-l border-blue-500">
-                                            <div class="flex items-center justify-center gap-2">
-                                                <input type="checkbox" id="checkAll" onclick="toggleCheckAll(this)" class="w-4 h-4 accent-white cursor-pointer rounded" title="Pilih Semua">
-                                                <label for="checkAll" class="cursor-pointer">MASSAL</label>
-                                            </div>
-                                        </th>
                                     </tr>
                                 </thead>
                                 <tbody id="history-table-body" class="divide-y divide-slate-100/80 text-slate-700"></tbody>
@@ -599,7 +536,6 @@
                 </div>
             </div>
 
-            <!-- TAB 4: DAFTAR GURU -->
             <div id="view-teachers" class="hidden space-y-6 fade-in">
                 <div class="glass-card p-4 md:p-8">
                     <div class="text-center mb-8">
@@ -614,7 +550,6 @@
         </main>
     </div>
 
-    <!-- FOOTER -->
     <footer class="glass-header mt-8 py-6 px-4 no-print text-center">
         <div class="max-w-3xl mx-auto space-y-5">
             <div class="px-4 md:px-6 py-5 bg-white/60 backdrop-blur-sm rounded-3xl border border-slate-200/60 shadow-sm relative overflow-hidden">
@@ -629,35 +564,19 @@
     </footer>
 
     <script>
-        // FUNGSI TUTUP MODAL KEMERDEKAAN
+        // MODAL HANDLERS
         function closeKemerdekaanModal() {
-            const kemerdekaanModal = document.getElementById('kemerdekaan-modal');
-            const welcomeModal = document.getElementById('welcome-modal');
-            if (kemerdekaanModal) {
-                kemerdekaanModal.classList.add('welcome-exit');
-                setTimeout(() => {
-                    kemerdekaanModal.classList.add('hidden');
-                    // Munculkan welcome modal setelah modal kemerdekaan ditutup
-                    if(welcomeModal) welcomeModal.classList.remove('hidden');
-                }, 400);
-            }
+            const m = document.getElementById('kemerdekaan-modal');
+            const w = document.getElementById('welcome-modal');
+            if (m) { m.classList.add('welcome-exit'); setTimeout(() => { m.classList.add('hidden'); if(w) w.classList.remove('hidden'); }, 400); }
         }
-
-        // FUNGSI TUTUP WELCOME MODAL
         function closeWelcomeModal() {
-            const welcomeModal = document.getElementById('welcome-modal');
-            const warningModal = document.getElementById('initial-warning-modal');
-            if (welcomeModal) {
-                welcomeModal.classList.add('welcome-exit');
-                setTimeout(() => {
-                    welcomeModal.classList.add('hidden');
-                    // Tampilkan warning modal setelah welcome ditutup
-                    if(warningModal) warningModal.classList.remove('hidden');
-                }, 400);
-            }
+            const w = document.getElementById('welcome-modal');
+            const wr = document.getElementById('initial-warning-modal');
+            if (w) { w.classList.add('welcome-exit'); setTimeout(() => { w.classList.add('hidden'); if(wr) wr.classList.remove('hidden'); }, 400); }
         }
 
-        // DATA GURU
+        // STATIC DATA
         const teacherList = [
             { no: 1, name: "Alimil Khoir, S.Pd", subject: "PJOK" }, { no: 2, name: "Hari Yanto, S.EI, M.EI", subject: "Al Qur'an Hadits" },
             { no: 3, name: "Bariyatin Nafiah, S.EI, M.EI", subject: "Sejarah" }, { no: 4, name: "Khoiriyah, S.Pd", subject: "Seni dan Budaya" },
@@ -673,53 +592,25 @@
             { no: 23, name: "Mufaruk, S.Pd.I, M.Pd", subject: "Ta'limul Muta'alim" }, { no: 24, name: "Khoirotun Nisa'iyah, S.Pd", subject: "BK" }
         ];
 
-        // GRADIENT TEMA BIRU & SILVER UNTUK CARD
-        const cardGradients = [
-            "from-blue-600 to-blue-400", "from-slate-500 to-slate-400", "from-cyan-600 to-teal-400",
-            "from-indigo-600 to-blue-500", "from-sky-500 to-blue-400", "from-slate-600 to-gray-400"
-        ];
-        
-        const quotesGuru = [
-            "\"Semoga Bapak/Ibu Tenaga pendidik MA Miftahul Ulum selalu dilancarkan rezekinya.\"",
-            "\"Di balik layar sistem yang canggih, terdapat doa dan dedikasi pengajar yang tak pernah lelah membimbing masa depan.\"",
-            "\"Sukwan Guru terlebih dahulu, lalu kaya kemudian wkwk.\""
-        ];
+        const cardGradients = [ "from-blue-600 to-blue-400", "from-slate-500 to-slate-400", "from-cyan-600 to-teal-400", "from-indigo-600 to-blue-500", "from-sky-500 to-blue-400", "from-slate-600 to-gray-400" ];
+        const quotesGuru = [ "\"Semoga Bapak/Ibu Tenaga pendidik MA Miftahul Ulum selalu dilancarkan rezekinya.\"", "\"Di balik layar sistem yang canggih, terdapat doa dan dedikasi pengajar yang tak pernah lelah membimbing masa depan.\"", "\"Sukwan Guru terlebih dahulu, lalu kaya kemudian wkwk.\"" ];
 
-        // FUNGSI EFEK TYPEWRITER
+        // UI EFFECTS
         function typeWriterEffect(elementId, textData, typeSpeed, deleteSpeed, delayPause) {
             const element = document.getElementById(elementId);
             if (!element) return;
-            
-            let textIndex = 0;
-            let charIndex = 0;
-            let isDeleting = false;
-            
+            let textIndex = 0, charIndex = 0, isDeleting = false;
             function type() {
                 const currentString = Array.isArray(textData) ? textData[textIndex] : textData;
                 const displayedText = currentString.substring(0, charIndex);
-                
                 element.innerHTML = displayedText + '<span class="animate-pulse text-current opacity-60">|</span>';
-                
                 let speed = isDeleting ? deleteSpeed : typeSpeed;
                 if (!isDeleting) speed += Math.random() * 40;
-
-                if (!isDeleting && charIndex === currentString.length) {
-                    speed = delayPause; 
-                    isDeleting = true;
-                } else if (isDeleting && charIndex === 0) {
-                    isDeleting = false;
-                    speed = 600; 
-                    if (Array.isArray(textData)) {
-                        textIndex = (textIndex + 1) % textData.length;
-                    }
-                }
-                
-                if (isDeleting) charIndex--;
-                else charIndex++;
-                
+                if (!isDeleting && charIndex === currentString.length) { speed = delayPause; isDeleting = true; } 
+                else if (isDeleting && charIndex === 0) { isDeleting = false; speed = 600; if (Array.isArray(textData)) textIndex = (textIndex + 1) % textData.length; }
+                if (isDeleting) charIndex--; else charIndex++;
                 setTimeout(type, speed);
             }
-            
             type();
         }
 
@@ -759,6 +650,7 @@
             } catch(e) {}
         }
 
+        // SYSTEM STATE
         let html5QrCode = null; let isProcessingScan = false;
         let currentSubject = ""; let currentClass = ""; let currentJam = ""; 
         let currentSessionMode = "realtime"; 
@@ -783,24 +675,27 @@
             }
         }
         
-        document.getElementById('select-mode').addEventListener('change', (e) => {
-            currentSessionMode = e.target.value;
-            updateTopModeBadge();
-        });
+        document.getElementById('select-mode').addEventListener('change', (e) => { currentSessionMode = e.target.value; updateTopModeBadge(); });
 
         async function loadData() {
             const cloudStatus = document.getElementById('cloud-status');
             renderStudents(); renderHistory(); renderTeachers(); updateQueueUI();
             try {
                 if(cloudStatus) { cloudStatus.innerHTML = 'Memuat Data...'; cloudStatus.className = "text-[10px] sm:text-xs font-extrabold px-3 py-1.5 rounded-full bg-blue-100 text-blue-700 border border-blue-200 text-center animate-pulse"; }
+                
+                // Get Students
                 const respStudents = await fetch(scriptUrl + "?action=getStudents");
                 const dataStudents = await respStudents.json();
-                if(dataStudents && dataStudents.length > 0) { students = dataStudents; localStorage.setItem('db_students', JSON.stringify(students)); }
+                if(dataStudents && dataStudents.length > 0) { 
+                    students = dataStudents; 
+                    localStorage.setItem('db_students', JSON.stringify(students)); 
+                }
                 renderStudents();
-                renderHistory();
+
                 if(cloudStatus) { cloudStatus.innerHTML = 'Sinkronisasi Selesai'; cloudStatus.className = "text-[10px] sm:text-xs font-extrabold px-3 py-1.5 rounded-full bg-emerald-100 text-emerald-700 border border-emerald-200 text-center"; }
                 processQueue();
                 
+                // Get History
                 fetch(scriptUrl + "?action=getHistory").then(res => res.json()).then(dataHistory => {
                     if(dataHistory && dataHistory.length > 0) {
                         realtimeHistory = dataHistory; 
@@ -810,7 +705,7 @@
                         }
                         if(currentDataSource === 'realtime') renderHistory();
                     }
-                }).catch(e => console.log("Background sync complete."));
+                }).catch(e => console.log("Background history sync offline."));
             } catch (error) {
                 if(cloudStatus) { cloudStatus.innerHTML = 'Siap (Mode Offline)'; cloudStatus.className = "text-[10px] sm:text-xs font-extrabold px-3 py-1.5 rounded-full bg-slate-200 text-slate-700 border border-slate-300 text-center"; }
             }
@@ -852,15 +747,14 @@
             const subtitleText = "Digital Presence V1.5 · Build for Excellence"; 
             
             typeWriterEffect('header-title', titleText, 80, 40, 5000);
-            setTimeout(() => {
-                typeWriterEffect('header-subtitle', subtitleText, 50, 25, 4000);
-            }, 1000);
-            
+            setTimeout(() => { typeWriterEffect('header-subtitle', subtitleText, 50, 25, 4000); }, 1000);
             typeWriterEffect('teacher-quote', quotesGuru, 40, 15, 6000);
             
             const ua = navigator.userAgent || navigator.vendor || window.opera;
             if (ua.indexOf('Instagram') > -1 || ua.indexOf('WhatsApp') > -1) document.getElementById('browser-warning').classList.remove('hidden');
+            
             loadData();
+            
             window.addEventListener('online', () => {
                 document.getElementById('network-text').innerHTML = 'Sistem: <span class="text-emerald-600">Online</span>';
                 document.getElementById('network-indicator').className = 'w-2.5 h-2.5 rounded-full bg-emerald-500 animate-pulse shadow-[0_0_8px_rgba(16,185,129,0.8)]';
@@ -878,9 +772,10 @@
             isSyncing = true;
             const task = syncQueue[0];
             try {
+                // Remove no-cors if GAS expects normal JSON to allow redirects, or keep as standard text
                 await fetch(scriptUrl, { 
-                    method: 'POST', 
-                    mode: 'no-cors', 
+                    method: 'POST',
+                    mode: 'no-cors',
                     headers: { 'Content-Type': 'text/plain;charset=utf-8' }, 
                     body: JSON.stringify(task.payload) 
                 });
@@ -902,17 +797,21 @@
         }
 
         async function kirimKeGoogleSheets(dataLog) {
+            // FIX: Ensure timestamp and specific params are correctly mapped so realtimeHistory has exactly what renderHistory needs.
             const payload = { 
                 action: 'addHistory', 
+                timestamp: dataLog.timestamp,
+                waktu: dataLog.timeDisplay,
                 nis: dataLog.nis, 
                 nama: dataLog.name, 
                 kelas: dataLog.className, 
                 mapel: dataLog.subject, 
                 jam: dataLog.jam, 
-                status: dataLog.status || 'Hadir' 
+                status: dataLog.status || 'Hadir',
+                wa: dataLog.wa || ''
             };
             
-            realtimeHistory.unshift(dataLog);
+            realtimeHistory.unshift(payload); // Ensure fallback object works correctly for UI
             if(currentDataSource === 'realtime') renderHistory();
 
             const cloudStatus = document.getElementById('cloud-status');
@@ -1012,6 +911,7 @@
 
             const now = new Date();
             const logEntry = { timestamp: now.toISOString(), timeDisplay: now.toLocaleTimeString('id-ID', { hour: '2-digit', minute: '2-digit', second: '2-digit' }), nis: registeredStudent.nis, name: registeredStudent.name, className: currentClass, subject: currentSubject, jam: currentJam, status: status, wa: registeredStudent.wa || '' };
+            
             sessionScans.unshift(logEntry); attendanceHistory.unshift(logEntry);
             localStorage.setItem('db_history', JSON.stringify(attendanceHistory));
             
@@ -1074,41 +974,52 @@
         function onScanSuccess(decodedText) {
             if (!isSessionActive || isProcessingScan) return;
             isProcessingScan = true;
-            let studentData = null;
-            try { studentData = JSON.parse(decodedText); } 
-            catch (e) { const found = students.find(s => String(s.nis).trim() === decodedText.trim()); if (found) studentData = { nis: found.nis, name: found.name }; }
-
-            const alertBox = document.getElementById('scan-alert'); alertBox.classList.remove('hidden');
-            if (!studentData || !studentData.nis) {
-                alertBox.innerText = "Format QR tidak dikenal."; alertBox.className = "mt-4 p-3 rounded-xl text-sm font-bold text-center border bg-rose-100 text-rose-800 border-rose-300 block";
-                return resumeScannerAfterDelay(2000);
-            }
-            let registeredStudent = students.find(s => String(s.nis).trim() === String(studentData.nis).trim());
-            if (!registeredStudent) {
-                alertBox.innerText = `Ditolak: NIS ${studentData.nis} tidak terdaftar!`; alertBox.className = "mt-4 p-3 rounded-xl text-sm font-bold text-center border bg-rose-100 text-rose-800 border-rose-300 block";
-                return resumeScannerAfterDelay(2000);
-            }
-            if ((registeredStudent.className || registeredStudent.kelas) !== currentClass) {
-                alertBox.innerText = `Beda Kelas: ${registeredStudent.name} (${registeredStudent.className || registeredStudent.kelas})`; alertBox.className = "mt-4 p-3 rounded-xl text-sm font-bold text-center border bg-amber-100 text-amber-800 border-amber-300 block";
-                return resumeScannerAfterDelay(2500);
-            }
-            if (sessionScans.some(s => String(s.nis).trim() === String(registeredStudent.nis).trim())) {
-                alertBox.innerText = `${registeredStudent.name} sudah tercatat.`; alertBox.className = "mt-4 p-3 rounded-xl text-sm font-bold text-center border bg-blue-100 text-blue-800 border-blue-300 block";
-                return resumeScannerAfterDelay(2000);
-            }
-
-            playBeep();
-            const now = new Date();
-            const logEntry = { timestamp: now.toISOString(), timeDisplay: now.toLocaleTimeString('id-ID', { hour: '2-digit', minute: '2-digit', second: '2-digit' }), nis: registeredStudent.nis, name: registeredStudent.name, className: currentClass, subject: currentSubject, jam: currentJam, status: "Hadir", wa: registeredStudent.wa || '' };
             
-            sessionScans.unshift(logEntry); attendanceHistory.unshift(logEntry);
-            localStorage.setItem('db_history', JSON.stringify(attendanceHistory));
-            
-            kirimKeGoogleSheets(logEntry); updateSessionUI();
+            try {
+                let studentData = null;
+                try { studentData = JSON.parse(decodedText); } 
+                catch (e) { const found = students.find(s => String(s.nis).trim() === decodedText.trim()); if (found) studentData = { nis: found.nis, name: found.name }; }
 
-            alertBox.innerHTML = `Berhasil: <b>${registeredStudent.name}</b>`;
-            alertBox.className = "mt-4 p-3 rounded-xl text-sm font-bold text-center border bg-emerald-100 text-emerald-800 border-emerald-300 block";
-            resumeScannerAfterDelay(1500);
+                const alertBox = document.getElementById('scan-alert'); alertBox.classList.remove('hidden');
+                
+                if (!studentData || !studentData.nis) {
+                    alertBox.innerText = "Format QR tidak dikenal."; alertBox.className = "mt-4 p-3 rounded-xl text-sm font-bold text-center border bg-rose-100 text-rose-800 border-rose-300 block";
+                    return resumeScannerAfterDelay(2000);
+                }
+                
+                let registeredStudent = students.find(s => String(s.nis).trim() === String(studentData.nis).trim());
+                if (!registeredStudent) {
+                    // FIX: Hal ini terjadi jika array students kosong karena gagal fetch saat booting dan tidak ditambahkan manual
+                    alertBox.innerText = `Ditolak: NIS ${studentData.nis} tidak terdaftar dalam database lokal!`; alertBox.className = "mt-4 p-3 rounded-xl text-sm font-bold text-center border bg-rose-100 text-rose-800 border-rose-300 block";
+                    return resumeScannerAfterDelay(2000);
+                }
+                
+                if ((registeredStudent.className || registeredStudent.kelas) !== currentClass) {
+                    alertBox.innerText = `Beda Kelas: ${registeredStudent.name} (${registeredStudent.className || registeredStudent.kelas})`; alertBox.className = "mt-4 p-3 rounded-xl text-sm font-bold text-center border bg-amber-100 text-amber-800 border-amber-300 block";
+                    return resumeScannerAfterDelay(2500);
+                }
+                
+                if (sessionScans.some(s => String(s.nis).trim() === String(registeredStudent.nis).trim())) {
+                    alertBox.innerText = `${registeredStudent.name} sudah tercatat.`; alertBox.className = "mt-4 p-3 rounded-xl text-sm font-bold text-center border bg-blue-100 text-blue-800 border-blue-300 block";
+                    return resumeScannerAfterDelay(2000);
+                }
+
+                playBeep();
+                const now = new Date();
+                const logEntry = { timestamp: now.toISOString(), timeDisplay: now.toLocaleTimeString('id-ID', { hour: '2-digit', minute: '2-digit', second: '2-digit' }), nis: registeredStudent.nis, name: registeredStudent.name, className: currentClass, subject: currentSubject, jam: currentJam, status: "Hadir", wa: registeredStudent.wa || '' };
+                
+                sessionScans.unshift(logEntry); attendanceHistory.unshift(logEntry);
+                localStorage.setItem('db_history', JSON.stringify(attendanceHistory));
+                
+                kirimKeGoogleSheets(logEntry); updateSessionUI();
+
+                alertBox.innerHTML = `Berhasil: <b>${registeredStudent.name}</b>`;
+                alertBox.className = "mt-4 p-3 rounded-xl text-sm font-bold text-center border bg-emerald-100 text-emerald-800 border-emerald-300 block";
+                resumeScannerAfterDelay(1500);
+            } catch(e) {
+                console.error("Terjadi error di onScanSuccess: ", e);
+                resumeScannerAfterDelay(1000);
+            }
         }
 
         function onScanFailure() {}
@@ -1127,15 +1038,88 @@
                 if(statStr === 'alpha') badgeClass = "bg-rose-100 text-rose-800 border-rose-200";
 
                 return `<tr class="hover:bg-slate-100/50 transition-colors">
-                    <td class="px-4 py-3 text-xs text-slate-500 whitespace-nowrap">${log.timeDisplay}</td>
+                    <td class="px-4 py-3 text-xs text-slate-500 whitespace-nowrap">${log.timeDisplay || '-'}</td>
                     <td class="px-4 py-3 text-xs font-bold text-slate-700 whitespace-nowrap">${log.nis}</td>
-                    <td class="px-4 py-3 text-xs font-bold text-slate-900 whitespace-nowrap">${log.name}</td>
+                    <td class="px-4 py-3 text-xs font-bold text-slate-900 whitespace-nowrap">${log.name || log.nama}</td>
                     <td class="px-4 py-3 text-center"><span class="px-2.5 py-1 text-[10px] font-black uppercase rounded-lg border ${badgeClass} shadow-sm">${log.status || 'Hadir'}</span></td>
                 </tr>`;
             }).join('');
         }
 
-        /* ----- FUNGSI RENDER SISWA & QR CODE ----- */
+        /* ----- FIX: FUNGSI CRUD SISWA LENGKAP ----- */
+        function addStudent(e) { 
+            e.preventDefault(); 
+            const nis = document.getElementById('stu-nis').value.trim();
+            const name = document.getElementById('stu-name').value.trim();
+            const cls = document.getElementById('stu-class').value;
+            const wa = document.getElementById('stu-wa').value.trim();
+
+            if(students.some(s => String(s.nis) === nis)) return alert("NIS sudah terdaftar!");
+            
+            const newStu = { nis, name, className: cls, wa };
+            students.push(newStu);
+            localStorage.setItem('db_students', JSON.stringify(students));
+            
+            renderStudents();
+            alert("Data Siswa Berhasil Ditambahkan!");
+            e.target.reset();
+
+            // Optional sync to cloud (Abaikan error kalau endpoint blm ready handle addStudent)
+            fetch(scriptUrl, {
+                method: 'POST', mode: 'no-cors',
+                headers: { 'Content-Type': 'text/plain;charset=utf-8' },
+                body: JSON.stringify({ action: 'addStudent', ...newStu })
+            }).catch(console.error);
+        }
+
+        function deleteStudent(nis) { 
+            if(confirm("Yakin ingin menghapus siswa dengan NIS: " + nis + "?")) {
+                students = students.filter(s => String(s.nis) !== String(nis));
+                localStorage.setItem('db_students', JSON.stringify(students));
+                renderStudents();
+            }
+        }
+        
+        function openEditModal(nis) { 
+            const stu = students.find(s => String(s.nis) === String(nis));
+            if(stu) {
+                document.getElementById('edit-original-nis').value = stu.nis;
+                document.getElementById('edit-stu-nis').value = stu.nis;
+                document.getElementById('edit-stu-name').value = stu.name;
+                document.getElementById('edit-stu-class').value = stu.className || stu.kelas || '';
+                document.getElementById('edit-stu-wa').value = stu.wa || '';
+                document.getElementById('edit-student-modal').classList.remove('hidden');
+            }
+        }
+
+        function closeEditModal() { document.getElementById('edit-student-modal').classList.add('hidden'); }
+
+        function saveEditStudent(e) { 
+            e.preventDefault(); 
+            const origNis = document.getElementById('edit-original-nis').value;
+            const nis = document.getElementById('edit-stu-nis').value;
+            const name = document.getElementById('edit-stu-name').value;
+            const cls = document.getElementById('edit-stu-class').value;
+            const wa = document.getElementById('edit-stu-wa').value;
+
+            const idx = students.findIndex(s => String(s.nis) === String(origNis));
+            if(idx > -1) {
+                students[idx] = { nis, name, className: cls, wa };
+                localStorage.setItem('db_students', JSON.stringify(students));
+                renderStudents();
+                closeEditModal();
+                alert("Data berhasil diubah!");
+            }
+        }
+
+        function clearStudents() { 
+            if(confirm("Yakin hapus SEMUA data siswa secara lokal?")) {
+                students = [];
+                localStorage.setItem('db_students', JSON.stringify(students));
+                renderStudents();
+            }
+        }
+
         function renderStudents() {
             const printArea = document.getElementById('print-area');
             if (!printArea) return;
@@ -1152,22 +1136,13 @@
                 </div>
             `).join('');
 
-            // Generate QR Code untuk setiap siswa
             students.forEach((s, idx) => {
                 const el = document.getElementById(`qrcode-${idx}`);
-                if (el) {
-                    el.innerHTML = '';
-                    new QRCode(el, {
-                        text: JSON.stringify({ nis: String(s.nis), name: s.name }),
-                        width: 90,
-                        height: 90,
-                        correctLevel: QRCode.CorrectLevel.M
-                    });
-                }
+                if (el) { el.innerHTML = ''; new QRCode(el, { text: JSON.stringify({ nis: String(s.nis), name: s.name }), width: 90, height: 90, correctLevel: QRCode.CorrectLevel.M }); }
             });
         }
 
-        /* ----- FUNGSI REKAP HISTORY & STATISTIK ----- */
+        /* ----- REKAP HISTORY & STATISTIK ----- */
         function renderHistory() {
             const dataSource = currentDataSource === 'realtime' ? realtimeHistory : attendanceHistory;
             const filterDate = document.getElementById('filter-date')?.value;
@@ -1177,25 +1152,22 @@
             const filterSubject = document.getElementById('filter-subject')?.value;
             const filterStatus = document.getElementById('filter-status')?.value;
 
+            // FIX: Robust Date Filter Logic (handles missing timestamps properly)
             let filtered = dataSource.filter(item => {
                 const itemDate = item.timestamp ? item.timestamp.split('T')[0] : '';
                 if (filterDate && itemDate !== filterDate) return false;
                 if (filterMonth && !itemDate.startsWith(filterMonth)) return false;
                 if (filterName && !(item.name || item.nama || '').toLowerCase().includes(filterName)) return false;
-                
                 if (filterClass && (item.className || item.kelas || '').trim() !== filterClass.trim()) return false;
                 if (filterSubject && (item.subject || item.mapel || '').trim() !== filterSubject.trim()) return false;
-                
                 if (filterStatus) {
                     const itemStatus = (item.status || 'Hadir').trim().toLowerCase();
                     const fStatus = filterStatus.trim().toLowerCase();
                     if (itemStatus !== fStatus) return false;
                 }
-                
                 return true;
             });
 
-            // Hitung Counter Statistik
             let hadir = 0, sakit = 0, izin = 0, alpha = 0;
             filtered.forEach(item => {
                 const st = (item.status || 'Hadir').trim().toLowerCase();
@@ -1214,12 +1186,12 @@
             if (!tbody) return;
 
             if (filtered.length === 0) {
-                tbody.innerHTML = `<tr><td colspan="9" class="px-4 py-8 text-center text-slate-400 font-semibold">Tidak ada data rekap presensi.</td></tr>`;
+                tbody.innerHTML = `<tr><td colspan="8" class="px-4 py-8 text-center text-slate-400 font-semibold">Tidak ada data rekap presensi.</td></tr>`;
                 return;
             }
 
             tbody.innerHTML = filtered.map((log) => {
-                const timeDisp = log.timeDisplay || (log.timestamp ? new Date(log.timestamp).toLocaleTimeString('id-ID') : '-');
+                const timeDisp = log.waktu || log.timeDisplay || (log.timestamp ? new Date(log.timestamp).toLocaleTimeString('id-ID') : '-');
                 const dateDisp = log.timestamp ? log.timestamp.split('T')[0] : '-';
                 
                 let badgeClass = "bg-emerald-100 text-emerald-800 border-emerald-200";
@@ -1228,9 +1200,8 @@
                 if(statStr === 'izin') badgeClass = "bg-slate-200 text-slate-700 border-slate-300";
                 if(statStr === 'alpha') badgeClass = "bg-rose-100 text-rose-800 border-rose-200";
                 
-                // Coba ambil nomor WA dari data log atau cari dari array students
-                const waNumber = log.wa ? log.wa : (students.find(s => s.nis === log.nis)?.wa || '');
-                const waLink = waNumber ? `https://wa.me/${waNumber}?text=Pemberitahuan%20Presensi:%20${log.name}%20dinyatakan%20${log.status}%20pada%20pelajaran%20${log.subject}.` : '#';
+                const waNumber = log.wa ? log.wa : (students.find(s => String(s.nis) === String(log.nis))?.wa || '');
+                const waLink = waNumber ? `https://wa.me/${waNumber}?text=Pemberitahuan%20Presensi:%20Anak%20anda%20(${log.name||log.nama})%20dinyatakan%20${log.status||'Hadir'}%20pada%20pelajaran%20${log.subject||log.mapel}.` : '#';
 
                 return `<tr class="hover:bg-slate-100/50 transition-colors">
                     <td class="px-4 py-3 whitespace-nowrap">${dateDisp} <span class="text-[10px] text-slate-400 block">${timeDisp}</span></td>
@@ -1241,35 +1212,101 @@
                     <td class="px-4 py-3 text-center whitespace-nowrap">${log.jam || '-'}</td>
                     <td class="px-4 py-3 text-center whitespace-nowrap"><span class="px-2 py-1 text-[10px] font-black uppercase rounded border ${badgeClass}">${log.status || 'Hadir'}</span></td>
                     <td class="px-4 py-3 text-center whitespace-nowrap">
-                        ${waNumber ? `<a href="${waLink}" target="_blank" class="text-[10px] bg-green-100 text-green-700 px-2 py-1 rounded border border-green-300 hover:bg-green-200">WA Wali</a>` : `<span class="text-[10px] text-slate-400">Tidak ada WA</span>`}
-                    </td>
-                    <td class="px-4 py-3 text-center whitespace-nowrap border-l border-slate-200">
-                        <input type="checkbox" class="w-4 h-4 cursor-pointer rounded" value="${log.nis}">
+                        ${waNumber ? `<a href="${waLink}" target="_blank" class="text-[10px] bg-green-100 text-green-700 px-2 py-1 rounded border border-green-300 hover:bg-green-200 shadow-sm transition-all">WA Wali</a>` : `<span class="text-[10px] text-slate-400">Tidak ada WA</span>`}
                     </td>
                 </tr>`;
             }).join('');
         }
         
-        // --- FUNGSI STUB UNTUK MENGHINDARI ERROR SAAT TOMBOL DIKLIK --- //
-        function closeEditModal() { document.getElementById('edit-student-modal').classList.add('hidden'); }
-        function closeMissingModal() { document.getElementById('missing-students-modal').classList.add('hidden'); }
-        function addStudent(e) { e.preventDefault(); alert("Fitur Tambah Siswa (Placeholder)"); }
-        function saveEditStudent(e) { e.preventDefault(); alert("Fitur Simpan Edit (Placeholder)"); }
-        function deleteStudent(nis) { alert("Hapus siswa NIS: " + nis); }
-        function openEditModal(nis) { document.getElementById('edit-student-modal').classList.remove('hidden'); }
-        function clearStudents() { alert("Fitur Hapus Semua (Placeholder)"); }
-        function exportQRToWord() { alert("Fitur Export QR ke Doc (Placeholder)"); }
-        function printQRCodes() { window.print(); }
-        function checkMissingHistory() { document.getElementById('missing-students-modal').classList.remove('hidden'); }
-        function sendBulkWA() { alert("Fitur Kirim WA Massal (Placeholder)"); }
-        function exportHistoryToDoc() { alert("Fitur Export Rekap ke Doc (Placeholder)"); }
-        function exportToCSV() { alert("Fitur Export ke CSV (Placeholder)"); }
-        function clearHistoryWithPin() { alert("Fitur Hapus Rekap Log (Placeholder)"); }
-        function checkMissingSession() { document.getElementById('missing-students-modal').classList.remove('hidden'); }
-        function toggleCheckAll(source) { 
-            const checkboxes = document.querySelectorAll('#history-table-body input[type="checkbox"]');
-            checkboxes.forEach(cb => cb.checked = source.checked);
+        // --- FIX: MISSING FUNCTIONS IMPLEMENTATION --- //
+        function checkMissingSession() { 
+            const m = document.getElementById('missing-students-modal'); m.classList.remove('hidden'); 
+            const tbody = document.getElementById('missing-students-body');
+            const title = document.getElementById('missing-modal-title');
+            
+            if(!isSessionActive) {
+                title.innerText = "Sesi Belum Aktif";
+                tbody.innerHTML = `<tr><td colspan="3" class="px-4 py-8 text-center text-slate-500 font-bold">Mulai sesi terlebih dahulu.</td></tr>`;
+                return;
+            }
+            
+            title.innerText = "Siswa Belum Absen - " + currentClass;
+            const classStudents = students.filter(s => (s.className || s.kelas) === currentClass);
+            const attendedNis = sessionScans.map(r => String(r.nis));
+            const missing = classStudents.filter(s => !attendedNis.includes(String(s.nis)));
+            
+            if(missing.length === 0) { tbody.innerHTML = `<tr><td colspan="3" class="px-4 py-8 text-center text-emerald-500 font-bold">Semua siswa di kelas telah presensi!</td></tr>`; } 
+            else {
+                tbody.innerHTML = missing.map(s => `<tr><td class="px-4 py-3">${s.nis}</td><td class="px-4 py-3">${s.name}</td><td class="px-4 py-3 text-center"><span class="px-2 py-1 text-[10px] font-black uppercase rounded border bg-rose-100 text-rose-800 border-rose-200">Alpha / Terlewat</span></td></tr>`).join('');
+            }
         }
+        
+        function checkMissingHistory() { 
+            const m = document.getElementById('missing-students-modal'); m.classList.remove('hidden'); 
+            const tbody = document.getElementById('missing-students-body');
+            const title = document.getElementById('missing-modal-title');
+            const filterClass = document.getElementById('filter-class').value;
+            
+            if(!filterClass) {
+                title.innerText = "Filter Kelas Kosong";
+                tbody.innerHTML = `<tr><td colspan="3" class="px-4 py-8 text-center text-amber-500 font-bold">Pilih "Kelas" di filter Rekap Log terlebih dahulu.</td></tr>`;
+                return;
+            }
+            
+            title.innerText = "Belum Absen Hari Ini - " + filterClass;
+            const classStudents = students.filter(s => (s.className || s.kelas) === filterClass);
+            const today = new Date().toISOString().split('T')[0];
+            const filterDate = document.getElementById('filter-date').value || today;
+            
+            const dataSource = currentDataSource === 'realtime' ? realtimeHistory : attendanceHistory;
+            const currentRecords = dataSource.filter(log => {
+                const date = log.timestamp ? log.timestamp.split('T')[0] : '';
+                return date === filterDate && (log.className || log.kelas) === filterClass;
+            });
+            
+            const attendedNis = currentRecords.map(r => String(r.nis));
+            const missing = classStudents.filter(s => !attendedNis.includes(String(s.nis)));
+            
+            if(missing.length === 0) { tbody.innerHTML = `<tr><td colspan="3" class="px-4 py-8 text-center text-emerald-500 font-bold">Semua siswa di kelas telah presensi!</td></tr>`; } 
+            else {
+                tbody.innerHTML = missing.map(s => `<tr><td class="px-4 py-3">${s.nis}</td><td class="px-4 py-3">${s.name}</td><td class="px-4 py-3 text-center"><span class="px-2 py-1 text-[10px] font-black uppercase rounded border bg-rose-100 text-rose-800 border-rose-200">Alpha / Terlewat</span></td></tr>`).join('');
+            }
+        }
+
+        function closeMissingModal() { document.getElementById('missing-students-modal').classList.add('hidden'); }
+        
+        function exportToCSV() { 
+            const dataSource = currentDataSource === 'realtime' ? realtimeHistory : attendanceHistory;
+            if(dataSource.length === 0) return alert("Data kosong, tidak ada yang diekspor.");
+            
+            let csvContent = "data:text/csv;charset=utf-8,Waktu,NIS,Nama,Kelas,Mapel,Jam,Status\n";
+            dataSource.forEach(row => {
+                const time = row.waktu || row.timeDisplay || (row.timestamp ? row.timestamp.split('T')[0] : '');
+                const name = (row.name || row.nama || '').replace(/,/g, '');
+                csvContent += `${time},${row.nis},${name},${row.className||row.kelas||''},${row.subject||row.mapel||''},${row.jam||''},${row.status||'Hadir'}\n`;
+            });
+            
+            const encodedUri = encodeURI(csvContent);
+            const link = document.createElement("a");
+            link.setAttribute("href", encodedUri);
+            link.setAttribute("download", "Rekap_Presensi_Miftahul_Ulum.csv");
+            document.body.appendChild(link);
+            link.click();
+        }
+
+        function clearHistoryWithPin() { 
+            const pin = prompt("PERINGATAN: Masukkan PIN untuk menghapus semua rekap log secara lokal:");
+            if (pin === "12345") {
+                attendanceHistory = [];
+                localStorage.setItem('db_history', JSON.stringify([]));
+                if(currentDataSource === 'local') renderHistory();
+                alert("Data rekap log lokal berhasil dihapus.");
+            } else if (pin) {
+                alert("PIN Salah! Operasi dibatalkan.");
+            }
+        }
+
+        function printQRCodes() { window.print(); }
     </script>
 </body>
 </html>
