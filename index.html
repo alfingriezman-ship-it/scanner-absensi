@@ -74,7 +74,7 @@
             @page { size: A4; margin: 1cm; }
             body * { visibility: hidden; }
             #print-area, #print-area * { visibility: visible; }
-            .no-print, nav, footer, #view-scan, #view-history, #view-teachers, #wa-floating, #initial-warning-modal, #edit-student-modal, #missing-students-modal, #welcome-modal, #kemerdekaan-modal { display: none !important; }
+            .no-print, nav, footer, #view-scan, #view-history, #view-teachers, #wa-floating, #initial-warning-modal, #edit-student-modal, #missing-students-modal, #welcome-modal, #kemerdekaan-modal, #login-modal { display: none !important; }
             body { background: white !important; margin: 0 !important; padding: 0 !important; }
             #print-area { position: relative !important; width: 100% !important; display: grid !important; grid-template-columns: repeat(4, 1fr) !important; gap: 12px !important; }
             .print-exact { page-break-inside: avoid !important; margin-bottom: 10px !important; border: 1px solid #000 !important; background: white !important; }
@@ -102,6 +102,38 @@
 </head>
 <body class="min-h-screen flex flex-col justify-between bg-theme selection:bg-blue-300 selection:text-blue-900">
     
+    <!-- POPUP LOGIN SEKOLAH -->
+    <div id="login-modal" class="fixed inset-0 z-[300] flex items-center justify-center bg-slate-950/90 backdrop-blur-2xl p-4 no-print">
+        <div class="bg-gradient-to-br from-slate-900 via-blue-950 to-slate-900 border border-blue-500/30 rounded-3xl p-6 sm:p-10 max-w-md w-full text-center shadow-[0_0_60px_rgba(59,130,246,0.35)] animate-popup relative overflow-hidden">
+            <div class="absolute -top-12 -right-12 w-40 h-40 bg-blue-500/20 rounded-full blur-3xl pointer-events-none"></div>
+            <div class="absolute -bottom-12 -left-12 w-40 h-40 bg-indigo-500/20 rounded-full blur-3xl pointer-events-none"></div>
+            
+            <div class="mx-auto w-16 h-16 bg-gradient-to-tr from-blue-600 to-indigo-600 rounded-2xl flex items-center justify-center shadow-lg shadow-blue-500/40 mb-5">
+                <svg xmlns="http://www.w3.org/2000/svg" class="h-8 w-8 text-white" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2">
+                    <path stroke-linecap="round" stroke-linejoin="round" d="M12 15v2m-6 4h12a2 2 0 002-2v-6a2 2 0 00-2-2H6a2 2 0 00-2 2v6a2 2 0 002 2zm10-10V7a4 4 0 00-8 0v4h8z" />
+                </svg>
+            </div>
+            
+            <h2 class="text-xl sm:text-2xl font-black text-white uppercase tracking-tight mb-1">Otentikasi Akses</h2>
+            <p class="text-xs text-slate-300 font-semibold mb-6">MAS Miftahul Ulum Lenteng</p>
+            
+            <form onsubmit="handleLogin(event)" class="space-y-4 text-left">
+                <div>
+                    <label class="block text-xs font-bold text-slate-300 mb-1.5 uppercase">ID Login Sekolah</label>
+                    <input type="text" id="login-id" required placeholder="Masukkan ID Sekolah" class="form-input">
+                </div>
+                <div>
+                    <label class="block text-xs font-bold text-slate-300 mb-1.5 uppercase">Password</label>
+                    <input type="password" id="login-pass" required placeholder="Masukkan Password" class="form-input">
+                </div>
+                <div id="login-error" class="hidden text-xs font-bold text-rose-400 bg-rose-950/50 border border-rose-800 p-2.5 rounded-xl text-center"></div>
+                <button type="submit" class="w-full bg-gradient-to-r from-blue-600 to-indigo-600 hover:from-blue-500 hover:to-indigo-500 text-white font-extrabold py-3.5 rounded-2xl shadow-xl shadow-blue-600/30 hover:scale-[1.02] active:scale-95 transition-all text-sm uppercase tracking-wider">
+                    Masuk Website
+                </button>
+            </form>
+        </div>
+    </div>
+
     <div id="kemerdekaan-modal" class="fixed inset-0 z-[200] flex items-center justify-center bg-slate-950/80 backdrop-blur-xl p-4 no-print">
         <div class="bg-white border-4 border-red-600 rounded-3xl p-5 sm:p-8 max-w-lg w-full text-center shadow-[0_0_60px_rgba(220,38,38,0.4)] animate-popup relative overflow-hidden">
             <button onclick="closeKemerdekaanModal()" class="absolute top-3 right-3 bg-red-100 text-red-600 hover:bg-red-600 hover:text-white rounded-full p-2 transition-colors z-10">
@@ -564,6 +596,25 @@
     </footer>
 
     <script>
+        // LOGIN MODAL HANDLER
+        function handleLogin(e) {
+            e.preventDefault();
+            const idInput = document.getElementById('login-id').value.trim();
+            const passInput = document.getElementById('login-pass').value.trim();
+            const errBox = document.getElementById('login-error');
+            
+            if (idInput === "MASMIFTAHULULUM1992" && passInput === "GURUMA2026") {
+                const loginModal = document.getElementById('login-modal');
+                loginModal.classList.add('welcome-exit');
+                setTimeout(() => {
+                    loginModal.classList.add('hidden');
+                }, 400);
+            } else {
+                errBox.innerText = "ID Sekolah atau Password Salah!";
+                errBox.classList.remove('hidden');
+            }
+        }
+
         // MODAL HANDLERS
         function closeKemerdekaanModal() {
             const m = document.getElementById('kemerdekaan-modal');
@@ -772,7 +823,6 @@
             isSyncing = true;
             const task = syncQueue[0];
             try {
-                // Remove no-cors if GAS expects normal JSON to allow redirects, or keep as standard text
                 await fetch(scriptUrl, { 
                     method: 'POST',
                     mode: 'no-cors',
@@ -797,7 +847,6 @@
         }
 
         async function kirimKeGoogleSheets(dataLog) {
-            // FIX: Ensure timestamp and specific params are correctly mapped so realtimeHistory has exactly what renderHistory needs.
             const payload = { 
                 action: 'addHistory', 
                 timestamp: dataLog.timestamp,
@@ -811,7 +860,7 @@
                 wa: dataLog.wa || ''
             };
             
-            realtimeHistory.unshift(payload); // Ensure fallback object works correctly for UI
+            realtimeHistory.unshift(payload);
             if(currentDataSource === 'realtime') renderHistory();
 
             const cloudStatus = document.getElementById('cloud-status');
@@ -989,7 +1038,6 @@
                 
                 let registeredStudent = students.find(s => String(s.nis).trim() === String(studentData.nis).trim());
                 if (!registeredStudent) {
-                    // FIX: Hal ini terjadi jika array students kosong karena gagal fetch saat booting dan tidak ditambahkan manual
                     alertBox.innerText = `Ditolak: NIS ${studentData.nis} tidak terdaftar dalam database lokal!`; alertBox.className = "mt-4 p-3 rounded-xl text-sm font-bold text-center border bg-rose-100 text-rose-800 border-rose-300 block";
                     return resumeScannerAfterDelay(2000);
                 }
@@ -1046,7 +1094,7 @@
             }).join('');
         }
 
-        /* ----- FIX: FUNGSI CRUD SISWA LENGKAP ----- */
+        /* ----- FUNGSI CRUD SISWA ----- */
         function addStudent(e) { 
             e.preventDefault(); 
             const nis = document.getElementById('stu-nis').value.trim();
@@ -1064,7 +1112,6 @@
             alert("Data Siswa Berhasil Ditambahkan!");
             e.target.reset();
 
-            // Optional sync to cloud (Abaikan error kalau endpoint blm ready handle addStudent)
             fetch(scriptUrl, {
                 method: 'POST', mode: 'no-cors',
                 headers: { 'Content-Type': 'text/plain;charset=utf-8' },
@@ -1120,6 +1167,8 @@
             }
         }
 
+        function printQRCodes() { window.print(); }
+
         function renderStudents() {
             const printArea = document.getElementById('print-area');
             if (!printArea) return;
@@ -1152,7 +1201,6 @@
             const filterSubject = document.getElementById('filter-subject')?.value;
             const filterStatus = document.getElementById('filter-status')?.value;
 
-            // FIX: Robust Date Filter Logic (handles missing timestamps properly)
             let filtered = dataSource.filter(item => {
                 const itemDate = item.timestamp ? item.timestamp.split('T')[0] : '';
                 if (filterDate && itemDate !== filterDate) return false;
@@ -1210,103 +1258,83 @@
                     <td class="px-4 py-3 text-center whitespace-nowrap">${log.className || log.kelas || '-'}</td>
                     <td class="px-4 py-3 whitespace-nowrap">${log.subject || log.mapel || '-'}</td>
                     <td class="px-4 py-3 text-center whitespace-nowrap">${log.jam || '-'}</td>
-                    <td class="px-4 py-3 text-center whitespace-nowrap"><span class="px-2 py-1 text-[10px] font-black uppercase rounded border ${badgeClass}">${log.status || 'Hadir'}</span></td>
-                    <td class="px-4 py-3 text-center whitespace-nowrap">
-                        ${waNumber ? `<a href="${waLink}" target="_blank" class="text-[10px] bg-green-100 text-green-700 px-2 py-1 rounded border border-green-300 hover:bg-green-200 shadow-sm transition-all">WA Wali</a>` : `<span class="text-[10px] text-slate-400">Tidak ada WA</span>`}
-                    </td>
+                    <td class="px-4 py-3 text-center whitespace-nowrap"><span class="px-2.5 py-1 text-[10px] font-black uppercase rounded-lg border ${badgeClass} shadow-sm">${log.status || 'Hadir'}</span></td>
+                    <td class="px-4 py-3 text-center whitespace-nowrap">${waNumber ? `<a href="${waLink}" target="_blank" class="bg-emerald-500 hover:bg-emerald-600 text-white px-2.5 py-1 rounded-lg text-[10px] font-bold inline-block shadow-sm">Kirim WA</a>` : '-'}</td>
                 </tr>`;
             }).join('');
         }
-        
-        // --- FIX: MISSING FUNCTIONS IMPLEMENTATION --- //
-        function checkMissingSession() { 
-            const m = document.getElementById('missing-students-modal'); m.classList.remove('hidden'); 
-            const tbody = document.getElementById('missing-students-body');
-            const title = document.getElementById('missing-modal-title');
+
+        function checkMissingSession() {
+            if(!currentClass) return alert("Sesi KBM belum dimulai!");
+            const recordedNis = sessionScans.map(s => String(s.nis).trim());
+            const missing = students.filter(s => String(s.className || s.kelas || '').trim() === currentClass && !recordedNis.includes(String(s.nis).trim()));
             
-            if(!isSessionActive) {
-                title.innerText = "Sesi Belum Aktif";
-                tbody.innerHTML = `<tr><td colspan="3" class="px-4 py-8 text-center text-slate-500 font-bold">Mulai sesi terlebih dahulu.</td></tr>`;
-                return;
-            }
-            
-            title.innerText = "Siswa Belum Absen - " + currentClass;
-            const classStudents = students.filter(s => (s.className || s.kelas) === currentClass);
-            const attendedNis = sessionScans.map(r => String(r.nis));
-            const missing = classStudents.filter(s => !attendedNis.includes(String(s.nis)));
-            
-            if(missing.length === 0) { tbody.innerHTML = `<tr><td colspan="3" class="px-4 py-8 text-center text-emerald-500 font-bold">Semua siswa di kelas telah presensi!</td></tr>`; } 
-            else {
-                tbody.innerHTML = missing.map(s => `<tr><td class="px-4 py-3">${s.nis}</td><td class="px-4 py-3">${s.name}</td><td class="px-4 py-3 text-center"><span class="px-2 py-1 text-[10px] font-black uppercase rounded border bg-rose-100 text-rose-800 border-rose-200">Alpha / Terlewat</span></td></tr>`).join('');
-            }
+            showMissingModal(`Belum Absen: ${currentClass}`, missing);
         }
-        
-        function checkMissingHistory() { 
-            const m = document.getElementById('missing-students-modal'); m.classList.remove('hidden'); 
-            const tbody = document.getElementById('missing-students-body');
-            const title = document.getElementById('missing-modal-title');
-            const filterClass = document.getElementById('filter-class').value;
-            
-            if(!filterClass) {
-                title.innerText = "Filter Kelas Kosong";
-                tbody.innerHTML = `<tr><td colspan="3" class="px-4 py-8 text-center text-amber-500 font-bold">Pilih "Kelas" di filter Rekap Log terlebih dahulu.</td></tr>`;
-                return;
-            }
-            
-            title.innerText = "Belum Absen Hari Ini - " + filterClass;
-            const classStudents = students.filter(s => (s.className || s.kelas) === filterClass);
-            const today = new Date().toISOString().split('T')[0];
-            const filterDate = document.getElementById('filter-date').value || today;
-            
+
+        function checkMissingHistory() {
+            const cls = document.getElementById('filter-class').value;
+            if(!cls) return alert("Pilih Filter Kelas terlebih dahulu untuk mengecek siswa belum presensi!");
             const dataSource = currentDataSource === 'realtime' ? realtimeHistory : attendanceHistory;
-            const currentRecords = dataSource.filter(log => {
-                const date = log.timestamp ? log.timestamp.split('T')[0] : '';
-                return date === filterDate && (log.className || log.kelas) === filterClass;
-            });
+            const filterDate = document.getElementById('filter-date')?.value;
             
-            const attendedNis = currentRecords.map(r => String(r.nis));
-            const missing = classStudents.filter(s => !attendedNis.includes(String(s.nis)));
+            const recordedNis = dataSource.filter(item => {
+                const itemDate = item.timestamp ? item.timestamp.split('T')[0] : '';
+                if(filterDate && itemDate !== filterDate) return false;
+                return (item.className || item.kelas || '').trim() === cls.trim();
+            }).map(item => String(item.nis).trim());
+
+            const missing = students.filter(s => String(s.className || s.kelas || '').trim() === cls && !recordedNis.includes(String(s.nis).trim()));
+            showMissingModal(`Belum Presensi (${cls})`, missing);
+        }
+
+        function showMissingModal(title, missingList) {
+            document.getElementById('missing-modal-title').innerText = title;
+            const tbody = document.getElementById('missing-students-body');
             
-            if(missing.length === 0) { tbody.innerHTML = `<tr><td colspan="3" class="px-4 py-8 text-center text-emerald-500 font-bold">Semua siswa di kelas telah presensi!</td></tr>`; } 
-            else {
-                tbody.innerHTML = missing.map(s => `<tr><td class="px-4 py-3">${s.nis}</td><td class="px-4 py-3">${s.name}</td><td class="px-4 py-3 text-center"><span class="px-2 py-1 text-[10px] font-black uppercase rounded border bg-rose-100 text-rose-800 border-rose-200">Alpha / Terlewat</span></td></tr>`).join('');
+            if(missingList.length === 0) {
+                tbody.innerHTML = `<tr><td colspan="3" class="px-4 py-6 text-center text-emerald-600 font-bold">Semua siswa di kelas ini sudah presensi!</td></tr>`;
+            } else {
+                tbody.innerHTML = missingList.map(s => `
+                    <tr class="hover:bg-slate-50">
+                        <td class="px-4 py-3 font-mono">${s.nis}</td>
+                        <td class="px-4 py-3 font-bold text-slate-800">${s.name}</td>
+                        <td class="px-4 py-3 text-center"><span class="bg-amber-100 text-amber-800 px-2.5 py-0.5 rounded-full text-[10px] font-black">BELUM HASIL REKAP</span></td>
+                    </tr>
+                `).join('');
             }
+            document.getElementById('missing-students-modal').classList.remove('hidden');
         }
 
         function closeMissingModal() { document.getElementById('missing-students-modal').classList.add('hidden'); }
-        
-        function exportToCSV() { 
+
+        function exportToCSV() {
             const dataSource = currentDataSource === 'realtime' ? realtimeHistory : attendanceHistory;
-            if(dataSource.length === 0) return alert("Data kosong, tidak ada yang diekspor.");
-            
-            let csvContent = "data:text/csv;charset=utf-8,Waktu,NIS,Nama,Kelas,Mapel,Jam,Status\n";
+            if (dataSource.length === 0) return alert("Tidak ada data untuk diexport!");
+            let csvContent = "data:text/csv;charset=utf-8,Waktu,NIS,Nama,Kelas,Mapel,Jam,Status,WA\n";
             dataSource.forEach(row => {
-                const time = row.waktu || row.timeDisplay || (row.timestamp ? row.timestamp.split('T')[0] : '');
-                const name = (row.name || row.nama || '').replace(/,/g, '');
-                csvContent += `${time},${row.nis},${name},${row.className||row.kelas||''},${row.subject||row.mapel||''},${row.jam||''},${row.status||'Hadir'}\n`;
+                csvContent += `"${row.timestamp || ''}","${row.nis || ''}","${row.name || row.nama || ''}","${row.className || row.kelas || ''}","${row.subject || row.mapel || ''}","${row.jam || ''}","${row.status || 'Hadir'}","${row.wa || ''}"\n`;
             });
-            
             const encodedUri = encodeURI(csvContent);
             const link = document.createElement("a");
             link.setAttribute("href", encodedUri);
-            link.setAttribute("download", "Rekap_Presensi_Miftahul_Ulum.csv");
+            link.setAttribute("download", `Rekap_Presensi_${new Date().toISOString().split('T')[0]}.csv`);
             document.body.appendChild(link);
             link.click();
+            document.body.removeChild(link);
         }
 
-        function clearHistoryWithPin() { 
-            const pin = prompt("PERINGATAN: Masukkan PIN untuk menghapus semua rekap log secara lokal:");
-            if (pin === "12345") {
+        function clearHistoryWithPin() {
+            const pin = prompt("Masukkan PIN Keamanan untuk menghapus seluruh rekap presensi lokal:");
+            if (pin === "1234" || pin === "GURUMA2026") {
                 attendanceHistory = [];
                 localStorage.setItem('db_history', JSON.stringify([]));
-                if(currentDataSource === 'local') renderHistory();
-                alert("Data rekap log lokal berhasil dihapus.");
-            } else if (pin) {
-                alert("PIN Salah! Operasi dibatalkan.");
+                renderHistory();
+                alert("Rekap presensi lokal berhasil dibersihkan.");
+            } else if (pin !== null) {
+                alert("PIN Salah!");
             }
         }
-
-        function printQRCodes() { window.print(); }
     </script>
 </body>
 </html>
