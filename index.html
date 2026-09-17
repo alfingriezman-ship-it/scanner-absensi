@@ -414,9 +414,11 @@
                             <div class="grid grid-cols-1 sm:grid-cols-12 gap-3">
                                 <select id="manual-student-nis" class="sm:col-span-6 form-input py-2.5 text-sm"><option value="">-- Cari Nama Siswa --</option></select>
                                 <select id="manual-status" class="sm:col-span-3 form-input py-2.5 text-sm font-bold text-slate-700">
-                                    <option value="Hadir">Hadir</option><option value="Sakit">Sakit</option>
-                                    <option value="Izin">Izin</option><option value="Alpha">Alpha</option>
-                                     <option value="Terlambat">Terlambat
+                                    <option value="Hadir">Hadir</option>
+                                    <option value="Terlambat">Terlambat</option>
+                                    <option value="Sakit">Sakit</option>
+                                    <option value="Izin">Izin</option>
+                                    <option value="Alpha">Alpha</option>
                                 </select>
                                 <button type="button" onclick="submitManualAttendance()" class="sm:col-span-3 bg-gradient-to-r from-emerald-500 to-teal-500 hover:opacity-90 text-white font-extrabold py-2.5 px-4 rounded-xl text-sm uppercase shadow-md transition-all">Simpan</button>
                             </div>
@@ -512,8 +514,12 @@
                                     <option value="Sosiologi">Sosiologi</option>
                                 </select>
                                 <select id="filter-status" onchange="renderHistory()" class="form-input py-2 text-xs">
-                                    <option value="">Status</option><option value="Hadir">Hadir</option>
-                                    <option value="Sakit">Sakit</option><option value="Izin">Izin</option><option value="Alpha">Alpha</option>
+                                    <option value="">Status</option>
+                                    <option value="Hadir">Hadir</option>
+                                    <option value="Terlambat">Terlambat</option>
+                                    <option value="Sakit">Sakit</option>
+                                    <option value="Izin">Izin</option>
+                                    <option value="Alpha">Alpha</option>
                                 </select>
                             </div>
                             <div class="flex flex-wrap gap-2 w-full lg:w-auto justify-end mt-2 lg:mt-0">
@@ -524,11 +530,16 @@
                         </div>
                     </div>
                     
-                    <div class="grid grid-cols-2 md:grid-cols-4 gap-3 md:gap-4 mb-6">
+                    <div class="grid grid-cols-2 sm:grid-cols-3 lg:grid-cols-5 gap-3 md:gap-4 mb-6">
                         <div class="bg-gradient-to-br from-blue-500 to-cyan-500 p-4 md:p-5 rounded-2xl text-white shadow-lg relative overflow-hidden">
                             <div class="absolute -right-4 -top-4 opacity-20"><svg class="w-16 h-16 md:w-20 md:h-20" fill="currentColor" viewBox="0 0 20 20"><path fill-rule="evenodd" d="M10 18a8 8 0 100-16 8 8 0 000 16zm3.707-9.293a1 1 0 00-1.414-1.414L9 10.586 7.707 9.293a1 1 0 00-1.414 1.414l2 2a1 1 0 001.414 0l4-4z" clip-rule="evenodd"></path></svg></div>
                             <div class="text-[10px] md:text-[11px] font-black uppercase tracking-widest mb-1 opacity-90">Hadir</div>
                             <div id="count-hadir" class="text-2xl sm:text-3xl md:text-4xl font-black">0</div>
+                        </div>
+                        <div class="bg-gradient-to-br from-yellow-500 to-amber-600 p-4 md:p-5 rounded-2xl text-white shadow-lg relative overflow-hidden">
+                            <div class="absolute -right-4 -top-4 opacity-20"><svg class="w-16 h-16 md:w-20 md:h-20" fill="currentColor" viewBox="0 0 20 20"><path fill-rule="evenodd" d="M10 18a8 8 0 100-16 8 8 0 000 16zm1-12a1 1 0 10-2 0v4a1 1 0 00.293.707l2.828 2.829a1 1 0 101.415-1.415L11 9.586V6z" clip-rule="evenodd"></path></svg></div>
+                            <div class="text-[10px] md:text-[11px] font-black uppercase tracking-widest mb-1 opacity-90">Terlambat</div>
+                            <div id="count-terlambat" class="text-2xl sm:text-3xl md:text-4xl font-black">0</div>
                         </div>
                         <div class="bg-gradient-to-br from-amber-400 to-orange-500 p-4 md:p-5 rounded-2xl text-white shadow-lg relative overflow-hidden">
                             <div class="absolute -right-4 -top-4 opacity-20"><svg class="w-16 h-16 md:w-20 md:h-20" fill="currentColor" viewBox="0 0 20 20"><path fill-rule="evenodd" d="M10 18a8 8 0 100-16 8 8 0 000 16zM8.707 7.293a1 1 0 00-1.414 1.414L8.586 10l-1.293 1.293a1 1 0 101.414 1.414L10 11.414l1.293 1.293a1 1 0 001.414-1.414L11.414 10l1.293-1.293a1 1 0 00-1.414-1.414L10 8.586 8.707 7.293z" clip-rule="evenodd"></path></svg></div>
@@ -795,8 +806,8 @@
             currentSessionMode = document.getElementById('select-mode').value;
             updateTopModeBadge();
             
-            const titleText = "MAS MIFTAHUL ULUM";
-            const subtitleText = "Digital Presence V1.5 · Build for Excellence"; 
+            const titleText = "MA MIFTAHUL ULUM LENTENG";
+            const subtitleText = "Digital Presence V1.6 · Support by Hawanif S.Ag.,M.M.Pd"; 
             
             typeWriterEffect('header-title', titleText, 80, 40, 5000);
             setTimeout(() => { typeWriterEffect('header-subtitle', subtitleText, 50, 25, 4000); }, 1000);
@@ -1082,6 +1093,7 @@
             tbody.innerHTML = sessionScans.map(log => {
                 const statStr = (log.status || 'Hadir').trim().toLowerCase();
                 let badgeClass = "bg-emerald-100 text-emerald-800 border-emerald-200";
+                if(statStr === 'terlambat') badgeClass = "bg-yellow-100 text-yellow-800 border-yellow-200";
                 if(statStr === 'sakit') badgeClass = "bg-amber-100 text-amber-800 border-amber-200";
                 if(statStr === 'izin') badgeClass = "bg-slate-200 text-slate-700 border-slate-300";
                 if(statStr === 'alpha') badgeClass = "bg-rose-100 text-rose-800 border-rose-200";
@@ -1217,16 +1229,18 @@
                 return true;
             });
 
-            let hadir = 0, sakit = 0, izin = 0, alpha = 0;
+            let hadir = 0, terlambat = 0, sakit = 0, izin = 0, alpha = 0;
             filtered.forEach(item => {
                 const st = (item.status || 'Hadir').trim().toLowerCase();
                 if (st === 'hadir') hadir++;
+                else if (st === 'terlambat') terlambat++;
                 else if (st === 'sakit') sakit++;
                 else if (st === 'izin') izin++;
                 else if (st === 'alpha') alpha++;
             });
 
             document.getElementById('count-hadir').innerText = hadir;
+            document.getElementById('count-terlambat').innerText = terlambat;
             document.getElementById('count-sakit').innerText = sakit;
             document.getElementById('count-izin').innerText = izin;
             document.getElementById('count-alpha').innerText = alpha;
@@ -1245,77 +1259,109 @@
                 
                 let badgeClass = "bg-emerald-100 text-emerald-800 border-emerald-200";
                 const statStr = (log.status || 'Hadir').trim().toLowerCase();
+                if(statStr === 'terlambat') badgeClass = "bg-yellow-100 text-yellow-800 border-yellow-200";
                 if(statStr === 'sakit') badgeClass = "bg-amber-100 text-amber-800 border-amber-200";
                 if(statStr === 'izin') badgeClass = "bg-slate-200 text-slate-700 border-slate-300";
                 if(statStr === 'alpha') badgeClass = "bg-rose-100 text-rose-800 border-rose-200";
                 
-                const waNumber = log.wa ? log.wa : (students.find(s => String(s.nis) === String(log.nis))?.wa || '');
-                const waLink = waNumber ? `https://wa.me/${waNumber}?text=Pemberitahuan%20Presensi:%20Anak%20anda%20(${log.name||log.nama})%20dinyatakan%20${log.status||'Hadir'}%20pada%20pelajaran%20${log.subject||log.mapel}.` : '#';
+                const waNumber = log.wa ? log.wa : (students.find(s => String(s.nis).trim() === String(log.nis).trim())?.wa || '');
+                const waLink = waNumber ? `https://wa.me/${waNumber.replace(/[^0-9]/g, '')}` : '#';
 
                 return `<tr class="hover:bg-slate-100/50 transition-colors">
-                    <td class="px-4 py-3 whitespace-nowrap">${dateDisp} <span class="text-[10px] text-slate-400 block">${timeDisp}</span></td>
-                    <td class="px-4 py-3 whitespace-nowrap">${log.nis}</td>
-                    <td class="px-4 py-3 whitespace-nowrap">${log.name || log.nama}</td>
-                    <td class="px-4 py-3 text-center whitespace-nowrap">${log.className || log.kelas || '-'}</td>
-                    <td class="px-4 py-3 whitespace-nowrap">${log.subject || log.mapel || '-'}</td>
-                    <td class="px-4 py-3 text-center whitespace-nowrap">${log.jam || '-'}</td>
+                    <td class="px-4 py-3 whitespace-nowrap"><div class="font-bold text-slate-800">${timeDisp}</div><div class="text-[10px] text-slate-400">${dateDisp}</div></td>
+                    <td class="px-4 py-3 font-bold text-slate-700 whitespace-nowrap">${log.nis || '-'}</td>
+                    <td class="px-4 py-3 font-bold text-slate-900 whitespace-nowrap">${log.name || log.nama || '-'}</td>
+                    <td class="px-4 py-3 text-center whitespace-nowrap"><span class="px-2 py-0.5 rounded text-[10px] font-extrabold bg-slate-100 text-slate-700 border border-slate-200">${log.className || log.kelas || '-'}</span></td>
+                    <td class="px-4 py-3 whitespace-nowrap font-semibold text-slate-700">${log.subject || log.mapel || '-'}</td>
+                    <td class="px-4 py-3 text-center whitespace-nowrap font-bold text-slate-600">${log.jam || '-'}</td>
                     <td class="px-4 py-3 text-center whitespace-nowrap"><span class="px-2.5 py-1 text-[10px] font-black uppercase rounded-lg border ${badgeClass} shadow-sm">${log.status || 'Hadir'}</span></td>
-                    <td class="px-4 py-3 text-center whitespace-nowrap">${waNumber ? `<a href="${waLink}" target="_blank" class="bg-emerald-500 hover:bg-emerald-600 text-white px-2.5 py-1 rounded-lg text-[10px] font-bold inline-block shadow-sm">Kirim WA</a>` : '-'}</td>
+                    <td class="px-4 py-3 text-center whitespace-nowrap">
+                        ${waNumber ? `<a href="${waLink}" target="_blank" class="inline-flex items-center gap-1 text-[10px] font-bold text-emerald-600 bg-emerald-50 px-2 py-1 rounded-lg border border-emerald-200 hover:bg-emerald-100 transition-colors"><svg class="w-3 h-3" fill="currentColor" viewBox="0 0 24 24"><path d="M.057 24l1.687-6.163c-1.041-1.804-1.588-3.849-1.587-5.946.003-6.556 5.338-11.891 11.893-11.891 3.181.001 6.167 1.24 8.413 3.488 2.245 2.248 3.481 5.236 3.48 8.414-.003 6.557-5.338 11.892-11.893 11.892-1.99-.001-3.951-.5-5.688-1.448l-6.305 1.654zm6.597-3.807c1.676.995 3.276 1.591 5.392 1.592 5.448 0 9.886-4.434 9.889-9.885.002-5.462-4.415-9.89-9.881-9.892-5.452 0-9.887 4.434-9.889 9.884-.001 2.225.651 3.891 1.746 5.634l-.999 3.648 3.742-.981z"/></svg> Kirim WA</a>` : '<span class="text-[10px] text-slate-400 font-semibold">-</span>'}
+                    </td>
                 </tr>`;
             }).join('');
         }
 
+        /* ----- FUNGSI HELPERTambahan ----- */
         function checkMissingSession() {
-            if(!currentClass) return alert("Sesi KBM belum dimulai!");
-            const recordedNis = sessionScans.map(s => String(s.nis).trim());
-            const missing = students.filter(s => String(s.className || s.kelas || '').trim() === currentClass && !recordedNis.includes(String(s.nis).trim()));
+            if (!currentClass) return alert("Pilih kelas dan mulai sesi terlebih dahulu.");
+            const classStudents = students.filter(s => (s.className || s.kelas || '').trim() === currentClass.trim());
+            const scannedNisSet = new Set(sessionScans.map(s => String(s.nis).trim()));
+            const missing = classStudents.filter(s => !scannedNisSet.has(String(s.nis).trim()));
             
-            showMissingModal(`Belum Absen: ${currentClass}`, missing);
-        }
-
-        function checkMissingHistory() {
-            const cls = document.getElementById('filter-class').value;
-            if(!cls) return alert("Pilih Filter Kelas terlebih dahulu untuk mengecek siswa belum presensi!");
-            const dataSource = currentDataSource === 'realtime' ? realtimeHistory : attendanceHistory;
-            const filterDate = document.getElementById('filter-date')?.value;
-            
-            const recordedNis = dataSource.filter(item => {
-                const itemDate = item.timestamp ? item.timestamp.split('T')[0] : '';
-                if(filterDate && itemDate !== filterDate) return false;
-                return (item.className || item.kelas || '').trim() === cls.trim();
-            }).map(item => String(item.nis).trim());
-
-            const missing = students.filter(s => String(s.className || s.kelas || '').trim() === cls && !recordedNis.includes(String(s.nis).trim()));
-            showMissingModal(`Belum Presensi (${cls})`, missing);
-        }
-
-        function showMissingModal(title, missingList) {
-            document.getElementById('missing-modal-title').innerText = title;
+            document.getElementById('missing-modal-title').innerText = `Siswa Belum Presensi - ${currentClass}`;
             const tbody = document.getElementById('missing-students-body');
-            
-            if(missingList.length === 0) {
-                tbody.innerHTML = `<tr><td colspan="3" class="px-4 py-6 text-center text-emerald-600 font-bold">Semua siswa di kelas ini sudah presensi!</td></tr>`;
+            if (missing.length === 0) {
+                tbody.innerHTML = `<tr><td colspan="3" class="px-4 py-6 text-center text-emerald-600 font-bold">Semua siswa kelas ${currentClass} sudah presensi!</td></tr>`;
             } else {
-                tbody.innerHTML = missingList.map(s => `
+                tbody.innerHTML = missing.map(s => `
                     <tr class="hover:bg-slate-50">
-                        <td class="px-4 py-3 font-mono">${s.nis}</td>
-                        <td class="px-4 py-3 font-bold text-slate-800">${s.name}</td>
-                        <td class="px-4 py-3 text-center"><span class="bg-amber-100 text-amber-800 px-2.5 py-0.5 rounded-full text-[10px] font-black">BELUM HASIL REKAP</span></td>
+                        <td class="px-4 py-3 font-bold text-slate-700">${s.nis}</td>
+                        <td class="px-4 py-3 font-extrabold text-slate-800">${s.name}</td>
+                        <td class="px-4 py-3 text-center"><span class="px-2.5 py-1 text-[10px] font-black uppercase rounded-lg bg-amber-100 text-amber-800 border border-amber-200">Belum Presensi</span></td>
                     </tr>
                 `).join('');
             }
             document.getElementById('missing-students-modal').classList.remove('hidden');
+            document.getElementById('missing-students-modal').classList.add('flex');
         }
 
-        function closeMissingModal() { document.getElementById('missing-students-modal').classList.add('hidden'); }
+        function checkMissingHistory() {
+            const filterClass = document.getElementById('filter-class')?.value;
+            if (!filterClass) return alert("Pilih kelas pada filter terlebih dahulu untuk mengecek siswa yang belum presensi.");
+            
+            const classStudents = students.filter(s => (s.className || s.kelas || '').trim() === filterClass.trim());
+            const filterDate = document.getElementById('filter-date')?.value || new Date().toISOString().split('T')[0];
+            const dataSource = currentDataSource === 'realtime' ? realtimeHistory : attendanceHistory;
+            
+            const checkedNisSet = new Set(
+                dataSource
+                    .filter(item => {
+                        const itemDate = item.timestamp ? item.timestamp.split('T')[0] : '';
+                        return itemDate === filterDate && (item.className || item.kelas || '').trim() === filterClass.trim();
+                    })
+                    .map(item => String(item.nis).trim())
+            );
+            
+            const missing = classStudents.filter(s => !checkedNisSet.has(String(s.nis).trim()));
+            document.getElementById('missing-modal-title').innerText = `Belum Presensi (${filterClass} - ${filterDate})`;
+            const tbody = document.getElementById('missing-students-body');
+            
+            if (missing.length === 0) {
+                tbody.innerHTML = `<tr><td colspan="3" class="px-4 py-6 text-center text-emerald-600 font-bold">Semua siswa di kelas ini sudah memiliki data presensi!</td></tr>`;
+            } else {
+                tbody.innerHTML = missing.map(s => `
+                    <tr class="hover:bg-slate-50">
+                        <td class="px-4 py-3 font-bold text-slate-700">${s.nis}</td>
+                        <td class="px-4 py-3 font-extrabold text-slate-800">${s.name}</td>
+                        <td class="px-4 py-3 text-center"><span class="px-2.5 py-1 text-[10px] font-black uppercase rounded-lg bg-amber-100 text-amber-800 border border-amber-200">Belum Presensi</span></td>
+                    </tr>
+                `).join('');
+            }
+            document.getElementById('missing-students-modal').classList.remove('hidden');
+            document.getElementById('missing-students-modal').classList.add('flex');
+        }
+
+        function closeMissingModal() {
+            const m = document.getElementById('missing-students-modal');
+            m.classList.add('hidden');
+            m.classList.remove('flex');
+        }
 
         function exportToCSV() {
             const dataSource = currentDataSource === 'realtime' ? realtimeHistory : attendanceHistory;
-            if (dataSource.length === 0) return alert("Tidak ada data untuk diexport!");
-            let csvContent = "data:text/csv;charset=utf-8,Waktu,NIS,Nama,Kelas,Mapel,Jam,Status,WA\n";
+            if (dataSource.length === 0) return alert("Tidak ada data rekap untuk diexport!");
+            
+            let csvContent = "data:text/csv;charset=utf-8,Waktu,Tanggal,NIS,Nama,Kelas,Mapel,Jam,Status,No WA\n";
             dataSource.forEach(row => {
-                csvContent += `"${row.timestamp || ''}","${row.nis || ''}","${row.name || row.nama || ''}","${row.className || row.kelas || ''}","${row.subject || row.mapel || ''}","${row.jam || ''}","${row.status || 'Hadir'}","${row.wa || ''}"\n`;
+                const timeDisp = row.waktu || row.timeDisplay || (row.timestamp ? new Date(row.timestamp).toLocaleTimeString('id-ID') : '-');
+                const dateDisp = row.timestamp ? row.timestamp.split('T')[0] : '-';
+                const name = `"${(row.name || row.nama || '').replace(/"/g, '""')}"`;
+                const cls = `"${(row.className || row.kelas || '').replace(/"/g, '""')}"`;
+                const subject = `"${(row.subject || row.mapel || '').replace(/"/g, '""')}"`;
+                csvContent += `${timeDisp},${dateDisp},${row.nis || ''},${name},${cls},${subject},${row.jam || ''},${row.status || 'Hadir'},${row.wa || ''}\n`;
             });
+
             const encodedUri = encodeURI(csvContent);
             const link = document.createElement("a");
             link.setAttribute("href", encodedUri);
@@ -1326,14 +1372,16 @@
         }
 
         function clearHistoryWithPin() {
-            const pin = prompt("Masukkan PIN Keamanan untuk menghapus seluruh rekap presensi lokal:");
-            if (pin === "1234" || pin === "GURUMA2026") {
-                attendanceHistory = [];
-                localStorage.setItem('db_history', JSON.stringify([]));
-                renderHistory();
-                alert("Rekap presensi lokal berhasil dibersihkan.");
+            const pin = prompt("Masukkan PIN Keamanan untuk menghapus seluruh Rekap Presensi Lokal:");
+            if (pin === "1992" || pin === "2026") {
+                if (confirm("Apakah Anda benar-benar yakin ingin mengosongkan Rekap Log Lokal?")) {
+                    attendanceHistory = [];
+                    localStorage.setItem('db_history', JSON.stringify([]));
+                    renderHistory();
+                    alert("Rekap Log Presensi Lokal berhasil dikosongkan.");
+                }
             } else if (pin !== null) {
-                alert("PIN Salah!");
+                alert("PIN Salah! Akses ditolak.");
             }
         }
     </script>
